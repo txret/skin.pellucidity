@@ -1,26 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <includes>
     <!--Music Video browser-->
-    <include name="musicvideos">
+    <include name="view_music_videos">
         <control type="panel" id="59">
-            <visible>$EXP[isMusicVideo]</visible>
-            <posx>col-1-begin</posx>
-            <posy>row-5-begin</posy>
+            <visible>$EXP[is_music_video]</visible>
+            <posx>col_1_begin</posx>
+            <posy>row_5_begin</posy>
             <width>1800</width>
-            <height>25-row</height>
+            <height>25_row</height>
             <onleft>9000</onleft>
-            <onright>60</onright>
-            <onback>9000</onback>
-			<ondown>59</ondown>
-			<onup>59</onup>
+            <onright>SetFocus(60,$VAR[jump_index],absolute)</onright>
+            <onback>activateWindow(home)</onback>
+            <ondown>59</ondown>
+            <onup>59</onup>
             <scrolltime tween="cubic" easing="out">600</scrolltime>
             <pagecontrol>60</pagecontrol>
             <itemlayout width="444" height="360">
                 <control type="image">
-                    <posx>0</posx>
-                    <posy>0</posy>
-                    <width>6-col-gutter</width>
-                    <height>4-col-gutter</height>
+                    <width>6_col_gutter</width>
+                    <height>4_col_gutter</height>
                     <aspectratio>scale</aspectratio>
                     <texture>colors/black.png</texture>
                     <bordertexture colordiffuse="overlay">colors/black.png</bordertexture>
@@ -28,44 +26,34 @@
                     <colordiffuse>overlay</colordiffuse>
                 </control>
                 <control type="image">
-                    <posx>0</posx>
-                    <posy>0</posy>
-                    <width>6-col-gutter</width>
-                    <height>4-col-gutter</height>
+                    <width>6_col_gutter</width>
+                    <height>4_col_gutter</height>
                     <aspectratio>scale</aspectratio>
                     <texture>$INFO[Listitem.Art(thumb)]</texture>
                     <bordersize>6</bordersize>
-					<colordiffuse>99ffffff</colordiffuse>
                 </control>
                 <control type="label">
                     <posx>12</posx>
                     <posy>268</posy>
                     <width>384</width>
-                    <height>1-row</height>
-                    <aligny>center</aligny>
-                    <font>thumbTitle</font>
-                    <textcolor>textActive</textcolor>
+                    <font>thumb_title</font>
                     <label>[B]$INFO[ListItem.label][/B]</label>
                 </control>
                 <control type="label">
                     <posx>12</posx>
                     <posy>292</posy>
                     <width>384</width>
-                    <height>1-row</height>
-                    <aligny>center</aligny>
-                    <font>thumbTitle</font>
-                    <textcolor>textDisabled</textcolor>
+                    <font>thumb_title</font>
+                    <textcolor>text_disabled</textcolor>
                     <label>$INFO[ListItem.artist] $INFO[ListItem.year,(,)]</label>
                 </control>
             </itemlayout>
             <focusedlayout width="444" height="360">
                 <control type="group">
-                    <include>focusThumb</include>
-					<control type="image">
-                        <posx>0</posx>
-                        <posy>0</posy>
-                        <width>6-col-gutter</width>
-                        <height>4-col-gutter</height>
+                    <include>focus_thumb</include>
+                    <control type="image">
+                        <width>6_col_gutter</width>
+                        <height>4_col_gutter</height>
                         <aspectratio>scale</aspectratio>
                         <texture border="6">colors/black.png</texture>
                         <bordertexture border="6" colordiffuse="ffFFFFFF">colors/white.png</bordertexture>
@@ -73,10 +61,8 @@
                         <colordiffuse>FF000000</colordiffuse>
                     </control>
                     <control type="image">
-                        <posx>0</posx>
-                        <posy>0</posy>
-                        <width>6-col-gutter</width>
-                        <height>4-col-gutter</height>
+                        <width>6_col_gutter</width>
+                        <height>4_col_gutter</height>
                         <aspectratio>scale</aspectratio>
                         <texture>$INFO[Listitem.thumb]</texture>
                         <bordersize>6</bordersize>
@@ -85,20 +71,14 @@
                         <posx>12</posx>
                         <posy>268</posy>
                         <width>384</width>
-                        <height>1-row</height>
-                        <aligny>center</aligny>
-                        <font>thumbTitle</font>
-                        <textcolor>textActive</textcolor>
+                        <font>thumb_title</font>
                         <label>[B]$INFO[ListItem.label][/B]</label>
                     </control>
                     <control type="label">
                         <posx>12</posx>
                         <posy>292</posy>
                         <width>384</width>
-                        <height>1-row</height>
-                        <aligny>center</aligny>
-                        <font>thumbTitle</font>
-                        <textcolor>textActive</textcolor>
+                        <font>thumb_title</font>
                         <label>$INFO[ListItem.artist] $INFO[ListItem.year,(,)]</label>
                     </control>
                 </control>

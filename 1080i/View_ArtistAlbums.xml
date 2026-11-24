@@ -1,181 +1,151 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <includes>
-	<!--Artist Album browser-->
-	<include name="musicartistcatalogue">
-		<!--fanart-->
-		<control type="group">
-			<visible>$EXP[isMusicArtistCatalogue]</visible>
-			<control type="group">
-				<animation type="conditional" condition="!control.isvisible(52)">
-	                <effect type="fade" start="100" end="0" time="0"/>
-	            </animation>
-				<animation type="conditional" condition="control.isvisible(52)">
-	                <effect type="fade" start="0" end="100" time="500" delay="500"/>
-	            </animation>
-				<include>kenBurnsey</include>
-				<control type="image">
-					<include>dimensionsFullscreen</include>
-					<aspectratio scalediffuse="false">stretch</aspectratio>
-					<texture border="0">$INFO[Container(52).Art(fanart)]</texture>
-					<fadetime>0</fadetime>
-					<colordiffuse>66ffffff</colordiffuse>
-				</control>
-				<control type="image">
-					<visible>!string.isempty(Container(52).Art(fanart))</visible>
-					<include>dimensionsFullscreen</include>
-					<texture>vignette.png</texture>
-					<colordiffuse>ffffffff</colordiffuse>
-					<aspectratio>stretch</aspectratio>
-				</control>
-			</control>
-			<control type="group">
-				<animation type="Conditional" condition="controlgroup(9000).hasfocus | controlgroup(9002).hasfocus | controlgroup(100).hasfocus">
-					<effect type="fade" start="100" end="0" time="200"/>
-				</animation>
-				<!--title-->
+    <!--Artist Album browser-->
+    <include name="view_artist_albums">
+        <!--fanart-->
+        <control type="group">
+            <visible>$EXP[is_artist_albums]</visible>
+            <control type="group">
+                <animation type="conditional" condition="!control.isvisible(52)">
+                    <effect type="fade" start="100" end="0" time="0"/>
+                </animation>
+                <animation type="conditional" condition="control.isvisible(52)">
+                    <effect type="fade" start="0" end="100" time="500" delay="500"/>
+                </animation>
+                <include>ken_burns</include>
+                <control type="image">
+                    <include>dimensions_fullscreen</include>
+                    <aspectratio scalediffuse="false">stretch</aspectratio>
+                    <texture>$INFO[Container(52).Art(fanart)]</texture>
+                    <fadetime>0</fadetime>
+                    <colordiffuse>66ffffff</colordiffuse>
+                </control>
+                <control type="image">
+                    <visible>!string.isempty(Container(52).Art(fanart))</visible>
+                    <include>dimensions_fullscreen</include>
+                    <texture>vignette.png</texture>
+                </control>
+            </control>
+            <control type="group">
+                <animation type="Conditional" condition="controlgroup(9000).hasfocus | controlgroup(9002).hasfocus | controlgroup(100).hasfocus">
+                    <effect type="fade" start="100" end="0" time="200"/>
+                </animation>
+                <!--title-->
                 <control type="group">
-                    <posx>col-1-begin</posx>
-                    <posy>row-10-begin</posy>
-					<animation type="conditional" condition="!control.isvisible(52)">
-		                <effect type="fade" start="100" end="0" time="0"/>
-		            </animation>
-					<animation type="conditional" condition="control.isvisible(52)">
-		                <effect type="fade" start="0" end="100" time="250" delay="500"/>
-		            </animation>
-					<control type="label">
-                        <posx>0</posx>
-                        <posy>4-row</posy>
-                        <width>12-col</width>
-                        <height>1-row</height>
-                        <font>largeTitle</font>
-                        <textcolor>textActive</textcolor>
-						<aligny>center</aligny>
-                        <shadowcolor></shadowcolor>
+                    <posx>col_1_begin</posx>
+                    <posy>row_10_begin</posy>
+                    <animation type="conditional" condition="!control.isvisible(52)">
+                        <effect type="fade" start="100" end="0" time="0"/>
+                    </animation>
+                    <animation type="conditional" condition="control.isvisible(52)">
+                        <effect type="fade" start="0" end="100" time="250" delay="500"/>
+                    </animation>
+                    <control type="label">
+                        <posy>4_row</posy>
+                        <width>12_col</width>
+                        <font>large_title</font>
                         <wrapmultiline>true</wrapmultiline>
                         <label>$INFO[container.foldername]</label>
                     </control>
-					<control type="label">
-		                <posx>0</posx>
-		                <posy>5-row</posy>
-		                <width>12-col</width>
-		                <height>2-row</height>
-		                <align></align>
-		                <font>menuTitle</font>
-		                <textcolor>textActive</textcolor>
-		                <label>$INFO[Container(52).ListItemAbsolute(0).genre]</label>
-		            </control>
+                    <control type="label">
+                        <posy>5_row</posy>
+                        <width>12_col</width>
+                        <height>2_row</height>
+                        <align></align>
+                        <font>menu_title</font>
+                        <label>$INFO[Container(52).ListItemAbsolute(0).genre]</label>
+                    </control>
                 </control>
-				<control type="panel" id="52">
-					<animation type="conditional" condition="!control.isvisible(52)">
-		                <effect type="fade" start="100" end="0" time="0"/>
-		            </animation>
-					<animation type="conditional" condition="control.isvisible(52)">
-		                <effect type="fade" start="0" end="100" time="500" delay="1000"/>
-		            </animation>
-					<visible>$EXP[isMusicArtistCatalogue]</visible>
-					<posx>84</posx>
-					<posy>696</posy>
-					<width>24-col</width>
-					<height>19-row</height>
-					<onleft>9000</onleft>
-					<ondown>52</ondown>
-					<onup>52</onup>
-					<pagecontrol>60</pagecontrol>
-					<orientation>horizontal</orientation>
-					<scrolltime tween="cubic" easing="out">600</scrolltime>
-					<itemlayout width="300" height="348">
-	                    <control type="image">
-	                        <posx>-6</posx>
-	                        <posy>-6</posy>
-	                        <width>276</width>
-	                        <height>276</height>
-	                        <aspectratio>stretch</aspectratio>
-	                        <texture>colors/black.png</texture>
-	                        <bordersize>12</bordersize>
-							<colordiffuse>11FFFFFF</colordiffuse>
-	                    </control>
-						<control type="image">
-							<posx>0</posx>
-							<posy>0</posy>
-							<width>4-col-gutter</width>
-							<height>4-col-gutter</height>
-							<aspectratio>stretch</aspectratio>
-							<texture>$INFO[ListItem.Art(thumb)]</texture>
-							<bordersize>12</bordersize>
-							<colordiffuse>99FFFFFF</colordiffuse>
-						</control>
-						<control type="textbox">
-							<visible>String.IsEmpty(listitem.title)</visible>
-							<posx>24</posx>
-							<posy>3-row</posy>
-							<width>228</width>
-							<height>6-row</height>
-							<font>largeLight</font>
-							<wrapmultiline>true</wrapmultiline>
-							<textcolor>textActive</textcolor>
-							<label>$INFO[ListItem.label]</label>
-						</control>
-						<control type="label">
-							<visible>!controlgroup(9000).hasfocus</visible>
-							<posx>12</posx>
-							<posy>268</posy>
-							<width>240</width>
-							<height>1-row</height>
-							<aligny>center</aligny>
-							<font>thumbTitle</font>
-							<textcolor>textActive</textcolor>
-							<label>[B]$INFO[ListItem.Title][/B][CR]$INFO[ListItem.year]</label>
-						</control>
-					</itemlayout>
-					<focusedlayout width="4-col" height="348">
-						<control type="group">
-							<include>focusThumb</include>
-							<control type="image">
-								<posx>0</posx>
-								<posy>0</posy>
-								<width>4-col-gutter</width>
-								<height>4-col-gutter</height>
-								<aspectratio>stretch</aspectratio>
-								<texture>colors/black.png</texture>
-								<bordertexture colordiffuse="ffFFFFFF">colors/white.png</bordertexture>
-								<bordersize>6</bordersize>
-								<colordiffuse>FF000000</colordiffuse>
-							</control>
-							<control type="image">
-								<posx>0</posx>
-								<posy>0</posy>
-								<width>4-col-gutter</width>
-								<height>4-col-gutter</height>
-								<aspectratio>stretch</aspectratio>
-								<texture>$INFO[ListItem.Art(thumb)]</texture>
-								<bordersize>6</bordersize>
-							</control>
-							<control type="textbox">
-								<visible>String.IsEmpty(listitem.title)</visible>
-								<posx>24</posx>
-								<posy>3-row</posy>
-								<width>228</width>
-								<height>6-row</height>
-								<font>largeLight</font>
-								<wrapmultiline>true</wrapmultiline>
-								<textcolor>textActive</textcolor>
-								<label>$INFO[ListItem.label]</label>
-							</control>
-							<control type="label">
-								<visible>!controlgroup(9000).hasfocus</visible>
-								<posx>12</posx>
-								<posy>280</posy>
-								<width>240</width>
-								<height>1-row</height>
-								<aligny>center</aligny>
-								<font>thumbTitle</font>
-								<textcolor>textActive</textcolor>
-								<label>[B]$INFO[ListItem.Title][/B][CR]$INFO[ListItem.year]</label>
-							</control>
-						</control>
-					</focusedlayout>
-				</control>
-			</control>
-		</control>
-	</include>
+                <control type="panel" id="52">
+                    <animation type="conditional" condition="!control.isvisible(52)">
+                        <effect type="fade" start="100" end="0" time="0"/>
+                    </animation>
+                    <animation type="conditional" condition="control.isvisible(52)">
+                        <effect type="fade" start="0" end="100" time="500" delay="1000"/>
+                    </animation>
+                    <visible>$EXP[is_artist_albums]</visible>
+                    <posx>84</posx>
+                    <posy>696</posy>
+                    <width>24_col</width>
+                    <height>19_row</height>
+                    <onleft>9000</onleft>
+                    <ondown>52</ondown>
+                    <onup>52</onup>
+                    <pagecontrol>60</pagecontrol>
+                    <orientation>horizontal</orientation>
+                    <scrolltime tween="cubic" easing="out">600</scrolltime>
+                    <itemlayout width="300" height="348">
+                        <control type="image">
+                            <posx>-6</posx>
+                            <posy>-6</posy>
+                            <width>276</width>
+                            <height>276</height>
+                            <texture>colors/black.png</texture>
+                            <bordersize>12</bordersize>
+                            <colordiffuse>11FFFFFF</colordiffuse>
+                        </control>
+                        <control type="image">
+                            <width>4_col_gutter</width>
+                            <height>4_col_gutter</height>
+                            <texture>$INFO[ListItem.Art(thumb)]</texture>
+                            <bordersize>12</bordersize>
+                        </control>
+                        <control type="textbox">
+                            <visible>String.IsEmpty(listitem.title)</visible>
+                            <posx>24</posx>
+                            <posy>3_row</posy>
+                            <width>228</width>
+                            <height>6_row</height>
+                            <font>large_light</font>
+                            <label>$INFO[ListItem.label]</label>
+                        </control>
+                        <control type="label">
+                            <visible>!controlgroup(9000).hasfocus</visible>
+                            <posx>12</posx>
+                            <posy>268</posy>
+                            <width>240</width>
+                            <font>thumb_title</font>
+                            <label>[B]$INFO[ListItem.Title][/B][CR]$INFO[ListItem.year]</label>
+                        </control>
+                    </itemlayout>
+                    <focusedlayout width="4_col" height="348">
+                        <control type="group">
+                            <include>focus_thumb</include>
+                            <control type="image">
+                                <width>4_col_gutter</width>
+                                <height>4_col_gutter</height>
+                                <texture>colors/black.png</texture>
+                                <bordertexture colordiffuse="ffFFFFFF">colors/white.png</bordertexture>
+                                <bordersize>6</bordersize>
+                                <colordiffuse>FF000000</colordiffuse>
+                            </control>
+                            <control type="image">
+                                <width>4_col_gutter</width>
+                                <height>4_col_gutter</height>
+                                <texture>$INFO[ListItem.Art(thumb)]</texture>
+                                <bordersize>6</bordersize>
+                            </control>
+                            <control type="textbox">
+                                <visible>String.IsEmpty(listitem.title)</visible>
+                                <posx>24</posx>
+                                <posy>3_row</posy>
+                                <width>228</width>
+                                <height>6_row</height>
+                                <font>large_light</font>
+                                <label>$INFO[ListItem.label]</label>
+                            </control>
+                            <control type="label">
+                                <visible>!controlgroup(9000).hasfocus</visible>
+                                <posx>12</posx>
+                                <posy>280</posy>
+                                <width>240</width>
+                                <font>thumb_title</font>
+                                <label>[B]$INFO[ListItem.Title][/B][CR]$INFO[ListItem.year]</label>
+                            </control>
+                        </control>
+                    </focusedlayout>
+                </control>
+            </control>
+        </control>
+    </include>
 </includes>

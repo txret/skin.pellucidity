@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--The info key during video opens the OSD instead: it already shows title, plot and times.-->
 <window>
-    <!--this window redirects to videoOSD.xml-->
     <onload>action(back)</onload>
     <onunload>activateWindow(videoosd)</onunload>
 </window>

@@ -4,11 +4,9 @@
     <color name="background">ff151515</color>
     <color name="highlight">ffbd081c</color>
     <color name="overlay">44ffffff</color>
-    <color name="textActive">fff0f0f0</color>
-    <color name="textDisabled">ff757575</color>
-    <color name="menuDisabled">aaf0f0f0</color>
-    <color name="menuUnselected">ff919191</color>
-    <color name="textboxInactive">99FFFFFF</color>
-    <color name="keyboardInactive">aa212121</color>
-    <color name="keyboardAccent">ffBDBDBD</color>
+    <color name="text_active">fff0f0f0</color>
+    <color name="text_disabled">ff757575</color>
+    <color name="menu_unselected">ff919191</color>
+    <color name="textbox_inactive">99FFFFFF</color>
+    <color name="keyboard_inactive">aa212121</color>
 </colors>

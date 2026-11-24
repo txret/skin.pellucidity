@@ -1,7 +1,7 @@
 # Kodi Media Center language file
-# Addon Name: Pellucid
-# Addon id: skin.pellucid
-# Addon Provider: chrisbevan
+# Addon Name: Pellucidity
+# Addon id: skin.pellucidity
+# Addon Provider: txret
 msgid ""
 msgstr ""
 "Project-Id-Version: Kodi Skins\n"
@@ -18,8 +18,8 @@ msgstr ""
 "X-Generator: Weblate 4.11\n"
 
 msgctxt "Addon Summary"
-msgid "A skin for Kodi from theDeadmanInYossariansTent"
-msgstr "Een skin voor Kodi van theDeadmanInYossariansTent"
+msgid "A modified version of the Pellucid skin by theDeadmanInYossariansTent"
+msgstr ""
 
 msgctxt "Addon Description"
 msgid "Pellucid is a lightweight, clean and simple Kodi experience designed for maximum usability and minimum fuss."
@@ -36,10 +36,6 @@ msgstr "Mijn bibliotheek"
 msgctxt "#31014"
 msgid "title(s)"
 msgstr "titel(s)"
-
-msgctxt "#31015"
-msgid "On"
-msgstr "Op"
 
 msgctxt "#31019"
 msgid "Open playlist"
@@ -245,10 +241,6 @@ msgctxt "#31114"
 msgid "Pixel format"
 msgstr "Pixelformaat"
 
-msgctxt "#31116"
-msgid "Set home background directory"
-msgstr "Instellen home-achtergrondfolder"
-
 msgctxt "#31117"
 msgid "Launch addon"
 msgstr "Start add-on"
@@ -260,10 +252,6 @@ msgstr "PVR niet actief"
 msgctxt "#31121"
 msgid "My Kodi"
 msgstr "Mijn Kodi"
-
-msgctxt "#31122"
-msgid "Reset home backgrounds to default"
-msgstr "Terugzetten home-achtergrond naar standaard"
 
 msgctxt "#31123"
 msgid "Current Queue"
@@ -285,10 +273,6 @@ msgctxt "#31138"
 msgid "Stop video playing on return to menu"
 msgstr "Stop afspelen video bij terugkeer naar menu"
 
-msgctxt "#31142"
-msgid "Prioritise exit over shutdown in power menu"
-msgstr "Prefereer exit i.p.v. shutdown in powermenu"
-
 msgctxt "#31143"
 msgid "Remaining"
 msgstr "Overblijvende"
@@ -304,10 +288,6 @@ msgstr "Item(s)"
 msgctxt "#31149"
 msgid "Released"
 msgstr "Uitgebracht"
-
-msgctxt "#31152"
-msgid "Press OK to cancel"
-msgstr "Druk op OK om af te breken"
 
 msgctxt "#31153"
 msgid "Playlist saved"

@@ -1,87 +1,72 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <includes>
-    <include name="episodes">
+    <!--Episodes of one season (view 53): season poster (or fanart) on the left half of the screen,
+        numbered episode rows on the right. Applies to the library and to plugin listings that name
+        their show; other plugin episode lists fall back to plain rows (view 52).-->
+    <include name="view_episodes">
         <!--fanart-->
         <control type="group">
-			<animation type="conditional" condition="control.isvisible(53)">
+            <animation type="conditional" condition="control.isvisible(53)">
                 <effect type="fade" start="0" end="100" time="1500"/>
-				<effect type="slide" start="-100,0" end="0,0" time="300"/>
+                <effect type="slide" start="-100,0" end="0,0" time="300"/>
             </animation>
-            <visible>String.Contains(container.folderpath,videodb://) + !String.IsEmpty(container.folderpath) + container.content(episodes) + !String.Contains(Container.folderpath,plugin)</visible>
-            <posy>0</posy>
-            <posx>0</posx>
+            <visible>!String.IsEmpty(container.folderpath) + container.content(episodes) + [[String.Contains(container.folderpath,videodb://) + !String.Contains(Container.folderpath,plugin)] | $EXP[is_plugin_show]]</visible>
             <control type="image">
-                <include>dimensionsFullscreen</include>
+                <include>dimensions_fullscreen</include>
                 <texture>colors/black.png</texture>
-                <colordiffuse>ffffffff</colordiffuse>
-                <aspectratio>stretch</aspectratio>
             </control>
             <control type="image">
                 <visible>String.IsEmpty(container.art(season.poster))</visible>
-                <posx>0</posx>
-                <posy>0</posy>
                 <width>960</width>
                 <height>1080</height>
                 <aspectratio aligny="bottom">scale</aspectratio>
-                <texture fallback="colors/black.png" border="0">$INFO[fanart.image]</texture>
-                <colordiffuse>ffffffff</colordiffuse>
+                <texture fallback="colors/black.png">$INFO[fanart.image]</texture>
             </control>
-			<control type="image">
+            <control type="image">
                 <visible>!String.IsEmpty(container.art(season.poster))</visible>
-                <posx>0</posx>
-                <posy>0</posy>
                 <width>960</width>
                 <height>1080</height>
                 <aspectratio>scale</aspectratio>
-                <texture border="0">$INFO[container.art(season.poster)]</texture>
+                <texture>$INFO[container.art(season.poster)]</texture>
                 <colordiffuse>ccffffff</colordiffuse>
             </control>
             <!--display clearart if available-->
             <control type="image">
                 <posx>1068</posx>
-                <posy>row-25-begin</posy>
-                <width>4-col</width>
-                <height>2-col</height>
+                <posy>row_25_begin</posy>
+                <width>4_col</width>
+                <height>2_col</height>
                 <texture>$INFO[ListItem.Art(clearlogo)]</texture>
                 <aspectratio align="left">keep</aspectratio>
             </control>
         </control>
         <!--overlay-->
         <control type="group">
-            <visible>String.Contains(container.folderpath,videodb://) + !String.IsEmpty(container.folderpath) + container.content(episodes) + !String.Contains(Container.folderpath,plugin)</visible>
+            <visible>!String.IsEmpty(container.folderpath) + container.content(episodes) + [[String.Contains(container.folderpath,videodb://) + !String.Contains(Container.folderpath,plugin)] | $EXP[is_plugin_show]]</visible>
             <posx>949</posx>
-            <posy>0</posy>
-            <control type="image">
-                <include>dimensionsFullscreen</include>
-                <texture>colors/black.png</texture>
-                <colordiffuse>ffFFFFFF</colordiffuse>
-                <aspectratio>stretch</aspectratio>
-            </control>
-            <include>globalBackground</include>
+            <include content="page_background"><param name="image" value="tv.jpg"/></include>
         </control>
         <!--title-->
         <control type="group">
-            <posx>col-13-begin</posx>
-            <posy>row-5-begin</posy>
-            <visible>String.Contains(container.folderpath,videodb://) + !String.IsEmpty(container.folderpath) + container.content(episodes) + !String.Contains(Container.folderpath,plugin)</visible>
+            <posx>col_13_begin</posx>
+            <posy>row_5_begin</posy>
+            <visible>!String.IsEmpty(container.folderpath) + container.content(episodes) + [[String.Contains(container.folderpath,videodb://) + !String.Contains(Container.folderpath,plugin)] | $EXP[is_plugin_show]]</visible>
             <control type="label">
                 <posx>24</posx>
                 <posy>-6</posy>
-                <width>12-col</width>
-                <height>2-row</height>
+                <width>12_col</width>
+                <height>2_row</height>
                 <align></align>
-                <font>largeTitle2</font>
-                <textcolor>textActive</textcolor>
+                <font>large_title_2</font>
                 <label>$INFO[Container.ShowTitle]</label>
             </control>
-			<control type="label">
+            <control type="label">
                 <posx>24</posx>
                 <posy>78</posy>
-                <width>12-col</width>
-                <height>1-row</height>
+                <width>12_col</width>
                 <align></align>
-                <font>itemTitle</font>
-                <textcolor>menuUnselected</textcolor>
+                <font>item_title</font>
+                <textcolor>menu_unselected</textcolor>
                 <label>$INFO[listitem.Season,$LOCALIZE[20373] , | ]$INFO[Container(53).NumItems,, $LOCALIZE[31189]]</label>
             </control>
         </control>
@@ -89,272 +74,193 @@
         <control type="group">
             <!--tvhsow library-sourced episode list-->
             <control type="panel" id="53">
-				<animation type="conditional" condition="!control.isvisible(53)">
-	                <effect type="fade" start="100" end="0" time="0"/>
-	            </animation>
-				<animation type="conditional" condition="control.isvisible(53)">
-	                <effect type="fade" start="0" end="100" time="250" delay="150"/>
-	            </animation>
-                <visible>$EXP[isEpisode] + !String.Contains(container.folderpath,smb://) + String.Contains(container.folderpath,videodb://)</visible>
+                <animation type="conditional" condition="!control.isvisible(53)">
+                    <effect type="fade" start="100" end="0" time="0"/>
+                </animation>
+                <animation type="conditional" condition="control.isvisible(53)">
+                    <effect type="fade" start="0" end="100" time="250" delay="150"/>
+                </animation>
+                <visible>$EXP[is_episode] + !String.Contains(container.folderpath,smb://) + [String.Contains(container.folderpath,videodb://) | $EXP[is_plugin_show]]</visible>
                 <posx>978</posx>
-                <posy>row-9-begin</posy>
-                <width>12-col</width>
-                <height>19-row</height>
+                <posy>row_9_begin</posy>
+                <width>12_col</width>
+                <height>19_row</height>
                 <onleft>9000</onleft>
-				<onright>60</onright>
-				<pagecontrol>60</pagecontrol>
-				<ondown>53</ondown>
-				<onup>53</onup>
-				<movement>4</movement>
-                <itemlayout width="12-col" height="2-row">
+                <onright>SetFocus(60,$VAR[jump_index],absolute)</onright>
+                <pagecontrol>60</pagecontrol>
+                <ondown>53</ondown>
+                <onup>53</onup>
+                <movement>4</movement>
+                <itemlayout width="12_col" height="2_row">
                     <control type="image">
-                        <posx>0</posx>
-                        <posy>0</posy>
-                        <width>1-col-textbox</width>
+                        <width>1_col_textbox</width>
                         <height>69</height>
-                        <aspectratio>stretch</aspectratio>
                         <texture>colors/black.png</texture>
-                        <bordersize>0</bordersize>
-                        <colordiffuse>textboxInactive</colordiffuse>
+                        <colordiffuse>textbox_inactive</colordiffuse>
                     </control>
                     <control type="label">
-                        <posx>0</posx>
-                        <posy>0</posy>
-                        <width>1-col-textbox</width>
+                        <width>1_col_textbox</width>
                         <height>69</height>
                         <align>center</align>
-                        <aligny>center</aligny>
-                        <font>itemTitle</font>
-                        <textcolor>textActive</textcolor>
-                        <shadowcolor></shadowcolor>
+                        <font>item_title</font>
                         <label>$INFO[ListItem.Episode]</label>
-                        <scroll>false</scroll>
                     </control>
                     <control type="image">
-                        <posx>1-col</posx>
-                        <posy>0</posy>
-                        <width>11-col</width>
+                        <posx>1_col</posx>
+                        <width>11_col</width>
                         <height>69</height>
-                        <aspectratio>stretch</aspectratio>
                         <texture>colors/black.png</texture>
-                        <bordersize>0</bordersize>
-                        <colordiffuse>textboxInactive</colordiffuse>
+                        <colordiffuse>textbox_inactive</colordiffuse>
                     </control>
                     <control type="label">
                         <visible>ListItem.IsParentFolder</visible>
-                        <posx>1-col-indent</posx>
-                        <posy>0</posy>
-                        <width>9-col</width>
-                        <height>2-row</height>
-                        <aligny>center</aligny>
-                        <font>itemTitle</font>
-                        <textcolor>textActive</textcolor>
-                        <shadowcolor></shadowcolor>
+                        <posx>1_col_indent</posx>
+                        <width>9_col</width>
+                        <height>2_row</height>
+                        <font>item_title</font>
                         <label>..</label>
-                        <scroll>false</scroll>
                     </control>
                     <control type="label">
-                        <posx>1-col-indent</posx>
-                        <posy>0</posy>
-                        <width>9-col</width>
-                        <height>2-row</height>
-                        <aligny>center</aligny>
-                        <font>itemTitle</font>
-                        <textcolor>textActive</textcolor>
-                        <shadowcolor></shadowcolor>
+                        <posx>1_col_indent</posx>
+                        <width>9_col</width>
+                        <height>2_row</height>
+                        <font>item_title</font>
                         <label>$INFO[ListItem.Title]</label>
-                        <scroll>false</scroll>
                     </control>
                     <control type="label">
                         <visible>!String.IsEmpty(ListItem.playcount)</visible>
-                        <posx>11-col</posx>
-                        <posy>0</posy>
-                        <width>1-col</width>
-                        <height>2-row</height>
+                        <posx>11_col</posx>
+                        <width>1_col</width>
+                        <height>2_row</height>
                         <align>center</align>
-                        <aligny>center</aligny>
-                        <font>symbolLarge</font>
-                        <textcolor>textActive</textcolor>
-                        <shadowcolor></shadowcolor>
+                        <font>symbol_large</font>
                         <label></label>
                     </control>
                 </itemlayout>
-                <focusedlayout width="12-col" height="2-row">
+                <focusedlayout width="12_col" height="2_row">
                     <control type="image">
-						<animation type="focus">
-				            <effect type="fade" start="100" end="50" time="0"/>
-				        </animation>
-                        <posx>0</posx>
-                        <posy>0</posy>
-                        <width>1-col-textbox</width>
-                        <height>2-row</height>
-                        <aspectratio>stretch</aspectratio>
+                        <animation type="focus">
+                            <effect type="fade" start="100" end="50" time="0"/>
+                        </animation>
+                        <width>1_col_textbox</width>
+                        <height>2_row</height>
                         <texture>colors/white.png</texture>
-                        <bordersize>0</bordersize>
                         <colordiffuse>highlight</colordiffuse>
                     </control>
                     <control type="label">
-                        <posx>0</posx>
-                        <posy>0</posy>
-                        <width>1-col-textbox</width>
-                        <height>2-row</height>
+                        <width>1_col_textbox</width>
+                        <height>2_row</height>
                         <align>center</align>
-                        <aligny>center</aligny>
-                        <font>itemTitle</font>
-                        <textcolor>textActive</textcolor>
-                        <shadowcolor></shadowcolor>
+                        <font>item_title</font>
                         <label>$INFO[ListItem.Episode]</label>
-                        <scroll>false</scroll>
                     </control>
                     <control type="image">
-                        <posx>1-col</posx>
-                        <posy>0</posy>
-                        <width>11-col</width>
-                        <height>2-row</height>
-                        <aspectratio>stretch</aspectratio>
+                        <posx>1_col</posx>
+                        <width>11_col</width>
+                        <height>2_row</height>
                         <texture>colors/white.png</texture>
-                        <bordersize>0</bordersize>
                         <colordiffuse>highlight</colordiffuse>
                     </control>
                     <control type="label">
                         <visible>ListItem.IsParentFolder</visible>
-                        <posx>1-col-indent</posx>
-                        <posy>0</posy>
-                        <width>9-col</width>
-                        <height>2-row</height>
-                        <aligny>center</aligny>
-                        <font>itemTitle</font>
-                        <textcolor>textActive</textcolor>
-                        <shadowcolor></shadowcolor>
+                        <posx>1_col_indent</posx>
+                        <width>9_col</width>
+                        <height>2_row</height>
+                        <font>item_title</font>
                         <label>..</label>
-                        <scroll>false</scroll>
                     </control>
                     <control type="label">
-                        <posx>1-col-indent</posx>
-                        <posy>0</posy>
-                        <width>9-col</width>
-                        <height>2-row</height>
-                        <aligny>center</aligny>
-                        <font>itemTitle</font>
-                        <textcolor>textActive</textcolor>
-                        <shadowcolor></shadowcolor>
+                        <posx>1_col_indent</posx>
+                        <width>9_col</width>
+                        <height>2_row</height>
+                        <font>item_title</font>
                         <label>$INFO[ListItem.Title]</label>
-                        <scroll>false</scroll>
                     </control>
                     <control type="label">
                         <visible>!String.IsEmpty(ListItem.playcount)</visible>
-                        <posx>11-col</posx>
-                        <posy>0</posy>
-                        <width>1-col</width>
-                        <height>2-row</height>
+                        <posx>11_col</posx>
+                        <width>1_col</width>
+                        <height>2_row</height>
                         <align>center</align>
-                        <aligny>center</aligny>
-                        <font>symbolLarge</font>
-                        <textcolor>textActive</textcolor>
-                        <shadowcolor></shadowcolor>
+                        <font>symbol_large</font>
                         <label></label>
                     </control>
                 </focusedlayout>
             </control>
             <!--Plugin-sourced Episode list-->
             <control type="panel" id="52">
-                <visible>String.Contains(Container.folderpath,plugin)</visible>
-                <posx>col-1-begin</posx>
-                <posy>row-5-begin</posy>
-                <width>24-col</width>
-                <height>23-row</height>
+                <visible>String.Contains(Container.folderpath,plugin) + !$EXP[is_plugin_show]</visible>
+                <posx>col_1_begin</posx>
+                <posy>row_5_begin</posy>
+                <width>24_col</width>
+                <height>23_row</height>
                 <onleft>9000</onleft>
-                <onright>60</onright>
+                <onright>SetFocus(60,$VAR[jump_index],absolute)</onright>
                 <ondown>52</ondown>
                 <onup>52</onup>
                 <pagecontrol>60</pagecontrol>
-                <itemlayout width="24-col" height="2-row">
+                <itemlayout width="24_col" height="2_row">
                     <control type="image">
-                        <posx>0</posx>
                         <posy>3</posy>
                         <width>66</width>
                         <height>66</height>
                         <aspectratio scalediffuse="false">stretch</aspectratio>
-                        <texture fallback="colors/black.png" diffuse="masks/circle.png" border="0">$INFO[Listitem.thumb]</texture>
+                        <texture fallback="colors/black.png" diffuse="masks/circle.png">$INFO[Listitem.thumb]</texture>
                     </control>
                     <control type="image">
-                        <posx>1-col</posx>
-                        <posy>0</posy>
-                        <width>23-col</width>
+                        <posx>1_col</posx>
+                        <width>23_col</width>
                         <height>69</height>
-                        <aspectratio>stretch</aspectratio>
-                        <texture border="0">colors/black.png</texture>
-                        <colordiffuse>textboxInactive</colordiffuse>
+                        <texture>colors/black.png</texture>
+                        <colordiffuse>textbox_inactive</colordiffuse>
                     </control>
                     <control type="label">
-                        <posx>1-col-indent</posx>
-                        <posy>0</posy>
-                        <width>23-col-gutter</width>
-                        <height>2-row</height>
-                        <aligny>center</aligny>
-                        <font>itemTitle</font>
-                        <textcolor>textActive</textcolor>
-                        <shadowcolor></shadowcolor>
+                        <posx>1_col_indent</posx>
+                        <width>23_col_gutter</width>
+                        <height>2_row</height>
+                        <font>item_title</font>
                         <label>$INFO[ListItem.Label]</label>
                     </control>
                     <control type="label">
                         <visible>!String.IsEmpty(ListItem.playcount)</visible>
-                        <posx>23-col</posx>
-                        <posy>0</posy>
-                        <width>1-col</width>
-                        <height>2-row</height>
+                        <posx>23_col</posx>
+                        <width>1_col</width>
+                        <height>2_row</height>
                         <align>center</align>
-                        <aligny>center</aligny>
-                        <font>symbolLarge</font>
-                        <textcolor>textActive</textcolor>
-                        <shadowcolor></shadowcolor>
+                        <font>symbol_large</font>
                         <label></label>
                     </control>
                 </itemlayout>
-                <focusedlayout width="24-col" height="2-row">
+                <focusedlayout width="24_col" height="2_row">
                     <control type="image">
-                        <posx>0</posx>
                         <posy>3</posy>
                         <width>66</width>
                         <height>66</height>
                         <aspectratio scalediffuse="false">stretch</aspectratio>
-                        <texture fallback="colors/black.png" diffuse="masks/circle.png" border="0">$INFO[Listitem.thumb]</texture>
-                        <animation type="focus" loop="false" reversible="false">
-                            <effect type="fade" time="500"/>
-                            <effect type="rotatey" end="360" center="33" tween="back" easing="out" time="1000"/>
-                        </animation>
+                        <texture fallback="colors/black.png" diffuse="masks/circle.png">$INFO[Listitem.thumb]</texture>
+                        <include>spin_focus_thumb</include>
                     </control>
                     <control type="image">
-                        <posx>1-col</posx>
-                        <posy>0</posy>
-                        <width>23-col</width>
-                        <height>2-row</height>
-                        <aspectratio>stretch</aspectratio>
-                        <texture border="0">colors/white.png</texture>
+                        <posx>1_col</posx>
+                        <width>23_col</width>
+                        <height>2_row</height>
+                        <texture>colors/white.png</texture>
                         <colordiffuse>highlight</colordiffuse>
                     </control>
                     <control type="label">
-                        <posx>1-col-indent</posx>
-                        <posy>0</posy>
-                        <width>23-col-gutter</width>
-                        <height>2-row</height>
-                        <aligny>center</aligny>
-                        <font>itemTitle</font>
-                        <textcolor>textActive</textcolor>
-                        <shadowcolor></shadowcolor>
+                        <posx>1_col_indent</posx>
+                        <width>23_col_gutter</width>
+                        <height>2_row</height>
+                        <font>item_title</font>
                         <label>$INFO[ListItem.Label]</label>
                     </control>
                     <control type="label">
                         <visible>!String.IsEmpty(ListItem.playcount)</visible>
-                        <posx>23-col</posx>
-                        <posy>0</posy>
-                        <width>1-col</width>
-                        <height>2-row</height>
+                        <posx>23_col</posx>
+                        <width>1_col</width>
+                        <height>2_row</height>
                         <align>center</align>
-                        <aligny>center</aligny>
-                        <font>symbolLarge</font>
-                        <textcolor>textActive</textcolor>
-                        <shadowcolor></shadowcolor>
+                        <font>symbol_large</font>
                         <label></label>
                     </control>
                 </focusedlayout>

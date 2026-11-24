@@ -1,18 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <includes>
-    <include name="seasons">
+    <!--Seasons of one show (view 58): the show's fanart with its title and a horizontal strip of
+        season posters. Library shows cycle through extrafanart; plugin shows use the folder fanart.-->
+    <include name="view_seasons">
         <control type="group">
-            <visible>!String.IsEmpty(container.folderpath) + container.content(seasons) + !container.content(episodes) + !String.Contains(container.folderpath,smb://) + String.Contains(container.folderpath,videodb://)</visible>
+            <visible>!String.IsEmpty(container.folderpath) + $EXP[is_season] + !container.content(episodes) + !String.Contains(container.folderpath,smb://)</visible>
             <!--fanart-->
+            <!--plugin show: the folder fanart set by the add-on-->
+            <control type="group">
+                <visible>$EXP[is_plugin_show]</visible>
+                <control type="image">
+                    <include>dimensions_fullscreen</include>
+                    <texture>colors/white.png</texture>
+                    <colordiffuse>background</colordiffuse>
+                </control>
+                <control type="image">
+                    <include>dimensions_fullscreen</include>
+                    <aspectratio>scale</aspectratio>
+                    <texture>$INFO[Container.Art(fanart)]</texture>
+                    <colordiffuse>66ffffff</colordiffuse>
+                    <include>ken_burns</include>
+                </control>
+                <control type="image">
+                    <include>dimensions_fullscreen</include>
+                    <texture>vignette.png</texture>
+                </control>
+            </control>
             <control type="group">
                 <visible>!String.Contains(Container.folderpath,plugin)</visible>
-                <posy>0</posy>
-                <include>itemFanart</include>
+                <include>item_fanart</include>
                 <control type="image">
-                    <include>dimensionsFullscreen</include>
+                    <include>dimensions_fullscreen</include>
                     <texture>vignette.png</texture>
-                    <colordiffuse>ffffffff</colordiffuse>
-                    <aspectratio>stretch</aspectratio>
                 </control>
             </control>
             <control type="group">
@@ -21,118 +40,100 @@
                 </animation>
                 <!--title-->
                 <control type="group">
-					<animation type="conditional" condition="!control.isvisible(58)">
-		                <effect type="fade" start="100" end="0" time="0"/>
-		            </animation>
-					<animation type="conditional" condition="control.isvisible(58)">
-		                <effect type="fade" start="0" end="100" time="250" delay="500"/>
-		            </animation>
-                    <visible>!String.Contains(Container.folderpath,plugin)</visible>
-                    <posx>col-1-begin</posx>
-                    <posy>row-8-begin</posy>
-					<control type="label">
-                        <posx>0</posx>
-                        <posy>4-row</posy>
-                        <width>12-col</width>
-                        <height>1-row</height>
-                        <font>largeTitle</font>
-                        <textcolor>textActive</textcolor>
-						<aligny>center</aligny>
-                        <shadowcolor></shadowcolor>
+                    <animation type="conditional" condition="!control.isvisible(58)">
+                        <effect type="fade" start="100" end="0" time="0"/>
+                    </animation>
+                    <animation type="conditional" condition="control.isvisible(58)">
+                        <effect type="fade" start="0" end="100" time="250" delay="500"/>
+                    </animation>
+                    <visible>!String.Contains(Container.folderpath,plugin) | $EXP[is_plugin_show]</visible>
+                    <posx>col_1_begin</posx>
+                    <posy>row_8_begin</posy>
+                    <control type="label">
+                        <posy>4_row</posy>
+                        <width>12_col</width>
+                        <font>large_title</font>
                         <wrapmultiline>true</wrapmultiline>
                         <label>$INFO[container.showtitle]</label>
                     </control>
-					<control type="label">
-		                <posx>0</posx>
-		                <posy>5-row</posy>
-		                <width>12-col</width>
-		                <height>2-row</height>
-		                <align></align>
-		                <font>itemTitle</font>
-		                <textcolor>menuUnselected</textcolor>
-		                <label>$INFO[Container(58).ListItemAbsolute(2).genre]</label>
-		            </control>
+                    <control type="label">
+                        <posy>5_row</posy>
+                        <width>12_col</width>
+                        <height>2_row</height>
+                        <align></align>
+                        <font>item_title</font>
+                        <textcolor>menu_unselected</textcolor>
+                        <label>$INFO[Container(58).ListItemAbsolute(2).genre]</label>
+                    </control>
                 </control>
                 <!--content-->
                 <control type="panel" id="58">
-					<animation type="conditional" condition="!control.isvisible(58)">
-		                <effect type="fade" start="100" end="0" time="0"/>
-		            </animation>
-					<animation type="conditional" condition="control.isvisible(58)">
-		                <effect type="fade" start="0" end="100" time="500" delay="1000"/>
-		            </animation>
-                    <visible>$EXP[isSeason] + !String.Contains(container.folderpath,smb://)</visible>
+                    <animation type="conditional" condition="!control.isvisible(58)">
+                        <effect type="fade" start="100" end="0" time="0"/>
+                    </animation>
+                    <animation type="conditional" condition="control.isvisible(58)">
+                        <effect type="fade" start="0" end="100" time="500" delay="1000"/>
+                    </animation>
+                    <visible>$EXP[is_season] + !String.Contains(container.folderpath,smb://)</visible>
                     <posx>84</posx>
-                    <posy>row-16-begin</posy>
+                    <posy>row_16_begin</posy>
                     <width>1860</width>
-                    <height>13-row</height>
+                    <height>13_row</height>
                     <onleft>58</onleft>
                     <onright>58</onright>
                     <orientation>horizontal</orientation>
-                    <itemlayout width="4-col" height="391">
-						<control type="image">
-							<posx>-3</posx>
-							<posy>-3</posy>
-							<width>258</width>
-							<height>384</height>
-							<aspectratio>stretch</aspectratio>
-							<texture>colors/black.png</texture>
-							<bordersize>6</bordersize>
-							<colordiffuse>overlay</colordiffuse>
-						</control>
-						<control type="image">
-                            <posx>0</posx>
-                            <posy>0</posy>
+                    <itemlayout width="4_col" height="391">
+                        <control type="image">
+                            <visible>!ListItem.IsParentFolder</visible>
+                            <posx>-3</posx>
+                            <posy>-3</posy>
+                            <width>258</width>
+                            <height>384</height>
+                            <texture>colors/black.png</texture>
+                            <bordersize>6</bordersize>
+                            <colordiffuse>overlay</colordiffuse>
+                        </control>
+                        <control type="image">
+                            <visible>!ListItem.IsParentFolder</visible>
                             <width>252</width>
                             <height>378</height>
-                            <aspectratio>stretch</aspectratio>
                             <texture>colors/black.png</texture>
                             <bordersize>12</bordersize>
                         </control>
-						<control type="image">
-                            <posx>0</posx>
-                            <posy>0</posy>
+                        <control type="image">
                             <width>252</width>
                             <height>378</height>
-                            <aspectratio>stretch</aspectratio>
                             <texture>$INFO[ListItem.art(poster)]</texture>
                             <bordersize>12</bordersize>
-                            <colordiffuse>99ffffff</colordiffuse>
                         </control>
-						<control type="image">
-							<visible>String.StartsWith(ListItem.label,*)</visible>
-                            <posx>0</posx>
-                            <posy>0</posy>
+                        <control type="image">
+                            <visible>String.StartsWith(ListItem.label,*)</visible>
                             <width>252</width>
                             <height>378</height>
-                            <aspectratio>stretch</aspectratio>
                             <texture>colors/black.png</texture>
                             <bordersize>12</bordersize>
                             <colordiffuse>99FFFFFF</colordiffuse>
                         </control>
-                        <control type="label">
+                        <control type="image">
                             <visible>ListItem.IsParentFolder</visible>
                             <posx>12</posx>
-                            <posy>4-row</posy>
+                            <posy>54</posy>
                             <width>228</width>
-                            <height>2-row</height>
-                            <align>center</align>
-                            <aligny>center</aligny>
-                            <font>largeLight</font>
-                            <textcolor>textActive</textcolor>
-                            <label>..</label>
+                            <height>228</height>
+                            <aspectratio>keep</aspectratio>
+                            <texture>$INFO[ListItem.Icon]</texture>
+                            <colordiffuse>99ffffff</colordiffuse>
                         </control>
-						<control type="textbox">
+                        <control type="textbox">
                             <visible>String.StartsWith(ListItem.label,*)</visible>
                             <posx>24</posx>
-                            <posy>4-row</posy>
+                            <posy>4_row</posy>
                             <width>216</width>
-                            <height>4-row</height>
+                            <height>4_row</height>
                             <align>left</align>
                             <aligny>center</aligny>
-                            <font>largeLight</font>
-							<shadowcolor>99000000</shadowcolor>
-                            <textcolor>textActive</textcolor>
+                            <font>large_light</font>
+                            <shadowcolor>99000000</shadowcolor>
                             <label>$INFO[ListItem.label]</label>
                         </control>
                         <control type="label">
@@ -140,132 +141,105 @@
                             <posx>12</posx>
                             <posy>366</posy>
                             <width>228</width>
-                            <height>2-row</height>
-                            <aligny>center</aligny>
-                            <font>thumbTitle</font>
-                            <textcolor>textActive</textcolor>
-                            <label fallback="31190">[B]$INFO[ListItem.label][/B][CR][COLOR textInactive]$VAR[itemDetail][/COLOR]</label>
+                            <height>2_row</height>
+                            <font>thumb_title</font>
+                            <label fallback="31190">[B]$INFO[ListItem.label][/B][CR][COLOR text_disabled]$VAR[item_detail][/COLOR]</label>
                         </control>
-						<control type="group">
-							<visible>Integer.IsGreater(ListItem.Property(UnWatchedEpisodes),0)</visible>
-							<animation condition="true" effect="fade" end="70" time="0">conditional</animation>
-							<posx>184</posx>
-							<posy>12</posy>
-							<control type="image">
-								<posx>0</posx>
-								<posy>0</posy>
-								<width>56</width>
-								<height>56</height>
-								<aspectratio>stretch</aspectratio>
-								<texture>masks/newContent.png</texture>
-								<colordiffuse>highlight</colordiffuse>
-							</control>
-							<control type="label">
-								<posx>28</posx>
-								<posy>-4</posy>
-								<width>36</width>
-								<height>36</height>
-								<aligny>center</aligny>
-								<font>symbol</font>
-								<textcolor>textActive</textcolor>
-								<label></label>
-							</control>
-						</control>
-                    </itemlayout>
-                    <focusedlayout width="4-col" height="391">
                         <control type="group">
-                            <include>focusThumb</include>
-							<control type="image">
-		                        <posx>0</posx>
-		                        <posy>0</posy>
-		                        <width>252</width>
-	                            <height>378</height>
-		                        <aspectratio>stretch</aspectratio>
-		                        <texture>colors/black.png</texture>
-		                        <bordertexture colordiffuse="FFFFFFFF">colors/white.png</bordertexture>
-		                        <bordersize>6</bordersize>
-		                        <colordiffuse>FF000000</colordiffuse>
-		                    </control>                        
-							<control type="image">
-                                <posx>0</posx>
-                                <posy>0</posy>
+                            <visible>Integer.IsGreater(ListItem.Property(UnWatchedEpisodes),0)</visible>
+                            <animation condition="true" effect="fade" end="70" time="0">conditional</animation>
+                            <posx>184</posx>
+                            <posy>12</posy>
+                            <control type="image">
+                                <width>56</width>
+                                <height>56</height>
+                                <texture>masks/newContent.png</texture>
+                                <colordiffuse>highlight</colordiffuse>
+                            </control>
+                            <control type="label">
+                                <posx>28</posx>
+                                <posy>-4</posy>
+                                <width>36</width>
+                                <font>symbol</font>
+                                <label></label>
+                            </control>
+                        </control>
+                    </itemlayout>
+                    <focusedlayout width="4_col" height="391">
+                        <control type="group">
+                            <include>focus_thumb</include>
+                            <control type="image">
+                                <visible>!ListItem.IsParentFolder</visible>
                                 <width>252</width>
-	                            <height>378</height>
+                                <height>378</height>
+                                <texture>colors/black.png</texture>
+                                <bordertexture colordiffuse="FFFFFFFF">colors/white.png</bordertexture>
+                                <bordersize>6</bordersize>
+                                <colordiffuse>FF000000</colordiffuse>
+                            </control>
+                            <control type="image">
+                                <width>252</width>
+                                <height>378</height>
                                 <aspectratio aligny="top">scale</aspectratio>
                                 <texture>$INFO[ListItem.art(poster)]</texture>
                                 <bordersize>6</bordersize>
                             </control>
-							<control type="image">
-								<visible>String.StartsWith(ListItem.label,*)</visible>
-	                            <posx>0</posx>
-	                            <posy>0</posy>
-	                            <width>252</width>
-	                            <height>378</height>
-	                            <aspectratio>stretch</aspectratio>
-	                            <texture>colors/black.png</texture>
-	                            <bordersize>6</bordersize>
-	                            <colordiffuse>BBFFFFFF</colordiffuse>
-	                        </control>
+                            <control type="image">
+                                <visible>String.StartsWith(ListItem.label,*)</visible>
+                                <width>252</width>
+                                <height>378</height>
+                                <texture>colors/black.png</texture>
+                                <bordersize>6</bordersize>
+                                <colordiffuse>BBFFFFFF</colordiffuse>
+                            </control>
+                            <control type="image">
+                                <visible>ListItem.IsParentFolder</visible>
+                                <posx>6</posx>
+                                <posy>47</posy>
+                                <width>240</width>
+                                <height>240</height>
+                                <aspectratio>keep</aspectratio>
+                                <texture>$INFO[ListItem.Icon]</texture>
+                            </control>
+                            <control type="textbox">
+                                <visible>String.StartsWith(ListItem.label,*)</visible>
+                                <posx>24</posx>
+                                <posy>4_row</posy>
+                                <width>216</width>
+                                <height>4_row</height>
+                                <align>left</align>
+                                <aligny>center</aligny>
+                                <font>large_light</font>
+                                <shadowcolor>99000000</shadowcolor>
+                                <label>$INFO[ListItem.label]</label>
+                            </control>
                             <control type="label">
-	                            <visible>ListItem.IsParentFolder</visible>
-	                            <posx>12</posx>
-	                            <posy>4-row</posy>
-	                            <width>228</width>
-	                            <height>2-row</height>
-	                            <align>center</align>
-	                            <aligny>center</aligny>
-	                            <font>largeLight</font>
-	                            <textcolor>textActive</textcolor>
-	                            <label>..</label>
-	                        </control>
-							<control type="textbox">
-	                            <visible>String.StartsWith(ListItem.label,*)</visible>
-	                            <posx>24</posx>
-	                            <posy>4-row</posy>
-	                            <width>216</width>
-	                            <height>4-row</height>
-	                            <align>left</align>
-	                            <aligny>center</aligny>
-	                            <font>largeLight</font>
-								<shadowcolor>99000000</shadowcolor>
-	                            <textcolor>textActive</textcolor>
-	                            <label>$INFO[ListItem.label]</label>
-	                        </control>
-                            <control type="label">
-	                            <visible>!controlgroup(9000).hasfocus + !ListItem.IsParentFolder</visible>
-	                            <posx>12</posx>
-	                            <posy>376</posy>
-	                            <width>228</width>
-	                            <height>2-row</height>
-	                            <aligny>center</aligny>
-	                            <font>thumbTitle</font>
-	                            <textcolor>textActive</textcolor>
-	                            <label fallback="31190">[B]$INFO[ListItem.label][/B][CR][COLOR textInactive]$VAR[itemDetail][/COLOR]</label>
-	                        </control>
-							<control type="group">
-								<visible>Integer.IsGreater(ListItem.Property(UnWatchedEpisodes),0)</visible>
-								<posx>190</posx>
-								<posy>6</posy>
-								<control type="image">
-									<posx>0</posx>
-									<posy>0</posy>
-									<width>56</width>
-									<height>56</height>
-									<aspectratio>stretch</aspectratio>
-									<texture>masks/newContent.png</texture>
-									<colordiffuse>highlight</colordiffuse>
-								</control>
-								<control type="label">
-									<posx>28</posx>
-									<posy>-4</posy>
-									<width>36</width>
-									<height>36</height>
-									<aligny>center</aligny>
-									<font>symbol</font>
-									<textcolor>textActive</textcolor>
-									<label></label>
-								</control>
-							</control>
+                                <visible>!controlgroup(9000).hasfocus + !ListItem.IsParentFolder</visible>
+                                <posx>12</posx>
+                                <posy>376</posy>
+                                <width>228</width>
+                                <height>2_row</height>
+                                <font>thumb_title</font>
+                                <label fallback="31190">[B]$INFO[ListItem.label][/B][CR][COLOR text_disabled]$VAR[item_detail][/COLOR]</label>
+                            </control>
+                            <control type="group">
+                                <visible>Integer.IsGreater(ListItem.Property(UnWatchedEpisodes),0)</visible>
+                                <posx>190</posx>
+                                <posy>6</posy>
+                                <control type="image">
+                                    <width>56</width>
+                                    <height>56</height>
+                                    <texture>masks/newContent.png</texture>
+                                    <colordiffuse>highlight</colordiffuse>
+                                </control>
+                                <control type="label">
+                                    <posx>28</posx>
+                                    <posy>-4</posy>
+                                    <width>36</width>
+                                    <font>symbol</font>
+                                    <label></label>
+                                </control>
+                            </control>
                         </control>
                     </focusedlayout>
                 </control>

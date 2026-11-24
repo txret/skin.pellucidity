@@ -1,0 +1,400 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Skin Shortcuts 3 menu defaults. The script turns this into 1080i/script-skinshortcuts-includes.xml:
+      skinshortcuts-mainmenu       Home main menu (list 9000)
+      skinshortcuts-videosubmenu   hub menu in the video / Live TV windows (Includes_hubMenu.xml)
+      skinshortcuts-musicsubmenu   hub menu in the music / radio windows
+      skinshortcuts-picturessubmenu, skinshortcuts-gamesubmenu
+      skinshortcuts-powermenu      power menu behind the button below the Home menu (DialogButtonMenu.xml, list 8000)
+    User edits are stored per skin in addon_data/script.skinshortcuts/skin.pellucidity.userdata.json.
+
+    Actions run as separate <onclick>s in order. v3 emits conditional actions before unconditional ones,
+    so items that need "open window, then focus a control" make every action conditional (complementary
+    conditions) to keep the order. The skin has no widgets, backgrounds or per-item submenus.-->
+<menus>
+    <menu name="mainmenu" container="9000">
+        <allow widgets="false" backgrounds="false" submenus="false"/>
+        <item name="nowplaying">
+            <label>31136</label>
+            <icon>DefaultAddon.png</icon>
+            <visible>Player.HasMedia</visible>
+            <action>Action(FullScreen)</action>
+        </item>
+        <item name="playdisc">
+            <label>31221</label>
+            <icon>DefaultAddon.png</icon>
+            <visible>System.HasMediaDVD</visible>
+            <action>PlayDVD()</action>
+        </item>
+        <item name="eject">
+            <label>31251</label>
+            <icon>DefaultAddon.png</icon>
+            <visible>System.HasMediaDVD</visible>
+            <action>EjectTray()</action>
+        </item>
+        <item name="livetv">
+            <label>31249</label>
+            <icon>DefaultAddon.png</icon>
+            <visible>System.HasPVRAddon + PVR.HasTVChannels</visible>
+            <action>ActivateWindow(TVChannels)</action>
+        </item>
+        <item name="liveradio">
+            <label>31250</label>
+            <icon>DefaultAddon.png</icon>
+            <visible>System.HasPVRAddon + PVR.HasRadioChannels</visible>
+            <action>ActivateWindow(RadioChannels)</action>
+        </item>
+        <!--"recently added" row (9103) unless switched off in skin settings-->
+        <item name="movies">
+            <label>342</label>
+            <icon>DefaultAddon.png</icon>
+            <visible>Library.HasContent(Movies)</visible>
+            <action condition="!Skin.HasSetting(disableRecentMovies)">ActivateWindow(Videos,videodb://movies/titles/)</action>
+            <action condition="!Skin.HasSetting(disableRecentMovies)">Control.SetFocus(9103,0,absolute)</action>
+            <action condition="Skin.HasSetting(disableRecentMovies)">ActivateWindow(Videos,videodb://movies/titles/)</action>
+        </item>
+        <item name="tvshows">
+            <label>20343</label>
+            <icon>DefaultAddon.png</icon>
+            <visible>Library.HasContent(TVShows)</visible>
+            <action condition="!Skin.HasSetting(disableRecentTVShows)">ActivateWindow(Videos,videodb://tvshows/titles/)</action>
+            <action condition="!Skin.HasSetting(disableRecentTVShows)">Control.SetFocus(9203,0,absolute)</action>
+            <action condition="Skin.HasSetting(disableRecentTVShows)">ActivateWindow(Videos,videodb://tvshows/titles/)</action>
+        </item>
+        <item name="videos">
+            <label>3</label>
+            <icon>DefaultAddon.png</icon>
+            <visible>!Library.HasContent(Video)</visible>
+            <action>ActivateWindow(Videos,sources://video/)</action>
+        </item>
+        <item name="music">
+            <label>2</label>
+            <icon>DefaultAddon.png</icon>
+            <visible>Library.HasContent(Music)</visible>
+            <action condition="!Skin.HasSetting(disableRecentAlbums)">ActivateWindow(Music,musicdb://albums/)</action>
+            <action condition="!Skin.HasSetting(disableRecentAlbums)">Control.SetFocus(9998,0,absolute)</action>
+            <action condition="Skin.HasSetting(disableRecentAlbums)">ActivateWindow(Music,musicdb://albums/)</action>
+        </item>
+        <item name="musicfiles">
+            <label>2</label>
+            <icon>DefaultAddon.png</icon>
+            <visible>!Library.HasContent(Music)</visible>
+            <action>ActivateWindow(Music,Files)</action>
+        </item>
+        <item name="partymode">
+            <label>31229</label>
+            <icon>DefaultAddon.png</icon>
+            <visible>Library.HasContent(Music)</visible>
+            <action>PlayerControl(Partymode(music))</action>
+        </item>
+        <item name="games">
+            <label>31232</label>
+            <icon>DefaultAddon.png</icon>
+            <action>ActivateWindow(Games)</action>
+        </item>
+        <item name="weather">
+            <label>12600</label>
+            <icon>DefaultAddon.png</icon>
+            <visible>!String.IsEmpty(Weather.Plugin)</visible>
+            <action>ActivateWindow(Weather)</action>
+        </item>
+        <item name="pictures">
+            <label>10002</label>
+            <icon>DefaultAddon.png</icon>
+            <action>ActivateWindow(Pictures)</action>
+        </item>
+    </menu>
+
+    <!--hub menus: picking an item first moves focus back to the window's content (9999).
+        In the media window itself an item only switches the listing (Container.Update).-->
+    <menu name="videosubmenu">
+        <allow widgets="false" backgrounds="false" submenus="false"/>
+        <defaults>
+            <action when="before">Control.SetFocus(9999)</action>
+        </defaults>
+        <item name="nowplaying">
+            <label>31136</label>
+            <icon>DefaultAddon.png</icon>
+            <visible>Player.HasMedia</visible>
+            <action>Action(FullScreen)</action>
+        </item>
+        <item name="tvchannels">
+            <label>31215</label>
+            <icon>DefaultAddon.png</icon>
+            <visible>System.HasPVRAddon + PVR.HasTVChannels</visible>
+            <action>ActivateWindow(TVChannels)</action>
+        </item>
+        <item name="tvguide">
+            <label>31112</label>
+            <icon>DefaultAddon.png</icon>
+            <visible>System.HasPVRAddon + PVR.HasTVChannels</visible>
+            <action>ActivateWindow(TVGuide)</action>
+        </item>
+        <item name="tvrecordings">
+            <label>31165</label>
+            <icon>DefaultAddon.png</icon>
+            <visible>System.HasPVRAddon + PVR.HasTVChannels</visible>
+            <action>ActivateWindow(TVRecordings)</action>
+        </item>
+        <item name="movies">
+            <label>342</label>
+            <icon>DefaultAddon.png</icon>
+            <visible>Library.HasContent(Movies)</visible>
+            <action condition="!Window.IsActive(Videos) + !Skin.HasSetting(disableRecentMovies)">ActivateWindow(Videos,videodb://movies/titles/)</action>
+            <action condition="!Window.IsActive(Videos) + !Skin.HasSetting(disableRecentMovies)">Control.SetFocus(9103,0,absolute)</action>
+            <action condition="Window.IsActive(Videos) + !Skin.HasSetting(disableRecentMovies)">Container.Update(videodb://movies/titles/)</action>
+            <action condition="Window.IsActive(Videos) + !Skin.HasSetting(disableRecentMovies)">Control.SetFocus(9103,0,absolute)</action>
+            <action condition="!Window.IsActive(Videos) + Skin.HasSetting(disableRecentMovies)">ActivateWindow(Videos,videodb://movies/titles/)</action>
+            <action condition="!Window.IsActive(Videos) + Skin.HasSetting(disableRecentMovies)">Control.SetFocus(9104,0,absolute)</action>
+            <action condition="Window.IsActive(Videos) + Skin.HasSetting(disableRecentMovies)">Container.Update(videodb://movies/titles/)</action>
+            <action condition="Window.IsActive(Videos) + Skin.HasSetting(disableRecentMovies)">Control.SetFocus(9104,0,absolute)</action>
+        </item>
+        <item name="tvshows">
+            <label>20343</label>
+            <icon>DefaultAddon.png</icon>
+            <visible>Library.HasContent(TVShows)</visible>
+            <action condition="!Window.IsActive(Videos) + !Skin.HasSetting(disableRecentTVShows)">ActivateWindow(Videos,videodb://tvshows/titles/)</action>
+            <action condition="!Window.IsActive(Videos) + !Skin.HasSetting(disableRecentTVShows)">Control.SetFocus(9203,0,absolute)</action>
+            <action condition="Window.IsActive(Videos) + !Skin.HasSetting(disableRecentTVShows)">Container.Update(videodb://tvshows/titles/)</action>
+            <action condition="Window.IsActive(Videos) + !Skin.HasSetting(disableRecentTVShows)">Control.SetFocus(9203,0,absolute)</action>
+            <action condition="!Window.IsActive(Videos) + Skin.HasSetting(disableRecentTVShows)">ActivateWindow(Videos,videodb://tvshows/titles/)</action>
+            <action condition="!Window.IsActive(Videos) + Skin.HasSetting(disableRecentTVShows)">Control.SetFocus(9204,0,absolute)</action>
+            <action condition="Window.IsActive(Videos) + Skin.HasSetting(disableRecentTVShows)">Container.Update(videodb://tvshows/titles/)</action>
+            <action condition="Window.IsActive(Videos) + Skin.HasSetting(disableRecentTVShows)">Control.SetFocus(9204,0,absolute)</action>
+        </item>
+        <item name="addons">
+            <label>31088</label>
+            <icon>DefaultAddon.png</icon>
+            <action>ActivateWindow(Videos,addons://sources/video/)</action>
+        </item>
+        <item name="playlists">
+            <label>136</label>
+            <icon>DefaultAddon.png</icon>
+            <action>ActivateWindow(Videos,special://videoplaylists/,return)</action>
+        </item>
+        <item name="files">
+            <label>744</label>
+            <icon>DefaultAddon.png</icon>
+            <action>ActivateWindow(Videos,sources://video/)</action>
+        </item>
+    </menu>
+
+    <menu name="musicsubmenu">
+        <allow widgets="false" backgrounds="false" submenus="false"/>
+        <defaults>
+            <action when="before">Control.SetFocus(9999)</action>
+        </defaults>
+        <item name="nowplaying">
+            <label>31136</label>
+            <icon>DefaultAddon.png</icon>
+            <visible>Player.HasMedia</visible>
+            <action>ActivateWindow(1103)</action>
+        </item>
+        <item name="playlist">
+            <label>31248</label>
+            <icon>DefaultAddon.png</icon>
+            <visible>MusicPlayer.HasNext</visible>
+            <action>ActivateWindow(MusicPlaylist)</action>
+        </item>
+        <item name="partymode">
+            <label>31031</label>
+            <icon>DefaultAddon.png</icon>
+            <visible>Library.HasContent(Music)</visible>
+            <action>PlayerControl(Partymode(music))</action>
+        </item>
+        <item name="radio">
+            <label>31250</label>
+            <icon>DefaultAddon.png</icon>
+            <visible>System.HasPVRAddon + PVR.HasRadioChannels</visible>
+            <action>ActivateWindow(RadioChannels)</action>
+        </item>
+        <item name="artists">
+            <label>133</label>
+            <icon>DefaultAddon.png</icon>
+            <visible>Library.HasContent(Music)</visible>
+            <action condition="Window.IsActive(Music)">Container.Update(musicdb://artists/)</action>
+            <action condition="Window.IsActive(Music)">Control.SetFocus(51,0,absolute)</action>
+            <action condition="!Window.IsActive(Music)">ActivateWindow(Music,musicdb://artists/)</action>
+        </item>
+        <item name="albums">
+            <label>132</label>
+            <icon>DefaultAddon.png</icon>
+            <visible>Library.HasContent(Music)</visible>
+            <action condition="!Window.IsActive(Music) + !Skin.HasSetting(disableRecentAlbums)">ActivateWindow(Music,musicdb://albums/)</action>
+            <action condition="!Window.IsActive(Music) + !Skin.HasSetting(disableRecentAlbums)">Control.SetFocus(9998,0,absolute)</action>
+            <action condition="Window.IsActive(Music) + !Skin.HasSetting(disableRecentAlbums)">Container.Update(musicdb://albums/)</action>
+            <action condition="Window.IsActive(Music) + !Skin.HasSetting(disableRecentAlbums)">Control.SetFocus(9998,0,absolute)</action>
+            <action condition="!Window.IsActive(Music) + Skin.HasSetting(disableRecentAlbums)">ActivateWindow(Music,musicdb://albums/)</action>
+            <action condition="!Window.IsActive(Music) + Skin.HasSetting(disableRecentAlbums)">Control.SetFocus(9124,0,absolute)</action>
+            <action condition="Window.IsActive(Music) + Skin.HasSetting(disableRecentAlbums)">Container.Update(musicdb://albums/)</action>
+            <action condition="Window.IsActive(Music) + Skin.HasSetting(disableRecentAlbums)">Control.SetFocus(9124,0,absolute)</action>
+        </item>
+        <item name="genres">
+            <label>135</label>
+            <icon>DefaultAddon.png</icon>
+            <visible>Library.HasContent(Music)</visible>
+            <action condition="Window.IsActive(Music)">Container.Update(musicdb://genres/)</action>
+            <action condition="!Window.IsActive(Music)">ActivateWindow(Music,musicdb://genres/)</action>
+        </item>
+        <item name="playlists">
+            <label>136</label>
+            <icon>DefaultAddon.png</icon>
+            <action>ActivateWindow(Music,special://musicplaylists/)</action>
+        </item>
+        <item name="musicvideos">
+            <label>20389</label>
+            <icon>DefaultAddon.png</icon>
+            <visible>Library.HasContent(MusicVideos)</visible>
+            <action condition="Window.IsActive(Music)">Container.Update(videodb://musicvideos/titles/)</action>
+            <action condition="!Window.IsActive(Music)">ActivateWindow(Videos,videodb://musicvideos/titles/)</action>
+        </item>
+        <item name="addons">
+            <label>31090</label>
+            <icon>DefaultAddon.png</icon>
+            <action>ActivateWindow(Music,Addons)</action>
+        </item>
+        <item name="files">
+            <label>744</label>
+            <icon>DefaultAddon.png</icon>
+            <action>ActivateWindow(Music,Files)</action>
+        </item>
+    </menu>
+
+    <menu name="picturessubmenu">
+        <allow widgets="false" backgrounds="false" submenus="false"/>
+        <defaults>
+            <action when="before">Control.SetFocus(9999)</action>
+        </defaults>
+        <item name="files">
+            <label>744</label>
+            <icon>DefaultAddonPicture.png</icon>
+            <action>ActivateWindow(Pictures,files)</action>
+        </item>
+        <item name="addons">
+            <label>1039</label>
+            <icon>DefaultAddonPicture.png</icon>
+            <action>ActivateWindow(Pictures,Addons,return)</action>
+        </item>
+    </menu>
+
+    <menu name="gamesubmenu">
+        <allow widgets="false" backgrounds="false" submenus="false"/>
+        <item name="files">
+            <label>744</label>
+            <icon>DefaultAddonPicture.png</icon>
+            <action>ActivateWindow(Games,files)</action>
+        </item>
+        <item name="addons">
+            <label>31234</label>
+            <icon>DefaultAddonPicture.png</icon>
+            <action>ActivateWindow(Games,Addons,return)</action>
+        </item>
+    </menu>
+
+    <!--power menu: every item first closes the dialog, so a window it opens is not left behind the
+        dialog (also for shortcuts added later) and coming back from an Android app lands on Home.-->
+    <menu name="powermenu">
+        <allow widgets="false" backgrounds="false" submenus="false"/>
+        <defaults>
+            <action when="before">Dialog.Close(all,true)</action>
+        </defaults>
+        <item name="apps">
+            <label>Apps</label>
+            <icon>DefaultAddon.png</icon>
+            <action>ActivateWindow(Programs,androidapp://sources/apps,return)</action>
+        </item>
+        <item name="kodisettings">
+            <label>Kodi settings</label>
+            <icon>DefaultAddon.png</icon>
+            <action>ActivateWindow(Settings)</action>
+        </item>
+        <item name="androidsettings">
+            <label>Android settings</label>
+            <icon>DefaultAddon.png</icon>
+            <action>StartAndroidActivity("", "android.settings.SETTINGS")</action>
+        </item>
+        <item name="quit">
+            <label>Quit Kodi</label>
+            <icon>DefaultAddon.png</icon>
+            <action>Quit()</action>
+        </item>
+    </menu>
+
+    <!--what "Choose shortcut" (button 401) offers. Android apps: add the app to Kodi favourites
+        and pick it there, or type StartAndroidActivity(<package>) under "Custom action".-->
+    <groupings>
+        <group name="common" label="Common">
+            <shortcut name="movies" label="$LOCALIZE[342]" icon="DefaultMovies.png">
+                <action>ActivateWindow(Videos,videodb://movies/titles/)</action>
+            </shortcut>
+            <shortcut name="tvshows" label="$LOCALIZE[20343]" icon="DefaultTVShows.png">
+                <action>ActivateWindow(Videos,videodb://tvshows/titles/)</action>
+            </shortcut>
+            <shortcut name="videos" label="$LOCALIZE[3]" icon="DefaultVideo.png">
+                <action>ActivateWindow(Videos,sources://video/)</action>
+            </shortcut>
+            <shortcut name="music" label="$LOCALIZE[2]" icon="DefaultMusicAlbums.png">
+                <action>ActivateWindow(Music,musicdb://albums/)</action>
+            </shortcut>
+            <shortcut name="musicvideos" label="$LOCALIZE[20389]" icon="DefaultMusicVideos.png">
+                <action>ActivateWindow(Videos,videodb://musicvideos/titles/)</action>
+            </shortcut>
+            <shortcut name="livetv" label="$LOCALIZE[31249]" icon="DefaultTVShows.png">
+                <action>ActivateWindow(TVChannels)</action>
+            </shortcut>
+            <shortcut name="liveradio" label="$LOCALIZE[31250]" icon="DefaultMusicAlbums.png">
+                <action>ActivateWindow(RadioChannels)</action>
+            </shortcut>
+            <shortcut name="pictures" label="$LOCALIZE[10002]" icon="DefaultPicture.png">
+                <action>ActivateWindow(Pictures)</action>
+            </shortcut>
+            <shortcut name="games" label="$LOCALIZE[31232]" icon="DefaultAddonGame.png">
+                <action>ActivateWindow(Games)</action>
+            </shortcut>
+            <shortcut name="weather" label="$LOCALIZE[12600]" icon="DefaultAddonWeather.png">
+                <action>ActivateWindow(Weather)</action>
+            </shortcut>
+            <shortcut name="programs" label="$LOCALIZE[10001]" icon="DefaultProgram.png">
+                <action>ActivateWindow(Programs,addons://sources/executable/,return)</action>
+            </shortcut>
+            <shortcut name="favourites" label="$LOCALIZE[1036]" icon="DefaultFavourites.png">
+                <action>ActivateWindow(Favourites)</action>
+            </shortcut>
+            <shortcut name="settings" label="$LOCALIZE[10004]" icon="DefaultAddonService.png">
+                <action>ActivateWindow(Settings)</action>
+            </shortcut>
+        </group>
+        <group name="favourites" label="Favourites and Android apps">
+            <content source="favourites"/>
+        </group>
+        <group name="videolibrary" label="Video library">
+            <content source="nodes" target="videos"/>
+        </group>
+        <group name="musiclibrary" label="Music library">
+            <content source="nodes" target="music"/>
+        </group>
+        <group name="playlists" label="Playlists">
+            <content source="playlists" target="video" folder="Video playlists"/>
+            <content source="playlists" target="music" folder="Music playlists"/>
+        </group>
+        <group name="sources" label="Media sources">
+            <content source="sources" target="video" folder="Video sources"/>
+            <content source="sources" target="music" folder="Music sources"/>
+            <content source="sources" target="pictures" folder="Picture sources"/>
+        </group>
+        <group name="addons" label="Add-ons">
+            <content source="addons" target="video" folder="Video add-ons"/>
+            <content source="addons" target="audio" folder="Music add-ons"/>
+            <content source="addons" target="image" folder="Picture add-ons"/>
+            <content source="addons" target="executable" folder="Program add-ons"/>
+            <content source="addons" target="game" folder="Game add-ons"/>
+        </group>
+        <group name="pvr" label="Live TV channels" condition="System.HasPVRAddon">
+            <content source="pvr" target="tv" folder="TV channels"/>
+            <content source="pvr" target="radio" folder="Radio channels"/>
+        </group>
+        <group name="commands" label="System commands">
+            <content source="commands"/>
+        </group>
+        <input label="Custom action" type="text" for="action"/>
+    </groupings>
+</menus>

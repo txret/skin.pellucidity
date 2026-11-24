@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Weather screen (MyWeather.xml) building blocks. Values come from the standard weather
+    properties via Weather.Data(...): Daily.1-10 for the days, Hourly.1-48 for the hours.
+    Icons are the skin's SMHI symbols (resources/weather/<SymbolCode>.png).-->
+<includes>
+    <!--one forecast day = one item of the day selector (container 100).
+        Date links the day to its hours; Icon and Summary feed the day page header.-->
+    <include name="weather_day_item">
+        <param name="n"/>
+        <param name="title"/>
+        <definition>
+            <item>
+                <label>$PARAM[title]</label>
+                <property name="date">$INFO[Weather.Data(Daily.$PARAM[n].LongDate)]</property>
+                <property name="icon">$INFO[Weather.Data(Daily.$PARAM[n].SymbolCode),special://skin/resources/weather/,.png]</property>
+                <property name="summary">$INFO[Weather.Data(Daily.$PARAM[n].Outlook)]$INFO[Weather.Data(Daily.$PARAM[n].HighTemperature),$COMMA ]$INFO[Weather.Data(Daily.$PARAM[n].LowTemperature), / ]$INFO[Weather.Data(Daily.$PARAM[n].WindDirection),$COMMA wind ]$INFO[Weather.Data(Daily.$PARAM[n].WindSpeed), ]</property>
+                <visible>!String.IsEmpty(Weather.Data(Daily.$PARAM[n].LongDate))</visible>
+            </item>
+        </definition>
+    </include>
+
+    <!--one forecast hour = one item of the hours panel (200); shown only on its own day's page-->
+    <include name="weather_hour_item">
+        <param name="n"/>
+        <definition>
+            <item>
+                <label>$INFO[Weather.Data(Hourly.$PARAM[n].Time)]</label>
+                <label2>$INFO[Weather.Data(Hourly.$PARAM[n].Temperature)]</label2>
+                <icon>$INFO[Weather.Data(Hourly.$PARAM[n].SymbolCode),special://skin/resources/weather/,.png]</icon>
+                <property name="wind">$INFO[Weather.Data(Hourly.$PARAM[n].WindDirection)]$INFO[Weather.Data(Hourly.$PARAM[n].WindSpeed), ]</property>
+                <visible>!String.IsEmpty(Weather.Data(Hourly.$PARAM[n].Time)) + String.IsEqual(Weather.Data(Hourly.$PARAM[n].LongDate),Container(100).ListItem.Property(date))</visible>
+            </item>
+        </definition>
+    </include>
+
+    <!--current conditions detail line: wind, humidity, sunrise, sunset (empty values are skipped).
+        Current.Wind is Kodi's own "From SW at 2 m/s" / "Calm" text (whole numbers); Current.WindSpeed
+        is avoided because core prints it unrounded (1.9444444444444444 m/s).-->
+    <variable name="weather_current_details">
+        <value condition="String.IsEmpty(Weather.Data(Current.Wind))">No wind$INFO[Weather.Data(Current.Humidity),$COMMA humidity ]$INFO[Weather.Data(Today.Sunrise),$COMMA sunrise ]$INFO[Weather.Data(Today.Sunset),$COMMA sunset ]</value>
+        <value>$INFO[Weather.Data(Current.Wind)]$INFO[Weather.Data(Current.Humidity),$COMMA humidity ]$INFO[Weather.Data(Today.Sunrise),$COMMA sunrise ]$INFO[Weather.Data(Today.Sunset),$COMMA sunset ]</value>
+    </variable>
+
+    <!--hour row: time, symbol, temperature, wind (used by both panel layouts)-->
+    <include name="weather_hour_row">
+        <control type="label">
+            <width>100</width>
+            <font>small</font>
+            <label>[B]$INFO[ListItem.Label][/B]:</label>
+        </control>
+        <control type="image">
+            <posx>105</posx>
+            <posy>6</posy>
+            <width>30</width>
+            <height>30</height>
+            <texture>$INFO[ListItem.Icon]</texture>
+        </control>
+        <control type="label">
+            <posx>140</posx>
+            <width>110</width>
+            <font>small</font>
+            <label>$INFO[ListItem.Label2]</label>
+        </control>
+        <control type="label">
+            <posx>255</posx>
+            <width>300</width>
+            <font>small</font>
+            <label>$INFO[ListItem.Property(wind)]</label>
+        </control>
+    </include>
+</includes>

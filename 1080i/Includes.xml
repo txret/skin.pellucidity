@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--Root of the skin's shared definitions. Pulls in the other include files, then defines the
+    view selection expressions and the building blocks that more than one window uses.-->
 <includes>
     <include file="Defaults.xml"/>
     <include file="Includes_grid.xml"/>
@@ -6,6 +8,8 @@
     <include file="Includes_animations.xml"/>
     <include file="Includes_hubMenu.xml"/>
     <include file="Includes_hubOptionsItems.xml"/>
+    <include file="Includes_weather.xml"/>
+    <include file="Includes_layouts.xml"/>
     <include file="View_LiveTVChannels.xml"/>
     <include file="View_Seasons.xml"/>
     <include file="View_Episodes.xml"/>
@@ -22,47 +26,125 @@
     <include file="View_MusicPlaylist.xml"/>
     <include file="View_ArtistAlbums.xml"/>
     <include file="View_MusicVideos.xml"/>
-	<include file="View_Games.xml"/>
-	<include file="View_SpotifyAlbums.xml"/>
-	<include file="View_SpotifyArtists.xml"/>
-    <include file="Includes_menus.xml"/>
+    <include file="View_Games.xml"/>
+    <include file="View_SpotifyAlbums.xml"/>
+    <include file="View_SpotifyArtists.xml"/>
+    <include file="script-skinshortcuts-includes.xml"/>
     <include file="Includes_mediaShowcase.xml"/>
 
-    <!--view type conditions-->
-    <expression name="isVideoList">!String.Contains(container.folderpath,special://profile/playlists/video) + !String.Contains(container.folderpath,videodb://) + !String.Contains(container.folderpath,plugin://) | container.content(files) | String.IsEmpty(container.content) | container.content(addons) | container.content(videos) | container.content(episodes)</expression>
-    <expression name="isMovie">container.content(movies) + [String.Contains(container.folderpath,videodb://) | String.Contains(container.folderpath,special://profile/playlists/video)]</expression>
-    <expression name="isAddonMovieOrTVshow">!String.Contains(container.folderpath,videodb://) + String.Contains(container.folderpath,plugin://) + [container.content(movies) | container.content(tvshows) | container.content(seasons)]</expression>
+    <!--View selection. Every media window holds all of its views; each view is visible only when its
+        expression matches the container's content type and where the listing comes from (library
+        "videodb://" / "musicdb://", a smart playlist, a plugin, or plain files).-->
+    <!--video: plain rows for files, sources, add-on lists and anything without a content type-->
+    <expression name="is_video_list">!String.Contains(container.folderpath,special://profile/playlists/video) + !String.Contains(container.folderpath,videodb://) + !String.Contains(container.folderpath,plugin://) | container.content(files) | String.IsEmpty(container.content) | container.content(addons) | container.content(videos) | container.content(episodes)</expression>
+    <!--poster wall: movies from the library or a video smart playlist-->
+    <expression name="is_movie">container.content(movies) + [String.Contains(container.folderpath,videodb://) | String.Contains(container.folderpath,special://profile/playlists/video)]</expression>
+    <!--plugin listings of movies / shows get the poster wall (seasons too, unless the plugin names the show)-->
+    <expression name="is_addon_movie_or_tvshow">!String.Contains(container.folderpath,videodb://) + String.Contains(container.folderpath,plugin://) + [container.content(movies) | container.content(tvshows) | [container.content(seasons) + !$EXP[is_plugin_show]]]</expression>
+    <!--poster wall: shows from the library or a video smart playlist-->
+    <expression name="is_tvshow">container.content(tvshows) + [String.Contains(container.folderpath,videodb://) | String.Contains(container.folderpath,special://profile/playlists/video)]</expression>
+    <!--plugin listings inside a show (they set Container.ShowTitle) use the library season/episode views-->
+    <expression name="is_plugin_show">String.StartsWith(container.folderpath,plugin://) + !String.IsEmpty(Container.ShowTitle)</expression>
+    <!--season strip of one show-->
+    <expression name="is_season">container.content(seasons) + [String.Contains(container.folderpath,videodb://) | $EXP[is_plugin_show]]</expression>
+    <!--episode list of one season-->
+    <expression name="is_episode">container.content(episodes) + [!String.Contains(Container.folderpath,plugin) | $EXP[is_plugin_show]]</expression>
+    <!--thumbnail wall of library music videos-->
+    <expression name="is_music_video">container.content(musicvideos) + !String.Contains(Container.folderpath,plugin)</expression>
+    <!--music: the Spotify add-on gets its own artist and album walls (no library art to rely on)-->
+    <expression name="is_spotify_artist">container.content(artists) + String.Contains(container.folderpath,spotify)</expression>
+    <!--as above, for albums-->
+    <expression name="is_spotify_album">container.content(albums) + String.Contains(container.folderpath,spotify)</expression>
+    <!--plain rows: files, sources, add-ons and anything that is not a library listing-->
+    <expression name="is_music_list">!String.Contains(container.folderpath,musicdb://) | String.Contains(container.foldername,Files) | container.content(files) | container.content(addons) | [container.content(playlists) + !String.Contains(Container.folderpath,special://profile/playlists)] | String.Contains(Container.folderpath,plugin://)</expression>
+    <!--artist wall-->
+    <expression name="is_music_artist">container.content(artists) + [String.Contains(container.folderpath,musicdb://) | String.Contains(Container.folderpath,special://profile/playlists)]</expression>
+    <!--the albums of one artist-->
+    <expression name="is_artist_albums">container.content(albums) + String.Contains(container.folderpath,albumartistsonly)</expression>
+    <!--album wall (with the recently added row)-->
+    <expression name="is_music_album">container.content(albums) + [String.Contains(container.folderpath,musicdb://) | String.Contains(Container.folderpath,special://profile/playlists)]</expression>
+    <!--genre columns-->
+    <expression name="is_music_genre">container.content(genres) + String.Contains(container.folderpath,musicdb://)</expression>
+    <!--track list of an album-->
+    <expression name="is_music_song">container.content(songs) + [String.Contains(Container.folderpath,musicdb://) | String.Contains(Container.folderpath,spotify)]</expression>
+    <!--now playing / smart playlist / party mode track list-->
+    <expression name="is_music_playlist">container.content(songs) + [String.Contains(Container.folderpath,.xsp) | String.Contains(Container.foldername,PartyMode) | String.Contains(Container.folderpath,playlistmusic://)]</expression>
+    <!--pictures-->
+    <expression name="is_photo_album">container.content(images)</expression>
+    <!--weather-->
+    <expression name="has_weather">!String.IsEmpty(Weather.Data(WeatherProvider)) + !String.IsEmpty(Weather.Temperature) + !String.IsEmpty(Weather.Conditions)</expression>
 
-    <expression name="isTVShow">container.content(tvshows) + [String.Contains(container.folderpath,videodb://) | String.Contains(container.folderpath,special://profile/playlists/video)]</expression>
-    <expression name="isSeason">container.content(seasons) + String.Contains(container.folderpath,videodb://)</expression>
-    <expression name="isEpisode">container.content(episodes) + !String.Contains(Container.folderpath,plugin)</expression>
-    <expression name="isMusicVideo">container.content(musicvideos) + !String.Contains(Container.folderpath,plugin)</expression>
+    <!--Quick jump: a letter column at the right screen edge instead of a scrollbar. scripts/quick_jump.py lists the
+        first letters present in the focused view and jumps the view when one is picked. It keeps the
+        scrollbar's ids (group 8000, control 60). The views open it with
+        <onright>SetFocus(60,$VAR[jump_index],absolute)</onright>, which lands on the letter of their first
+        visible item (variable jump_index, Includes_variables.xml).-->
+    <include name="jump">
+        <control type="group" id="8000">
+            <visible>Control.IsVisible(60)</visible>
+            <animation effect="fade" start="100" end="0" time="100" condition="!controlgroup(8000).hasfocus">conditional</animation>
+            <control type="panel" id="60">
+                <onleft>9999</onleft>
+                <onback>9999</onback>
+                <posx>54r</posx>
+                <posy>row_7_begin</posy>
+                <height>23_row</height>
+                <width>50</width>
+                <itemlayout height="29" width="50">
+                    <control type="label">
+                        <width>100%</width>
+                        <align>center</align>
+                        <label>$INFO[ListItem.Label]</label>
+                        <font>jump</font>
+                    </control>
+                </itemlayout>
+                <focusedlayout height="60" width="50">
+                    <control type="label">
+                        <width>100%</width>
+                        <align>center</align>
+                        <label>$INFO[ListItem.Label]</label>
+                        <font>jump_focus</font>
+                    </control>
+                </focusedlayout>
+                <content>plugin://skin.pellucidity/?action=list&amp;content=$INFO[Container.Content]&amp;showall=false</content>
+            </control>
+        </control>
+    </include>
 
-	<expression name="isMusicSpotifyArtist">container.content(artists) + String.Contains(container.folderpath,spotify)</expression>
-	<expression name="isMusicSpotifyAlbum">container.content(albums) + String.Contains(container.folderpath,spotify)</expression>
+    <!--Page scrollbar at the right screen edge for windows without quick jump; fades out unless focused.-->
+    <include name="page_scrollbar">
+        <control type="group" id="8000">
+            <visible>Control.IsVisible(60)</visible>
+            <animation effect="fade" start="100" end="0" time="100" condition="!controlgroup(8000).hasfocus">conditional</animation>
+            <control type="scrollbar" id="60">
+                <posx>54r</posx>
+                <posy>row_6_begin</posy>
+                <height>20_row</height>
+                <onleft>9999</onleft>
+            </control>
+        </control>
+    </include>
 
-	<expression name="isMusicList">!String.Contains(container.folderpath,musicdb://) | String.Contains(container.foldername,Files) | container.content(files) | container.content(addons) | [container.content(playlists) + !String.Contains(Container.folderpath,special://profile/playlists)] | String.Contains(Container.folderpath,plugin://)</expression>
-	<expression name="isMusicArtist">container.content(artists) + [String.Contains(container.folderpath,musicdb://) | String.Contains(Container.folderpath,special://profile/playlists)]</expression>
-	<expression name="isMusicArtistCatalogue">container.content(albums) + String.Contains(container.folderpath,albumartistsonly)</expression>
-	<expression name="isMusicAlbum">container.content(albums) + [String.Contains(container.folderpath,musicdb://) | String.Contains(Container.folderpath,special://profile/playlists)]</expression>
-	<expression name="isMusicGenre">container.content(genres) + String.Contains(container.folderpath,musicdb://)</expression>
-	<expression name="isMusicSong">container.content(songs) + [String.Contains(Container.folderpath,musicdb://) | String.Contains(Container.folderpath,spotify)]</expression>
-	<expression name="isMusicPlaylist">container.content(songs) + [String.Contains(Container.folderpath,.xsp) | String.Contains(Container.foldername,PartyMode) | String.Contains(Container.folderpath,playlistmusic://)]</expression>
+    <!--Window background: a dimmed full-screen image from media/backgrounds. A plugin can swap it
+        for its own with xbmcplugin.setProperty(handle, "background", image); the skin image is the
+        fallback while that property is empty.-->
+    <include name="page_background">
+        <param name="image"/>
+        <definition>
+            <control type="image">
+                <include>dimensions_fullscreen</include>
+                <texture fallback="backgrounds/$PARAM[image]">$INFO[Container.Property(background)]</texture>
+                <colordiffuse>FF555555</colordiffuse>
+                <aspectratio>scale</aspectratio>
+            </control>
+        </definition>
+    </include>
 
-	<!--photos-->
-	<expression name="isPhotoAlbum">container.content(images)</expression>
-	
-	<!--games-->
-	<expression name="isGame">container.content(games)</expression>
-
-	<!--weather-->
-	<expression name="hasWeather">!String.IsEmpty(Window(Weather).Property(WeatherProvider)) + !String.String.IsEmpty(weather.temperature) + !String.String.IsEmpty(weather.conditions)</expression>
-
-	<!--item fanart-->
-    <include name="itemFanart">
+    <!--Fanart behind a library view. With "extrafanart" folders it cycles through their images:
+        the hidden wraplist 99999 lists the folder and auto-scrolls, the image shows its current item.
+        Without them (or with the feature switched off) the folder's own fanart is shown.-->
+    <include name="item_fanart">
         <control type="wraplist" id="99999">
-            <posx>0</posx>
-            <posy>0</posy>
             <width>1000</width>
             <height>1000</height>
             <enable>false</enable>
@@ -71,162 +153,149 @@
             <autoscroll>true</autoscroll>
             <itemlayout />
             <focusedlayout />
-            <content>$VAR[extraFanartLocation]</content>
+            <content>$VAR[extra_fanart_location]</content>
         </control>
-		<control type="image">
-            <include>dimensionsFullscreen</include>
+        <control type="image">
+            <include>dimensions_fullscreen</include>
             <texture>colors/white.png</texture>
             <colordiffuse>background</colordiffuse>
-            <aspectratio>stretch</aspectratio>
         </control>
         <control type="image">
             <visible>Integer.IsGreater(container(99999).numitems,0) + !Skin.HasSetting(disableExtendedFanart)</visible>
-            <include>dimensionsFullscreen</include>
+            <include>dimensions_fullscreen</include>
             <texture>$INFO[container(99999).listitem.filenameandpath,,]</texture>
             <colordiffuse>66ffffff</colordiffuse>
             <fadetime>500</fadetime>
-            <aspectratio>stretch</aspectratio>
-			<include>kenBurnsey</include>
+            <include>ken_burns</include>
         </control>
         <control type="image">
             <visible>!Integer.IsGreater(container(99999).numitems,0) | Skin.HasSetting(disableExtendedFanart) | ListItem.IsParentFolder</visible>
-            <posx>0</posx>
-            <posy>0</posy>
-            <include>dimensionsFullscreen</include>
+            <include>dimensions_fullscreen</include>
             <texture>$INFO[container.Art(fanart)]</texture>
             <colordiffuse>66ffffff</colordiffuse>
-            <aspectratio>stretch</aspectratio>
-			<include>kenBurnsey</include>
+            <include>ken_burns</include>
         </control>
     </include>
 
-    <!--keyboard autocomplete-->
-    <include name="AutoComplete">
-            <control type="group">
-            <visible>!String.String.IsEmpty(Control.GetLabel(312).index(1)) + !Control.IsVisible(313)</visible>
-            <posx>0</posx>
-            <posy>0</posy>
-            <control type="group">
-                <animation effect="fade" time="300" tween="cubic" start="0" end="100" reversible="false" condition="!String.String.IsEmpty(Container(5000).ListItem.Label)">Conditional</animation>
-                <animation effect="fade" time="150" tween="cubic" start="100" end="0" reversible="false" condition="String.String.IsEmpty(Container(5000).ListItem.Label)">Conditional</animation>
-            </control>
-            <control type="panel" id="5000">
-                <posx>col-5-begin</posx>
-                <posy>-36</posy>
-                <width>16-col</width>
-                <height>2-row</height>
-                <onleft>5000</onleft>
-                <onright>5000</onright>
-                <ondown>312</ondown>
-                <onback>noop</onback>
-                <orientation>horizontal</orientation>
-                <itemlayout height="2-row" width="4-col">
-                    <control type="label">
-                        <posx>0</posx>
-                        <posy>0</posy>
-                        <width>4-col-gutter</width>
-                        <height>2-row</height>
-                        <align>center</align>
-                        <textcolor>textDisabled</textcolor>
-                        <font>itemTitle</font>
-                        <label>$INFO[ListItem.Label]</label>
-                    </control>
-                </itemlayout>
-                <focusedlayout height="2-row" width="4-col">
-                    <control type="label">
-                        <posx>0</posx>
-                        <posy>0</posy>
-                        <width>4-col-gutter</width>
-                        <height>2-row</height>
-                        <align>center</align>
-                        <textcolor>textActive</textcolor>
-                        <font>itemTitle</font>
-                        <label>$INFO[ListItem.Label]</label>
-                    </control>
-                </focusedlayout>
-                <content>plugin://plugin.program.autocompletion?info=autocomplete&amp;&amp;id=$INFO[Control.GetLabel(312).index(1)]&amp;&amp;limit=8</content>
-            </control>
+    <!--Keyboard suggestions (needs plugin.program.autocompletion): a row of completions for the text
+        typed so far (edit control 312), shown above the keyboard unless the Chinese input row (313) is.-->
+    <include name="keyboard_suggestions">
+        <control type="panel" id="5000">
+            <visible>!String.IsEmpty(Control.GetLabel(312).index(1)) + !Control.IsVisible(313)</visible>
+            <posx>col_5_begin</posx>
+            <posy>-36</posy>
+            <width>16_col</width>
+            <height>2_row</height>
+            <onleft>5000</onleft>
+            <onright>5000</onright>
+            <ondown>312</ondown>
+            <onback>noop</onback>
+            <orientation>horizontal</orientation>
+            <itemlayout height="2_row" width="4_col">
+                <control type="label">
+                    <width>4_col_gutter</width>
+                    <height>2_row</height>
+                    <align>center</align>
+                    <textcolor>text_disabled</textcolor>
+                    <font>item_title</font>
+                    <label>$INFO[ListItem.Label]</label>
+                </control>
+            </itemlayout>
+            <focusedlayout height="2_row" width="4_col">
+                <control type="label">
+                    <width>4_col_gutter</width>
+                    <height>2_row</height>
+                    <align>center</align>
+                    <font>item_title</font>
+                    <label>$INFO[ListItem.Label]</label>
+                </control>
+            </focusedlayout>
+            <content>plugin://plugin.program.autocompletion?info=autocomplete&amp;&amp;id=$INFO[Control.GetLabel(312).index(1)]&amp;&amp;limit=8</content>
         </control>
     </include>
-    <!--modal dialogs-->
-    <include name="modalDialog">
+
+    <!--Dims whatever lies behind a modal dialog.-->
+    <include name="modal_dialog_dim">
         <control type="image">
-            <include>dimensionsFullscreen</include>
+            <include>dimensions_fullscreen</include>
             <texture>colors/black.png</texture>
-            <colordiffuse>e9FFFFFF</colordiffuse>
-            <aspectratio>stretch</aspectratio>
-        </control>
-        <control type="image">
-            <include>dimensionsFullscreen</include>
-            <texture>vignette.png</texture>
-            <colordiffuse>ffffffff</colordiffuse>
-            <aspectratio>stretch</aspectratio>
+            <colordiffuse>D0FFFFFF</colordiffuse>
         </control>
     </include>
-    <!--Global background-->
-    <include name="globalBackground">
-		<control type="image">
-		   <include>dimensionsFullscreen</include>
-           <texture>colors/black.png</texture>
-           <colordiffuse>ffFFFFFF</colordiffuse>
-           <aspectratio>stretch</aspectratio>
-       </control>
-       <control type="image">
-           <include>dimensionsFullscreen</include>
-           <texture>colors/white.png</texture>
-           <colordiffuse>background</colordiffuse>
-           <aspectratio>stretch</aspectratio>
-       </control>
+
+    <!--Dialog title bar: highlight strip with the title on it. Pass "id" when Kodi fills the
+        heading itself (it then looks the label up by that id) instead of "label".-->
+    <include name="dialog_title_bar">
+        <param name="width"/>
+        <param name="label" default=""/>
+        <param name="id" default="0"/>
+        <definition>
+            <control type="group">
+                <width>$PARAM[width]</width>
+                <height>2_row</height>
+                <control type="image">
+                    <texture>colors/white.png</texture>
+                    <colordiffuse>highlight</colordiffuse>
+                </control>
+                <control type="label" id="$PARAM[id]">
+                    <left>24</left>
+                    <right>24</right>
+                    <height>2_row</height>
+                    <font>dialog_title</font>
+                    <label>$PARAM[label]</label>
+                </control>
+            </control>
+        </definition>
     </include>
-	<!--page header-->
-	<include name="pageHeader">
-		<control type="group">
-			<posx>col-1-begin</posx>
-            <posy>row-1-begin</posy>
-			<!--title-->
-			<control type="label">
-	            <posx>0</posx>
-	            <posy>0</posy>
-	            <width>18-col</width>
-	            <font>sectionTitle</font>
-	            <label>$VAR[listTitle]</label>
-	            <textcolor>textActive</textcolor>
-	        </control>
-	        <!--subtitle-->
-	        <control type="label">
-	            <posx>0</posx>
-	            <posy>26</posy>
-	            <width>12-col</width>
-				<height>2-row</height>
-	            <font>menuTitle2</font>
-	            <label>$VAR[listSubTitle]</label>
-	            <textcolor>textActive</textcolor>
-	        </control>
-			<!--time-->
-			<control type="label">
-	            <posx>24-col</posx>
-	            <posy>0</posy>
-	            <width>12-col</width>
-	            <align>right</align>
-	            <font>sectionTitle</font>
-	            <label>[B]$INFO[System.Time][/B]</label>
-	            <textcolor>textActive</textcolor>
-	        </control>
-			<!--date-->
-	        <control type="label">
-	            <posx>24-col</posx>
-	            <posy>26</posy>
-	            <width>12-col</width>
-				<height>2-row</height>
-				<align>right</align>
-	            <font>menuTitle2</font>
-	            <label>$INFO[System.Date(DDD)], $INFO[system.Date(mmm d)]</label>
-	            <textcolor>textActive</textcolor>
-	        </control>
-		</control>
-	</include>
-    <!--busy indicator-->
-    <include name="loadingIndicator">
+
+    <!--Clock and date in the top right corner of a page.-->
+    <include name="page_clock">
+        <control type="group">
+            <posx>col_1_begin</posx>
+            <posy>row_1_begin</posy>
+            <control type="label">
+                <posx>24_col</posx>
+                <width>12_col</width>
+                <align>right</align>
+                <font>section_title</font>
+                <label>[B]$INFO[System.Time][/B]</label>
+            </control>
+            <control type="label">
+                <posx>24_col</posx>
+                <posy>26</posy>
+                <width>12_col</width>
+                <height>2_row</height>
+                <align>right</align>
+                <font>menu_title_2</font>
+                <label>$INFO[System.Date(DDD)], $INFO[system.Date(mmm d)]</label>
+            </control>
+        </control>
+    </include>
+
+    <!--Page header: what is listed and how many items (top left), clock (top right).-->
+    <include name="page_header">
+        <control type="group">
+            <posx>col_1_begin</posx>
+            <posy>row_1_begin</posy>
+            <control type="label">
+                <width>18_col</width>
+                <font>section_title</font>
+                <label>$VAR[list_title]</label>
+            </control>
+            <control type="label">
+                <posy>26</posy>
+                <width>12_col</width>
+                <height>2_row</height>
+                <font>menu_title_2</font>
+                <label>$VAR[list_subtitle]</label>
+            </control>
+        </control>
+        <include>page_clock</include>
+    </include>
+
+    <!--Busy spinner over a dimmed screen: while a folder is still loading (it has a name but no
+        items yet) and for Kodi's busy dialog. Two rings turn in opposite directions.-->
+    <include name="loading_indicator">
         <control type="group">
             <animation type="Visible" reversible="false">
                 <effect type="zoom" start="80" end="100" center="960,540" tween="back" time="240" />
@@ -239,16 +308,15 @@
             <visible>!Window.IsActive(startup) + !String.IsEmpty(container.foldername) + !Integer.IsGreater(container.numitems,0) + !ListItem.IsParentFolder | window.isactive(busydialog)</visible>
             <control type="image">
                 <texture>colors/black.png</texture>
-                <include>dimensionsFullscreen</include>
+                <include>dimensions_fullscreen</include>
                 <animation effect="fade" start="100" end="70" time="0" condition="true">Conditional</animation>
                 <animation effect="fade" start="100" end="0" time="240" condition="Window.IsVisible(fullscreenvideo)">Conditional</animation>
                 <animation effect="fade" end="100" time="560">WindowOpen</animation>
                 <animation effect="fade" start="100" end="0" time="240">WindowClose</animation>
             </control>
             <control type="image">
-                <depth>DepthMax</depth>
-                <left>920</left>
-                <top>513</top>
+                <posx>920</posx>
+                <posy>513</posy>
                 <width>80</width>
                 <height>80</height>
                 <aspectratio>keep</aspectratio>
@@ -257,9 +325,8 @@
                 <animation effect="fade" end="100" time="300" delay="200">WindowOpen</animation>
             </control>
             <control type="image">
-                <depth>DepthMax</depth>
-                <left>935</left>
-                <top>528</top>
+                <posx>935</posx>
+                <posy>528</posy>
                 <width>50</width>
                 <height>50</height>
                 <aspectratio>keep</aspectratio>
@@ -269,22 +336,60 @@
             </control>
         </control>
     </include>
-     <!--conditional positioning for progress dialogs (avoid overlaps)-->
-    <include name="progressPosition1"><posy>row-2-begin</posy></include>
-    <include name="progressPosition2"><posy>row-6-begin</posy></include>
-     
-	<!--mini player window-->
-    <include name="miniVideoPlayer">
+
+    <!--Toasts (volume, slider, extended progress): a white card in the top right corner. Kodi can
+        show a notification at the same time, which owns the top slot, so a toast opened while one
+        is up takes the slot below. Includes are resolved when the toast loads, hence two variants.-->
+    <include name="toast_position">
+        <posx>col_19_begin</posx>
+        <include condition="!Window.IsActive(notification)">toast_slot_top</include>
+        <include condition="Window.IsActive(notification)">toast_slot_below</include>
+    </include>
+    <!--the regular slot-->
+    <include name="toast_slot_top">
+        <posy>row_2_begin</posy>
+    </include>
+    <!--the slot under a notification-->
+    <include name="toast_slot_below">
+        <posy>row_6_begin</posy>
+    </include>
+    <!--the card itself, with a highlight strip along its left edge-->
+    <include name="toast_card">
+        <control type="image">
+            <width>8_col</width>
+            <height>3_row</height>
+            <texture>colors/white.png</texture>
+            <bordertexture colordiffuse="highlight">colors/white.png</bordertexture>
+            <bordersize>6,0,0,0</bordersize>
+        </control>
+    </include>
+    <!--label properties of a toast's small heading-->
+    <include name="toast_heading">
+        <posx>24</posx>
+        <width>468</width>
+        <height>60</height>
+        <font>item_subtitle</font>
+        <textcolor>black</textcolor>
+    </include>
+    <!--label properties of a toast's main line-->
+    <include name="toast_message">
+        <posx>24</posx>
+        <posy>1_row</posy>
+        <width>468</width>
+        <height>2_row</height>
+        <font>dialog_title</font>
+        <textcolor>black</textcolor>
+    </include>
+
+    <!--Picture-in-picture: the playing video in the top right corner of menu windows.-->
+    <include name="mini_video_player">
         <control type="group">
             <visible>!Skin.hassetting(stopVideoOnMenu) + Player.HasVideo + !VideoPlayer.IsFullscreen + !SlideShow.IsActive</visible>
-            <posx>col-20-begin</posx>
+            <posx>col_20_begin</posx>
             <posy>12</posy>
             <control type="image">
-                <posx>0</posx>
-                <posy>0</posy>
                 <width>444</width>
                 <height>255</height>
-                <aspectratio>stretch</aspectratio>
                 <texture>colors/black.png</texture>
                 <bordertexture border="6" colordiffuse="overlay">colors/black.png</bordertexture>
                 <bordersize>6</bordersize>
@@ -292,44 +397,32 @@
             <control type="videowindow">
                 <posx>6</posx>
                 <posy>6</posy>
-                <width>6-col</width>
+                <width>6_col</width>
                 <height>243</height>
             </control>
         </control>
     </include>
 
-	<!--touchscreen screen edge controls-->
-	<include name="touchscreenControls">
-		
-	</include>
-	
-   <!--debugging-->
-    <include name="DialogID">
-        <posx>15</posx>
-        <posy>15</posy>
-        <width>fullscreenwidth</width>
-        <height>1-row</height>
-        <font>smallStrong</font>
-        <textcolor>textActive</textcolor>
-        <align>left</align>
-        <visible>Skin.HasSetting(DebugInfo)</visible>
-    </include>
-    <include name="WindowID">
-        <posx>15</posx>
-        <posy>15</posy>
-        <width>fullscreenwidth</width>
-        <height>1-row</height>
-        <font>smallStrong</font>
-        <textcolor>textActive</textcolor>
-        <align>left</align>
-        <visible>Skin.HasSetting(DebugInfo)</visible>
-    </include>
-    <include name="DebugGrid">
-        <control type="image">
-            <include>dimensionsFullscreen</include>
-            <texture>debuggrid1080.png</texture>
-            <colordiffuse>77FFFFFF</colordiffuse>
-            <visible>Skin.HasSetting(DebugGrid)</visible>
-        </control>
+    <!--Developer aids, switched on under Skin settings > Debug (and off again at every start):
+        the 24 column layout grid, and a line naming the window file plus whatever state the
+        window passes in "label".-->
+    <include name="debug_overlay">
+        <param name="label"/>
+        <definition>
+            <control type="image">
+                <visible>Skin.HasSetting(DebugGrid)</visible>
+                <include>dimensions_fullscreen</include>
+                <texture>debuggrid1080.png</texture>
+                <colordiffuse>77FFFFFF</colordiffuse>
+            </control>
+            <control type="label">
+                <visible>Skin.HasSetting(DebugInfo)</visible>
+                <posx>15</posx>
+                <posy>15</posy>
+                <width>fullscreen_width</width>
+                <font>small_strong</font>
+                <label>$PARAM[label]</label>
+            </control>
+        </definition>
     </include>
 </includes>

@@ -1,2 +1,5 @@
 .DS_Store
 1080i/script-skinshortcuts-includes.xml
+media/Textures.xbt
+.vscode/
+**/\.*

@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--Skin variables-->
 <includes>
-    <!--folder titles-->
-    <variable name="listTitle">
+    <!--page header, first line: what the window lists (library section, folder, playlist ...) and,
+        for library walls, how it is sorted. The first matching value wins, so the specific cases
+        (music videos, smart playlists, plugins) come before the general ones of each window.-->
+    <variable name="list_title">
         <value condition="Window.isactive(Videos) + Container.Content(musicvideos)">$LOCALIZE[20389] [LOWERCASE][COLOR highlight]$LOCALIZE[31054] $INFO[container.sortmethod] $INFO[Container.SortOrder,(,)][/COLOR][/LOWERCASE]</value>
         <value condition="Window.isactive(Videos) + [Container.Content(movies) | container.content(tvshows)] + String.Contains(Container.folderpath,special://profile/playlists/video)">[CAPITALIZE]$INFO[container.foldername][/CAPITALIZE] [LOWERCASE][COLOR highlight]$LOCALIZE[31054] $INFO[container.sortmethod] $INFO[Container.SortOrder,(,)][/COLOR][/LOWERCASE]</value>
         <value condition="Window.isactive(Videos) + String.Contains(Container.folderpath,plugin)">$INFO[container.foldername] $INFO[ListItem.TVShowTitle,- ,] $INFO[ListItem.season,$LOCALIZE[20373] ,]</value>
@@ -13,8 +15,8 @@
         <value condition="Window.isactive(Videos) + String.IsEmpty(container.foldername)">$LOCALIZE[31012]</value>
         <value condition="Window.isactive(Music) + String.Contains(Container.folderpath,special://profile/playlists)">[CAPITALIZE]$INFO[container.foldername][/CAPITALIZE]</value>
         <value condition="Window.isactive(Music) + Container.Content(albums) + String.Contains(Container.folderpath,special://profile/playlists/music)">[CAPITALIZE]$INFO[container.foldername][/CAPITALIZE] [LOWERCASE][COLOR highlight]$LOCALIZE[31054] $INFO[container.sortmethod] $INFO[Container.SortOrder,(,)][/COLOR][/LOWERCASE]</value>
-		<value condition="Window.isactive(Music) + String.contains(container.folderpath,spotify)">$INFO[container.foldername] [CAPITALIZE][COLOR highlight]$INFO[container.content][/COLOR][/CAPITALIZE]</value>
-		<value condition="Window.isactive(Music) + String.Contains(container.folderpath,addons://)">$LOCALIZE[1038]</value>
+        <value condition="Window.isactive(Music) + String.contains(container.folderpath,spotify)">$INFO[container.foldername] [CAPITALIZE][COLOR highlight]$INFO[container.content][/COLOR][/CAPITALIZE]</value>
+        <value condition="Window.isactive(Music) + String.Contains(container.folderpath,addons://)">$LOCALIZE[1038]</value>
         <value condition="Window.isactive(Music) + String.Contains(container.folderpath,plugin://)">$INFO[container.foldername]</value>
         <value condition="Window.isactive(Music) + Container.Content(albums)">$LOCALIZE[132] [LOWERCASE][COLOR highlight]$LOCALIZE[31054] $INFO[container.sortmethod] $INFO[Container.SortOrder,(,)][/COLOR][/LOWERCASE]</value>
         <value condition="Window.isactive(Music) + Container.Content(artists)">$LOCALIZE[133] [LOWERCASE][COLOR highlight]$LOCALIZE[31054] $INFO[container.sortmethod] $INFO[Container.SortOrder,(,)][/COLOR][/LOWERCASE]</value>
@@ -22,94 +24,113 @@
         <value condition="Window.isactive(Music) + !container.content(genres) + String.Contains(container.folderpath,musicdb://genres)">$LOCALIZE[31199] [COLOR highlight]$INFO[container.foldername][/COLOR]</value>
         <value condition="Window.isactive(Music) + !String.IsEmpty(container.foldername)">$INFO[container.foldername]</value>
         <value condition="Window.isactive(Music) + String.IsEmpty(container.foldername)">$LOCALIZE[14237]</value>
-    	<value condition="Window.isactive(Weather)">$LOCALIZE[8]</value>
-		<value condition="Window.isactive(TVchannels) | Window.isactive(TVGuide)">$LOCALIZE[19020] [COLOR highlight]$LOCALIZE[31078][/COLOR]</value>
-		<value condition="Window.isactive(RadioChannels)">$LOCALIZE[19021] [COLOR highlight]$LOCALIZE[31078][/COLOR]</value>
-		<value condition="Window.isactive(TVRecordings)">$LOCALIZE[19020] [COLOR highlight]$LOCALIZE[31165][/COLOR]</value>
-		<value condition="Window.isactive(MyPVRTimers.xml)">$LOCALIZE[31060] [COLOR highlight]$LOCALIZE[31087][/COLOR]</value>
-		<value condition="Window.isactive(programs)">$LOCALIZE[10506]</value>
-		<value condition="Window.isactive(musicplaylist) | Window.isactive(videoplaylist)">$LOCALIZE[31123]</value>
-		<value condition="Window.isactive(pictures)">$LOCALIZE[31056]</value>
-		<value condition="Window.isactive(games)">$LOCALIZE[31232] [LOWERCASE][COLOR highlight]$INFO[container.foldername][/COLOR][/LOWERCASE]</value>
-	</variable>
-    <variable name="listSubTitle">
-        <value condition="Window.isactive(Videos)">$INFO[Container.NumAllItems,, $LOCALIZE[31014]] $VAR[unwatchedOnly]</value>
+        <value condition="Window.isactive(Weather)">$LOCALIZE[8]</value>
+        <value condition="Window.isactive(TVchannels) | Window.isactive(TVGuide)">$LOCALIZE[19020] [COLOR highlight]$LOCALIZE[31078][/COLOR]</value>
+        <value condition="Window.isactive(RadioChannels)">$LOCALIZE[19021] [COLOR highlight]$LOCALIZE[31078][/COLOR]</value>
+        <value condition="Window.isactive(TVRecordings)">$LOCALIZE[19020] [COLOR highlight]$LOCALIZE[31165][/COLOR]</value>
+        <value condition="Window.isactive(MyPVRTimers.xml)">$LOCALIZE[31060] [COLOR highlight]$LOCALIZE[31087][/COLOR]</value>
+        <value condition="Window.isactive(programs)">$LOCALIZE[10506]</value>
+        <value condition="Window.isactive(musicplaylist) | Window.isactive(videoplaylist)">$LOCALIZE[31123]</value>
+        <value condition="Window.isactive(pictures)">$LOCALIZE[31056]</value>
+        <value condition="Window.isactive(games)">$LOCALIZE[31232] [LOWERCASE][COLOR highlight]$INFO[container.foldername][/COLOR][/LOWERCASE]</value>
+    </variable>
+    <!--page header, second line: item count or the window's equivalent of it-->
+    <variable name="list_subtitle">
+        <value condition="Window.isactive(Videos)">$INFO[Container.NumAllItems,, $LOCALIZE[31014]] $VAR[unwatched_only]</value>
         <value condition="Window.isactive(Music)">$INFO[container.NumAllItems,, $LOCALIZE[31014]]</value>
-		<value condition="Window.isactive(MyPVRTimers.xml)">$INFO[container.NumAllItems,, $LOCALIZE[31145]]</value>
-		<value condition="Window.isactive(Weather)">$LOCALIZE[31212] $INFO[Window.Property(WeatherProvider)]</value>
-		<value condition="Window.isactive(TVchannels) | Window.isactive(RadioChannels) | Window.isactive(TVGuide)">$INFO[Pvr.BackendChannels] $LOCALIZE[19019] ($INFO[control.getlabel(29)])</value>
-		<value condition="Window.isactive(TVRecordings)">$INFO[container.NumAllItems] $LOCALIZE[31165] ($INFO[Pvr.BackendDiskSpace])</value>
-		<value condition="Window.isactive(programs)">$INFO[container.NumAllItems,, $LOCALIZE[31145]]</value>
-		<value condition="Window.isactive(games)">$INFO[container.NumAllItems,, $LOCALIZE[31145]]</value>
-		<value condition="Window.isactive(musicplaylist) | Window.isactive(videoplaylist)">$INFO[container.NumAllItems,, $LOCALIZE[31014]]</value>
-		<value condition="Window.isactive(pictures) + Integer.IsGreater(container.Numitems,0)">$INFO[container.NumAllItems,, $LOCALIZE[31014]]</value>
-	</variable>
+        <value condition="Window.isactive(MyPVRTimers.xml)">$INFO[container.NumAllItems,, $LOCALIZE[31145]]</value>
+        <value condition="Window.isactive(Weather)">$LOCALIZE[31212] $INFO[Weather.Data(WeatherProvider)]</value>
+        <value condition="Window.isactive(TVchannels) | Window.isactive(RadioChannels) | Window.isactive(TVGuide)">$INFO[Pvr.BackendChannels] $LOCALIZE[19019] ($INFO[control.getlabel(29)])</value>
+        <value condition="Window.isactive(TVRecordings)">$INFO[container.NumAllItems] $LOCALIZE[31165] ($INFO[Pvr.BackendDiskSpace])</value>
+        <value condition="Window.isactive(programs)">$INFO[container.NumAllItems,, $LOCALIZE[31145]]</value>
+        <value condition="Window.isactive(games)">$INFO[container.NumAllItems,, $LOCALIZE[31145]]</value>
+        <value condition="Window.isactive(musicplaylist) | Window.isactive(videoplaylist)">$INFO[container.NumAllItems,, $LOCALIZE[31014]]</value>
+        <value condition="Window.isactive(pictures) + Integer.IsGreater(container.Numitems,0)">$INFO[container.NumAllItems,, $LOCALIZE[31014]]</value>
+    </variable>
     <!--list view item detail / subheader-->
-    <variable name="itemDetail">
+    <variable name="item_detail">
         <value condition="Container.Content(movies)">$INFO[Listitem.duration]</value>
         <value condition="Container.Content(tvshows) + !String.IsEmpty(listitem.property(totalseasons))">[B]$INFO[ListItem.Property(TotalSeasons)][/B] $LOCALIZE[31188] • [B]$INFO[ListItem.Property(NumEpisodes)][/B] $LOCALIZE[31189]</value>
         <value condition="Container.Content(seasons)">$INFO[ListItem.Property(TotalEpisodes)] $LOCALIZE[31189]</value>
         <value condition="Container.Content(artists)">$INFO[ListItem.Property(Artist_Genre)]</value>
         <value/>
     </variable>
-    <!--Music player shuffle state-->
-    <variable name="shuffleState">
-        <value condition="Playlist.IsRandom">$LOCALIZE[16041]</value>
-        <value condition="!Playlist.IsRandom">$LOCALIZE[16039]</value>
-    </variable>
-    <!--offset song view, show artist / album if parent view is active-->
-    <variable name="songViewArtist">
+    <!--track list header (artist, album, cover) comes from the focused track. On the ".." item
+        there is none, so the first real track (ListItem(1)) is used instead.-->
+    <variable name="song_view_artist">
         <value condition="ListItem.IsParentFolder">$INFO[ListItem(1).Artist] $INFO[ListItem(1).Year,(,)]</value>
         <value>$INFO[ListItem.Artist] $INFO[ListItem.Year,(,)]</value>
     </variable>
-    <variable name="songViewAlbum">
+    <!--see song_view_artist-->
+    <variable name="song_view_album">
         <value condition="ListItem.IsParentFolder">$INFO[ListItem(1).Album]</value>
         <value>$INFO[ListItem.Album]</value>
     </variable>
-    <variable name="songViewThumb">
+    <!--see song_view_artist-->
+    <variable name="song_view_thumb">
         <value condition="ListItem.IsParentFolder">$INFO[ListItem(1).art(thumb)]</value>
         <value>$INFO[ListItem.art(thumb)]</value>
     </variable>
-    <!--Music player repeat state-->
-    <variable name="repeatState">
-        <value condition="Playlist.IsRepeat">$LOCALIZE[597]</value>
-        <value condition="Playlist.IsRepeatOne">$LOCALIZE[596]</value>
-        <value condition="!Playlist.IsRepeat + !Playlist.IsRepeatOne">$LOCALIZE[595]</value>
-    </variable>
     <!--unwatched only filter active-->
-    <variable name="unwatchedOnly">
+    <variable name="unwatched_only">
         <value condition="System.Setting(hidewatched)">• $LOCALIZE[31213]</value>
     </variable>
-    <!--Star rating for music tracks-->
-    <variable name="starRating">
-        <value condition="String.IsEqual(MusicPlayer.UserRating,1)"></value>
-        <value condition="String.IsEqual(MusicPlayer.UserRating,2)"></value>
-        <value condition="String.IsEqual(MusicPlayer.UserRating,3)"></value>
-        <value condition="String.IsEqual(MusicPlayer.UserRating,4)"></value>
-        <value condition="String.IsEqual(MusicPlayer.UserRating,5)"></value>
-        <value condition="String.IsEqual(MusicPlayer.UserRating,6)"></value>
-        <value condition="String.IsEqual(MusicPlayer.UserRating,7)"></value>
-        <value condition="String.IsEqual(MusicPlayer.UserRating,8)"></value>
-        <value condition="String.IsEqual(MusicPlayer.UserRating,9)"></value>
-        <value condition="String.IsEqual(MusicPlayer.UserRating,10)"></value>
-        <value></value>
-    </variable>
-    <!--home background location-->
-    <variable name="homeBackgroundLocation">
-        <value condition="!String.IsEmpty(Skin.String(homeBackground))">$INFO[Skin.String(homeBackground)]</value>
-        <value>special://skin/extras/homeBackgrounds</value>
-    </variable>
     <!--menu logos-->
-    <variable name="menuLogo">
+    <variable name="menu_logo">
         <value condition="Window.IsActive(games)"></value>
-		<value condition="Window.IsActive(pictures)"></value>
-        <value condition="window.isactive(music) | window.isactive(radiochannels) | window.isactive(radioguide) | window.isactive(radiorecordings) | window.isactive(radiotimers) | window.isactive(musicplaylist) | window.isactive(1103)"></value>
+        <value condition="Window.IsActive(pictures)"></value>
+        <value condition="window.isactive(music) | window.isactive(radiochannels) | window.isactive(radioguide) | window.isactive(radiorecordings) | window.isactive(radiotimers) | window.isactive(musicplaylist)"></value>
         <value condition="window.isactive(videos) | window.isactive(tvchannels) | window.isactive(tvrecordings) | window.isactive(tvguide) | window.isactive(tvtimers) | window.isactive(videoplaylist)"></value>
     </variable>
     <!--extra fanart sourcing-->
-    <variable name="extraFanartLocation">
-        <value condition="container.content(movies)">$INFO[listitem.path,,extrafanart]</value>
-        <value condition="container.content(tvshows)">$INFO[listitem.filenameandpath,,extrafanart]</value>
-        <value condition="container.content(seasons)">$INFO[container.listitem.path,,extrafanart]</value>
+    <!--never for plugins: listing <plugin url>extrafanart would call the add-on with a bogus URL-->
+    <variable name="extra_fanart_location">
+        <value condition="container.content(movies) + !String.StartsWith(container.folderpath,plugin://)">$INFO[listitem.path,,extrafanart]</value>
+        <value condition="container.content(tvshows) + !String.StartsWith(container.folderpath,plugin://)">$INFO[listitem.filenameandpath,,extrafanart]</value>
+        <value condition="container.content(seasons) + !String.StartsWith(container.folderpath,plugin://)">$INFO[container.listitem.path,,extrafanart]</value>
+    </variable>
+    <!--list background: the item's fanart, else the folder's (e.g. for the ".." item)-->
+    <variable name="list_fanart">
+        <value condition="!String.IsEmpty(ListItem.Art(fanart))">$INFO[ListItem.Art(fanart)]</value>
+        <value>$INFO[Container.Art(fanart)]</value>
+    </variable>
+    <!--row list thumbnail: the "up" arrow icon for the ".." item-->
+    <variable name="list_thumb">
+        <value condition="ListItem.IsParentFolder">$INFO[ListItem.Icon]</value>
+        <value>$INFO[ListItem.Thumb]</value>
+    </variable>
+    <!--Quick jump: the column position of the letter of the view's first visible item, for opening the
+        column on it (SetFocus(60,$VAR[jump_index],absolute) in the views' <onright>). scripts/quick_jump.py stores the
+        position of every letter as window property "jump_index_<letter>" when it lists the column.
+        ListItemPosition(0) is the item at the top left of the visible page, not the focused one.
+        Digits and characters outside A-Z fall back to the top entry ("#" when the view has digits).-->
+    <variable name="jump_index">
+        <value condition="String.IsEqual(Container.ListItemPosition(0).SortLetter,A)">$INFO[Window.Property(jump_index_A)]</value>
+        <value condition="String.IsEqual(Container.ListItemPosition(0).SortLetter,B)">$INFO[Window.Property(jump_index_B)]</value>
+        <value condition="String.IsEqual(Container.ListItemPosition(0).SortLetter,C)">$INFO[Window.Property(jump_index_C)]</value>
+        <value condition="String.IsEqual(Container.ListItemPosition(0).SortLetter,D)">$INFO[Window.Property(jump_index_D)]</value>
+        <value condition="String.IsEqual(Container.ListItemPosition(0).SortLetter,E)">$INFO[Window.Property(jump_index_E)]</value>
+        <value condition="String.IsEqual(Container.ListItemPosition(0).SortLetter,F)">$INFO[Window.Property(jump_index_F)]</value>
+        <value condition="String.IsEqual(Container.ListItemPosition(0).SortLetter,G)">$INFO[Window.Property(jump_index_G)]</value>
+        <value condition="String.IsEqual(Container.ListItemPosition(0).SortLetter,H)">$INFO[Window.Property(jump_index_H)]</value>
+        <value condition="String.IsEqual(Container.ListItemPosition(0).SortLetter,I)">$INFO[Window.Property(jump_index_I)]</value>
+        <value condition="String.IsEqual(Container.ListItemPosition(0).SortLetter,J)">$INFO[Window.Property(jump_index_J)]</value>
+        <value condition="String.IsEqual(Container.ListItemPosition(0).SortLetter,K)">$INFO[Window.Property(jump_index_K)]</value>
+        <value condition="String.IsEqual(Container.ListItemPosition(0).SortLetter,L)">$INFO[Window.Property(jump_index_L)]</value>
+        <value condition="String.IsEqual(Container.ListItemPosition(0).SortLetter,M)">$INFO[Window.Property(jump_index_M)]</value>
+        <value condition="String.IsEqual(Container.ListItemPosition(0).SortLetter,N)">$INFO[Window.Property(jump_index_N)]</value>
+        <value condition="String.IsEqual(Container.ListItemPosition(0).SortLetter,O)">$INFO[Window.Property(jump_index_O)]</value>
+        <value condition="String.IsEqual(Container.ListItemPosition(0).SortLetter,P)">$INFO[Window.Property(jump_index_P)]</value>
+        <value condition="String.IsEqual(Container.ListItemPosition(0).SortLetter,Q)">$INFO[Window.Property(jump_index_Q)]</value>
+        <value condition="String.IsEqual(Container.ListItemPosition(0).SortLetter,R)">$INFO[Window.Property(jump_index_R)]</value>
+        <value condition="String.IsEqual(Container.ListItemPosition(0).SortLetter,S)">$INFO[Window.Property(jump_index_S)]</value>
+        <value condition="String.IsEqual(Container.ListItemPosition(0).SortLetter,T)">$INFO[Window.Property(jump_index_T)]</value>
+        <value condition="String.IsEqual(Container.ListItemPosition(0).SortLetter,U)">$INFO[Window.Property(jump_index_U)]</value>
+        <value condition="String.IsEqual(Container.ListItemPosition(0).SortLetter,V)">$INFO[Window.Property(jump_index_V)]</value>
+        <value condition="String.IsEqual(Container.ListItemPosition(0).SortLetter,W)">$INFO[Window.Property(jump_index_W)]</value>
+        <value condition="String.IsEqual(Container.ListItemPosition(0).SortLetter,X)">$INFO[Window.Property(jump_index_X)]</value>
+        <value condition="String.IsEqual(Container.ListItemPosition(0).SortLetter,Y)">$INFO[Window.Property(jump_index_Y)]</value>
+        <value condition="String.IsEqual(Container.ListItemPosition(0).SortLetter,Z)">$INFO[Window.Property(jump_index_Z)]</value>
+        <value>0</value>
     </variable>
 </includes>

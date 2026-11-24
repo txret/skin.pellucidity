@@ -2,57 +2,41 @@
 <window>
     <defaultcontrol always="true">5</defaultcontrol>
 
-    <include>fadeInOut</include>
+    <include>fade_in_out</include>
     <controls>
-        <include>modalDialog</include>
+        <include>modal_dialog_dim</include>
         <control type="group">
-            <posx>col-1-begin</posx>
-            <posy>row-4-begin</posy>
-            <!--animations-->
-            <include>modalDialogInOut</include>
+            <posx>col_1_begin</posx>
+            <posy>row_4_begin</posy>
+            <include>modal_dialog_in_out</include>
             <control type="image">
-                <posx>0</posx>
-                <posy>0</posy>
-                <width>12-col</width>
-                <height></height>
+                <width>12_col</width>
                 <aspectratio align="left" aligny="top">keep</aspectratio>
                 <texture>$INFO[listitem.thumb]</texture>
             </control>
             <control type="panel" id="5">
-                <posx>13-col</posx>
-                <posy>0</posy>
-                <width>11-col</width>
-                <height>12-row</height>
+                <posx>13_col</posx>
+                <width>11_col</width>
+                <height>12_row</height>
                 <enable>false</enable>
-                <itemlayout width="5-col" height="2-row">
+                <itemlayout width="5_col" height="2_row">
                     <control type="label">
-                        <posx>0</posx>
-                        <posy>0</posy>
                         <width>324</width>
-                        <font>itemSubTitle</font>
+                        <font>item_subtitle</font>
                         <textcolor>highlight</textcolor>
                         <label>[B]$INFO[ListItem.label][/B]</label>
-                        <shadowcolor></shadowcolor>
                     </control>
                     <control type="label">
-                        <posx>0</posx>
                         <posy>32</posy>
                         <width>324</width>
-                        <font>itemSubTitle</font>
-                        <textcolor>textActive</textcolor>
+                        <font>item_subtitle</font>
                         <label fallback="13205">$INFO[ListItem.label2]</label>
-                        <shadowcolor></shadowcolor>
                     </control>
                 </itemlayout>
-                <focusedlayout width="5-col" height="2-row">
+                <focusedlayout width="5_col" height="2_row">
                 </focusedlayout>
             </control>
         </control>
-        <!--debugging-->
-        <include>DebugGrid</include>
-        <control type="label">
-            <include>DialogID</include>
-            <label>DialogPictureInfo.xml</label>
-        </control>
+        <include content="debug_overlay"><param name="label" value="DialogPictureInfo.xml"/></include>
     </controls>
 </window>

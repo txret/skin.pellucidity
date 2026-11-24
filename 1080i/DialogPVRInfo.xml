@@ -2,233 +2,129 @@
 <window>
     <defaultcontrol always="true">8000</defaultcontrol>
     <controls>
+        <!--background-->
         <control type="group">
-            <!--background-->
-            <control type="group">
-                <include>fadeInOut</include>
-                <control type="image">
-                    <include>dimensionsFullscreen</include>
-                    <texture>colors/black.png</texture>
-                    <colordiffuse>eeFFFFFF</colordiffuse>
-                    <aspectratio>stretch</aspectratio>
-                </control>
+            <include>fade_in_out</include>
+            <control type="image">
+                <include>dimensions_fullscreen</include>
+                <texture>colors/black.png</texture>
+                <colordiffuse>eeFFFFFF</colordiffuse>
             </control>
-            <!--content-->
-            <control type="group">
-                <posx>col-7-begin</posx>
-                <posy>row-5-begin</posy>
-                <include>modalDialogInOut</include>
-                <!--titles-->
-                <control type="label">
-                    <description>Episode title</description>
-                    <posx>0</posx>
-                    <posy>0</posy>
-                    <width>12-col-gutter</width>
-                    <height>3-row</height>
-                    <align>left</align>
-                    <aligny>center</aligny>
-                    <font>largeTitle</font>
-                    <textcolor>textActive</textcolor>
-                    <shadowcolor></shadowcolor>
-                    <label>$INFO[ListItem.Label]</label>
-                    <wrapmultiline>true</wrapmultiline>
-                </control>
-                <!--meta-->
-                <control type="panel">
-                    <posx>0</posx>
-                    <posy>132</posy>
-                    <width>10-col</width>
-                    <height>6-row</height>
-                    <enable>false</enable>
-                    <itemlayout width="5-col" height="78">
-                        <control type="label">
-                            <posx>0</posx>
-                            <posy>0</posy>
-                            <width>324</width>
-                            <font>itemSubTitle</font>
-                            <textcolor>highlight</textcolor>
-                            <label>[B]$INFO[ListItem.label][/B]</label>
-                            <shadowcolor></shadowcolor>
-                        </control>
-                        <control type="label">
-                            <posx>0</posx>
-                            <posy>30</posy>
-                            <width>324</width>
-                            <font>itemSubTitle</font>
-                            <textcolor>textActive</textcolor>
-                            <label fallback="13205">[B]$INFO[ListItem.label2][/B]</label>
-                            <shadowcolor></shadowcolor>
-                        </control>
-                    </itemlayout>
-                    <focusedlayout width="5-col" height="78">
-                    </focusedlayout>
-                    <content>
-                        <item>
-                            <label>$LOCALIZE[19029]</label>
-                            <label2>$INFO[ListItem.channelname]</label2>
-                            <thumb></thumb>
-                        </item>
-                        <item>
-                            <label>$LOCALIZE[552]</label>
-                            <label2>$INFO[ListItem.startdate]</label2>
-                            <thumb></thumb>
-                        </item>
-                        <item>
-                            <label>$LOCALIZE[515]</label>
-                            <label2>$INFO[ListItem.genre]</label2>
-                            <thumb></thumb>
-                        </item>
-                        <item>
-                            <label>$LOCALIZE[180]</label>
-                            <label2>$INFO[ListItem.duration]</label2>
-                            <thumb></thumb>
-                        </item>
-                    </content>
-                </control>
-                <!--synopsis-->
-                <control type="textbox">
-                    <posx>0</posx>
-                    <posy>292</posy>
-                    <font>textbox</font>
-                    <width>12-col</width>
-                    <align>left</align>
-                    <textcolor>textActive</textcolor>
-                    <shadowcolor></shadowcolor>
-                    <height>232</height>
-                    <label>$INFO[ListItem.plot]</label>
-                    <autoscroll>false</autoscroll>
-                    <pagecontrol>61</pagecontrol>
-                </control>
-                <control type="scrollbar" id="61">
-                    <posx>-36</posx>
-                    <posy>300</posy>
-                    <height>6-row</height>
-                    <ondown>8000</ondown>
-                </control>
-                <!--dialog controls-->
-                <control type="list" id="8000">
-                    <posx>0</posx>
-                    <posy>16-row</posy>
-                    <width>12-col</width>
-                    <height>2-row</height>
-                    <onup>61</onup>
-                    <orientation>horizontal</orientation>
-                    <itemlayout width="4-col" height="2-row">
-                        <control type="image">
-                            <posx>0</posx>
-                            <posy>0</posy>
-                            <width>4-col</width>
-                            <height>2-row</height>
-                            <aspectratio>stretch</aspectratio>
-                            <texture>colors/black.png</texture>
-                        </control>
-                        <control type="label">
-                            <posx>0</posx>
-                            <posy>0</posy>
-                            <width>1-col</width>
-                            <height>2-row</height>
-                            <aligny>center</aligny>
-                            <align>center</align>
-                            <font>symbolLarge</font>
-                            <textcolor>textActive</textcolor>
-                            <label>$INFO[ListItem.label2]</label>
-                            <shadowcolor></shadowcolor>
-                        </control>
-                        <control type="label">
-                            <posx>1-col-indent</posx>
-                            <posy>0</posy>
-                            <width>3-col</width>
-                            <height>2-row</height>
-                            <aligny>center</aligny>
-                            <font>buttonTitle</font>
-                            <textcolor>textActive</textcolor>
-                            <label>$INFO[ListItem.label]</label>
-                            <shadowcolor></shadowcolor>
-                        </control>
-                    </itemlayout>
-                    <focusedlayout width="4-col" height="2-row">
-                        <control type="image">
-                            <posx>0</posx>
-                            <posy>0</posy>
-                            <width>1-col-textbox</width>
-                            <height>2-row</height>
-                            <aspectratio>stretch</aspectratio>
-                            <texture>colors/white.png</texture>
-                            <colordiffuse>highlight</colordiffuse>
-                            <include>spinFocusIcon</include>
-                        </control>
-                        <control type="image">
-                            <posx>1-col</posx>
-                            <posy>0</posy>
-                            <width>3-col</width>
-                            <height>2-row</height>
-                            <aspectratio>stretch</aspectratio>
-                            <texture>colors/white.png</texture>
-                        </control>
-                        <control type="label">
-                            <posx>0</posx>
-                            <posy>0</posy>
-                            <width>1-col</width>
-                            <height>2-row</height>
-                            <aligny>center</aligny>
-                            <align>center</align>
-                            <font>symbolLarge</font>
-                            <textcolor>textActive</textcolor>
-                            <label>$INFO[ListItem.label2]</label>
-                            <shadowcolor></shadowcolor>
-                        </control>
-                        <control type="label">
-                            <posx>1-col-indent</posx>
-                            <posy>0</posy>
-                            <width>3-col</width>
-                            <height>2-row</height>
-                            <aligny>center</aligny>
-                            <font>buttonTitle</font>
-                            <textcolor>black</textcolor>
-                            <label>$INFO[ListItem.label]</label>
-                            <shadowcolor></shadowcolor>
-                        </control>
-                    </focusedlayout>
-                    <content>
-                        <item id="1">
-							<visible>window.isactive(tvchannels) | window.isactive(radiochannels) | window.isactive(tvguide)</visible>
-                            <label>208</label>
-                            <label2></label2>
-                            <thumb></thumb>
-                            <onclick>sendclick(pvrguideinfo,5)</onclick>
-                        </item>
-						<item id="2">
-							<visible>window.isactive(tvrecordings) | window.isactive(radiorecordings)</visible>
-                            <label>208</label>
-                            <label2></label2>
-                            <thumb></thumb>
-                            <onclick>sendclick(pvrrecordinginfo,8)</onclick>
-                        </item>
-                        <item id="3">
-							<visible>!window.isactive(tvrecordings) + !window.isactive(radiorecordings)</visible>
-                            <label>264</label>
-                            <label2></label2>
-                            <thumb></thumb>
-                            <onclick>SendClick(pvrguideinfo,6)</onclick>
-                        </item>
-                        <item id="4">
-							<visible>window.isactive(tvchannels) | window.isactive(radiochannels) | window.isactive(tvguide)</visible>
-                            <label>826</label>
-                            <label2></label2>
-                            <thumb></thumb>
-                            <onclick>SendClick(pvrguideinfo,11)</onclick>
-                        </item>
-                        <item id="5">
-							<visible>!window.isactive(tvrecordings) + !window.isactive(radiorecordings) + !window.isactive(tvguide)</visible>
-                            <label>31073</label>
-                            <label2></label2>
-                            <thumb></thumb>
-                            <onclick>dialog.close(all,true)</onclick>
-                            <onclick>ActivateWindow(TVGuide)</onclick>
-                            <onclick>Control.SetFocus(10)</onclick>
-                        </item>
-                    </content>
-                </control>
+        </control>
+        <!--content-->
+        <control type="group">
+            <posx>col_7_begin</posx>
+            <posy>row_5_begin</posy>
+            <include>modal_dialog_in_out</include>
+            <!--titles-->
+            <control type="label">
+                <description>Episode title</description>
+                <width>12_col_gutter</width>
+                <height>3_row</height>
+                <font>large_title</font>
+                <label>$INFO[ListItem.Label]</label>
+                <wrapmultiline>true</wrapmultiline>
+            </control>
+            <!--meta-->
+            <control type="panel">
+                <posy>132</posy>
+                <width>10_col</width>
+                <height>6_row</height>
+                <enable>false</enable>
+                <itemlayout width="5_col" height="78">
+                    <control type="label">
+                        <width>324</width>
+                        <font>item_subtitle</font>
+                        <textcolor>highlight</textcolor>
+                        <label>[B]$INFO[ListItem.label][/B]</label>
+                    </control>
+                    <control type="label">
+                        <posy>30</posy>
+                        <width>324</width>
+                        <font>item_subtitle</font>
+                        <label fallback="13205">[B]$INFO[ListItem.label2][/B]</label>
+                    </control>
+                </itemlayout>
+                <focusedlayout width="5_col" height="78">
+                </focusedlayout>
+                <content>
+                    <item>
+                        <label>$LOCALIZE[19029]</label>
+                        <label2>$INFO[ListItem.channelname]</label2>
+                    </item>
+                    <item>
+                        <label>$LOCALIZE[552]</label>
+                        <label2>$INFO[ListItem.startdate]</label2>
+                    </item>
+                    <item>
+                        <label>$LOCALIZE[515]</label>
+                        <label2>$INFO[ListItem.genre]</label2>
+                    </item>
+                    <item>
+                        <label>$LOCALIZE[180]</label>
+                        <label2>$INFO[ListItem.duration]</label2>
+                    </item>
+                </content>
+            </control>
+            <!--synopsis-->
+            <control type="textbox">
+                <posy>292</posy>
+                <font>textbox</font>
+                <width>12_col</width>
+                <align>left</align>
+                <height>232</height>
+                <label>$INFO[ListItem.plot]</label>
+                <autoscroll>false</autoscroll>
+                <pagecontrol>61</pagecontrol>
+            </control>
+            <control type="scrollbar" id="61">
+                <posx>-36</posx>
+                <posy>300</posy>
+                <height>6_row</height>
+                <ondown>8000</ondown>
+            </control>
+            <!--dialog controls-->
+            <control type="list" id="8000">
+                <posy>16_row</posy>
+                <width>12_col</width>
+                <height>2_row</height>
+                <onup>61</onup>
+                <orientation>horizontal</orientation>
+                <include content="layout_info_button_list"><param name="width" value="4_col"/><param name="label_width" value="3_col"/><param name="focus_width" value="3_col"/></include>
+                <content>
+                    <item id="1">
+                        <visible>window.isactive(tvchannels) | window.isactive(radiochannels) | window.isactive(tvguide)</visible>
+                        <label>208</label>
+                        <label2></label2>
+                        <onclick>sendclick(pvrguideinfo,5)</onclick>
+                    </item>
+                    <item id="2">
+                        <visible>window.isactive(tvrecordings) | window.isactive(radiorecordings)</visible>
+                        <label>208</label>
+                        <label2></label2>
+                        <onclick>sendclick(pvrrecordinginfo,8)</onclick>
+                    </item>
+                    <item id="3">
+                        <visible>!window.isactive(tvrecordings) + !window.isactive(radiorecordings)</visible>
+                        <label>264</label>
+                        <label2></label2>
+                        <onclick>SendClick(pvrguideinfo,6)</onclick>
+                    </item>
+                    <item id="4">
+                        <visible>window.isactive(tvchannels) | window.isactive(radiochannels) | window.isactive(tvguide)</visible>
+                        <label>826</label>
+                        <label2></label2>
+                        <onclick>SendClick(pvrguideinfo,11)</onclick>
+                    </item>
+                    <item id="5">
+                        <visible>!window.isactive(tvrecordings) + !window.isactive(radiorecordings) + !window.isactive(tvguide)</visible>
+                        <label>31073</label>
+                        <label2></label2>
+                        <onclick>dialog.close(all,true)</onclick>
+                        <onclick>ActivateWindow(TVGuide)</onclick>
+                        <onclick>Control.SetFocus(10)</onclick>
+                    </item>
+                </content>
             </control>
         </control>
         <!--buttons-->
@@ -254,11 +150,6 @@
                 <label>826</label>
             </control>
         </control>
-        <!--debugging-->
-        <include>DebugGrid</include>
-        <control type="label">
-            <include>WindowID</include>
-            <label>DialogPVRInfo.xml</label>
-        </control>
+        <include content="debug_overlay"><param name="label" value="DialogPVRInfo.xml"/></include>
     </controls>
 </window>

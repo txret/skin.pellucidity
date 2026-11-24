@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<timers>
+    <!--Folder navigation does not reload the window. Remember the last handled path per
+        window so selecting the parent item manually never triggers another focus change.
+        Only main media views (50-59) participate, not menus or recent-content widgets.-->
+    <timer>
+        <name>focus_first_folder_item</name>
+        <start reset="true">
+            [Window.IsActive(videos) | Window.IsActive(music) | Window.IsActive(pictures) | Window.IsActive(programs) | Window.IsActive(games) | Window.IsActive(addonbrowser) | Window.IsActive(tvrecordings) | Window.IsActive(radiorecordings) | Window.IsActive(tvtimers) | Window.IsActive(radiotimers) | Window.IsActive(musicplaylisteditor)] +
+            !System.HasModalDialog + !Container.IsUpdating +
+            Integer.IsGreater(System.CurrentControlID,49) + Integer.IsLess(System.CurrentControlID,60) +
+            !String.IsEqual(Container.FolderPath,Window.Property(pellucid_folder_focus_path))
+        </start>
+        <!--NumItems excludes the parent entry. Leave empty folders and restored content
+            selections alone; position 1 is the first item after the parent at position 0.-->
+        <onstart condition="ListItem.IsParentFolder + Integer.IsGreater(Container.NumItems,0)">Control.SetFocus($INFO[System.CurrentControlID],1,absolute)</onstart>
+        <onstart>SetProperty(pellucid_folder_focus_path,$ESCINFO[Container.FolderPath])</onstart>
+        <!--Re-arm after handling this path; the saved path prevents repeated actions.-->
+        <stop>true</stop>
+    </timer>
+</timers>

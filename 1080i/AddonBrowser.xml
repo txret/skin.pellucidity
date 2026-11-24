@@ -1,18 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <window>
     <defaultcontrol always="true">50</defaultcontrol>
-	<views>50,51</views>
+    <views>50,51</views>
     <controls>
-        <include>globalBackground</include>
-		<!--mini window-->
-		<include>miniVideoPlayer</include>
+        <include content="page_background"><param name="image" value="settings.jpg"/></include>
+        <include>mini_video_player</include>
         <control type="group" id="9999">
             <control type="group">
-                <posx>col-9-begin</posx>
-                <posy>row-6-begin</posy>
+                <posx>col_9_begin</posx>
+                <posy>row_6_begin</posy>
                 <visible>String.IsEqual(container.folderpath,addons://)</visible>
-                <!--animations-->
-                <include>modalDialogInOutVertical</include>
+                <include>modal_dialog_in_out_vertical</include>
                 <!--Initial menu-->
                 <control type="image">
                     <posx>-12</posx>
@@ -21,133 +19,88 @@
                     <height>600</height>
                     <texture>colors/black.png</texture>
                     <colordiffuse>overlay</colordiffuse>
-                    <aspectratio>stretch</aspectratio>
                 </control>
-                <control type="image">
-                    <posx>0</posx>
-                    <posy>0</posy>
-                    <width>8-col</width>
-                    <height>2-row</height>
-                    <texture>colors/white.png</texture>
-                    <colordiffuse>highlight</colordiffuse>
-                    <aspectratio>stretch</aspectratio>
-                </control>
-                <!--title-->
-                <control type="label">
-                    <posx>24</posx>
-                    <posy>0</posy>
-                    <width>8-col-gutter</width>
-                    <height>2-row</height>
-                    <font>dialogTitle</font>
-                    <label>$LOCALIZE[31113]</label>
-                    <textcolor>textActive</textcolor>
-                    <shadowcolor></shadowcolor>
-                </control>
+                <include content="dialog_title_bar"><param name="width" value="8_col"/><param name="label" value="$LOCALIZE[31113]"/></include>
                 <control type="panel" id="50">
                     <visible>String.IsEqual(container.folderpath,addons://)</visible>
-                    <posx>0</posx>
                     <posy>84</posy>
-                    <width>8-col</width>
-                    <height>18-row</height>
+                    <width>8_col</width>
+                    <height>18_row</height>
                     <onleft>activateWindow(contextmenu)</onleft>
                     <ondown>50</ondown>
                     <onup>50</onup>
-                    <itemgap>0</itemgap>
-                    <itemlayout width="8-col" height="84">
-	                    <control type="image">
-	                        <posx>0</posx>
-	                        <posy>0</posy>
-	                        <width>69</width>
-	                        <height>69</height>
-	                        <aspectratio scalediffuse="false">stretch</aspectratio>
-	                        <texture fallback="colors/offblack.png" border="0">$INFO[Listitem.thumb]</texture>
-	                    </control>
+                    <itemlayout width="8_col" height="84">
                         <control type="image">
-                            <posx>0</posx>
-                            <posy>0</posy>
-                            <width>1-col</width>
-                            <height>2-row</height>
-                            <aspectratio>stretch</aspectratio>
+                            <width>69</width>
+                            <height>69</height>
+                            <aspectratio scalediffuse="false">stretch</aspectratio>
+                            <texture fallback="colors/offblack.png">$INFO[Listitem.thumb]</texture>
+                        </control>
+                        <control type="image">
+                            <width>1_col</width>
+                            <height>2_row</height>
                             <texture>$INFO[listitem.icon]</texture>
                         </control>
                         <control type="label">
-                            <posx>1-col-indent</posx>
+                            <posx>1_col_indent</posx>
                             <posy>-1</posy>
-                            <width>6-col-gutter</width>
-                            <height>2-row</height>
-                            <aligny>center</aligny>
-                            <font>buttonTitle</font>
-                            <textcolor>textActive</textcolor>
+                            <width>6_col_gutter</width>
+                            <height>2_row</height>
+                            <font>button_title</font>
                             <label>$INFO[ListItem.label]</label>
                         </control>
                     </itemlayout>
-                    <focusedlayout width="8-col" height="84">
+                    <focusedlayout width="8_col" height="84">
                         <control type="group">
                             <control type="image">
-								<animation type="focus">
-						            <effect type="fade" start="100" end="50" time="0"/>
-						        </animation>
-                                <posx>0</posx>
-                                <posy>0</posy>
-                                <width>1-col</width>
-                                <height>2-row</height>
-                                <aspectratio>stretch</aspectratio>
+                                <animation type="focus">
+                                    <effect type="fade" start="100" end="50" time="0"/>
+                                </animation>
+                                <width>1_col</width>
+                                <height>2_row</height>
                                 <texture>colors/white.png</texture>
                                 <colordiffuse>highlight</colordiffuse>
                             </control>
                             <control type="image">
-                                <posx>0</posx>
-                                <posy>0</posy>
-                                <width>1-col</width>
-                                <height>2-row</height>
-                                <aspectratio>stretch</aspectratio>
+                                <width>1_col</width>
+                                <height>2_row</height>
                                 <texture>$INFO[listitem.icon]</texture>
                             </control>
-                            <include>spinFocusIcon</include>
+                            <include>spin_focus_icon</include>
                         </control>
                         <control type="image">
-                            <posx>1-col</posx>
-                            <posy>0</posy>
-                            <width>7-col</width>
-                            <height>2-row</height>
-                            <aspectratio>stretch</aspectratio>
+                            <posx>1_col</posx>
+                            <width>7_col</width>
+                            <height>2_row</height>
                             <texture>colors/white.png</texture>
                         </control>
                         <control type="label">
-                            <posx>0</posx>
-                            <posy>0</posy>
-                            <width>1-col</width>
-                            <height>2-row</height>
+                            <width>1_col</width>
+                            <height>2_row</height>
                             <align>center</align>
-                            <aligny>center</aligny>
-                            <font>symbolLarge</font>
-                            <textcolor>textActive</textcolor>
+                            <font>symbol_large</font>
                             <label>$INFO[ListItem.label2]</label>
-                            <shadowcolor></shadowcolor>
                         </control>
                         <control type="label">
-                            <posx>1-col-indent</posx>
+                            <posx>1_col_indent</posx>
                             <posy>-1</posy>
-                            <width>6-col-gutter</width>
-                            <height>2-row</height>
-                            <aligny>center</aligny>
-                            <font>buttonTitle</font>
+                            <width>6_col_gutter</width>
+                            <height>2_row</height>
+                            <font>button_title</font>
                             <textcolor>black</textcolor>
                             <label>$INFO[ListItem.label]</label>
-                            <shadowcolor></shadowcolor>
                         </control>
                     </focusedlayout>
                 </control>
             </control>
             <!--submenus-->
             <control type="group">
-                <!--animations-->
                 <animation type="visible">
                     <effect type="fade" start="0" end="100" time="300"/>
                     <effect type="slide" start="0,-200" end="0" tween="cubic" easing="out" time="400"/>
                 </animation>
-                <posx>col-7-begin</posx>
-                <posy>row-4-begin</posy>
+                <posx>col_7_begin</posx>
+                <posy>row_4_begin</posy>
                 <visible>!String.IsEqual(container.folderpath,addons://)</visible>
                 <!--dialog background-->
                 <control type="image">
@@ -157,170 +110,109 @@
                     <height>792</height>
                     <texture>colors/black.png</texture>
                     <colordiffuse>overlay</colordiffuse>
-                    <aspectratio>stretch</aspectratio>
                 </control>
-				<control type="image">
-                    <posx>0</posx>
-                    <posy>0</posy>
-                    <width>12-col</width>
-                    <height>71</height>
-                    <texture>colors/white.png</texture>
-                    <colordiffuse>highlight</colordiffuse>
-                    <aspectratio>stretch</aspectratio>
-                </control>
-                <!--title-->
-                <control type="label">
-                    <posx>24</posx>
-                    <posy>0</posy>
-                    <width>11-col</width>
-                    <height>2-row</height>
-                    <font>dialogTitle</font>
-                    <label>$INFO[container.foldername] $INFO[container.numitems,(,)]</label>
-                    <textcolor>textActive</textcolor>
-                    <shadowcolor></shadowcolor>
-                </control>
+                <include content="dialog_title_bar"><param name="width" value="12_col"/><param name="label" value="$INFO[container.foldername] $INFO[container.numitems,(,)]"/></include>
                 <control type="panel" id="51">
                     <visible>!String.IsEqual(container.folderpath,addons://)</visible>
-                    <posx>0</posx>
                     <posy>84</posy>
-                    <width>12-col</width>
-                    <height>19-row</height>
+                    <width>12_col</width>
+                    <height>19_row</height>
                     <onleft>activateWindow(contextmenu)</onleft>
                     <onright>60</onright>
                     <ondown>51</ondown>
                     <onup>51</onup>
                     <pagecontrol>60</pagecontrol>
-                    <itemlayout width="12-col" height="84">
-	                    <control type="image">
-	                        <posx>0</posx>
-	                        <posy>0</posy>
-	                        <width>69</width>
-	                        <height>69</height>
-	                        <aspectratio scalediffuse="false">stretch</aspectratio>
-	                        <texture fallback="colors/offblack.png" border="0">$INFO[Listitem.thumb]</texture>
-	                    </control>
+                    <itemlayout width="12_col" height="84">
+                        <control type="image">
+                            <width>69</width>
+                            <height>69</height>
+                            <aspectratio scalediffuse="false">stretch</aspectratio>
+                            <texture fallback="colors/offblack.png">$INFO[Listitem.thumb]</texture>
+                        </control>
                         <control type="label">
                             <visible>ListItem.AddonLifecycleDesc</visible>
-                            <posx>0</posx>
-                            <posy>0</posy>
-                            <width>1-col</width>
-                            <height>2-row</height>
+                            <width>1_col</width>
+                            <height>2_row</height>
                             <align>center</align>
-                            <aligny>center</aligny>
-                            <font>symbolLarge</font>
-                            <textcolor>textActive</textcolor>
+                            <font>symbol_large</font>
                             <label></label>
-                            <shadowcolor></shadowcolor>
                         </control>
                         <control type="label">
                             <visible>ListItem.Property(Addon.HasUpdate)</visible>
-                            <posx>0</posx>
-                            <posy>0</posy>
-                            <width>1-col</width>
-                            <height>2-row</height>
+                            <width>1_col</width>
+                            <height>2_row</height>
                             <align>center</align>
-                            <aligny>center</aligny>
-                            <font>symbolLarge</font>
-                            <textcolor>textActive</textcolor>
+                            <font>symbol_large</font>
                             <label></label>
-                            <shadowcolor></shadowcolor>
                         </control>
                         <control type="label">
-                            <posx>1-col-indent</posx>
-                            <posy>0</posy>
-                            <width>10-col-gutter</width>
-                            <height>2-row</height>
-                            <aligny>center</aligny>
-                            <font>itemTitle</font>
-                            <textcolor>textActive</textcolor>
-                            <shadowcolor></shadowcolor>
+                            <posx>1_col_indent</posx>
+                            <width>10_col_gutter</width>
+                            <height>2_row</height>
+                            <font>item_title</font>
                             <label>$INFO[ListItem.Label]</label>
                         </control>
                     </itemlayout>
-                    <focusedlayout width="14-col" height="84">
+                    <focusedlayout width="14_col" height="84">
                         <control type="group">
-                            <include>spinFocusIcon</include>
+                            <include>spin_focus_icon</include>
                             <control type="image">
-								<animation type="focus">
-						            <effect type="fade" start="100" end="50" time="0"/>
-						        </animation>
-                                <posx>0</posx>
-                                <posy>0</posy>
-                                <width>1-col</width>
-                                <height>1-col</height>
+                                <animation type="focus">
+                                    <effect type="fade" start="100" end="50" time="0"/>
+                                </animation>
+                                <width>1_col</width>
+                                <height>1_col</height>
                                 <aspectratio scalediffuse="false">stretch</aspectratio>
-                                <texture border="0">colors/white.png</texture>
+                                <texture>colors/white.png</texture>
                                 <colordiffuse>highlight</colordiffuse>
                             </control>
                             <control type="label">
                                 <visible>ListItem.AddonLifecycleDesc</visible>
-                                <posx>0</posx>
-                                <posy>0</posy>
-                                <width>1-col</width>
-                                <height>2-row</height>
+                                <width>1_col</width>
+                                <height>2_row</height>
                                 <align>center</align>
-                                <aligny>center</aligny>
-                                <font>symbolLarge</font>
-                                <textcolor>textActive</textcolor>
+                                <font>symbol_large</font>
                                 <label></label>
-                                <shadowcolor></shadowcolor>
                             </control>
                             <control type="label">
                                 <visible>ListItem.Property(Addon.HasUpdate)</visible>
-                                <posx>0</posx>
-                                <posy>0</posy>
-                                <width>1-col</width>
-                                <height>2-row</height>
+                                <width>1_col</width>
+                                <height>2_row</height>
                                 <align>center</align>
-                                <aligny>center</aligny>
-                                <font>symbolLarge</font>
-                                <textcolor>textActive</textcolor>
+                                <font>symbol_large</font>
                                 <label></label>
-                                <shadowcolor></shadowcolor>
                             </control>
                         </control>
                         <control type="image">
-                            <posx>1-col</posx>
-                            <posy>0</posy>
-                            <width>11-col-textbox</width>
-                            <height>2-row</height>
-                            <aspectratio>stretch</aspectratio>
-                            <texture border="0">colors/white.png</texture>
+                            <posx>1_col</posx>
+                            <width>11_col_textbox</width>
+                            <height>2_row</height>
+                            <texture>colors/white.png</texture>
                         </control>
                         <control type="label">
-                            <posx>1-col-indent</posx>
-                            <posy>0</posy>
-                            <width>9-col-gutter</width>
-                            <height>2-row</height>
-                            <aligny>center</aligny>
-                            <font>itemTitle</font>
+                            <posx>1_col_indent</posx>
+                            <width>9_col_gutter</width>
+                            <height>2_row</height>
+                            <font>item_title</font>
                             <textcolor>black</textcolor>
-                            <shadowcolor></shadowcolor>
                             <label>$INFO[ListItem.Label]</label>
                         </control>
                     </focusedlayout>
-                </control>                
+                </control>
             </control>
-            <control type="group">
-                <!--page scrollbar-->
-                <control type="group" id="8000">
-                    <visible>Control.IsVisible(60)</visible>
-                    <animation effect="fade" start="100" end="0" time="100" condition="!controlgroup(8000).hasfocus">conditional</animation>
-                    <control type="scrollbar" id="60">
-                        <posx>1420</posx>
-                        <posy>row-11-begin</posy>
-                        <height>10-row</height>
-                        <onleft>50</onleft>
-                        <onback>50</onback>
-                    </control>
+            <!--page scrollbar-->
+            <control type="group" id="8000">
+                <visible>Control.IsVisible(60)</visible>
+                <animation effect="fade" start="100" end="0" time="100" condition="!controlgroup(8000).hasfocus">conditional</animation>
+                <control type="scrollbar" id="60">
+                    <posx>1420</posx>
+                    <posy>row_11_begin</posy>
+                    <height>10_row</height>
+                    <onleft>50</onleft>
+                    <onback>50</onback>
                 </control>
             </control>
         </control>
-        <!--debugging-->
-        <include>DebugGrid</include>
-        <control type="label">
-            <include>DialogID</include>
-            <label>AddonBrowser.xml</label>
-        </control>
+        <include content="debug_overlay"><param name="label" value="AddonBrowser.xml"/></include>
     </controls>
 </window>

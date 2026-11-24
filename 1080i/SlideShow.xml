@@ -1,13 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <window>
-    <include>fadeInOut</include>
+    <include>fade_in_out</include>
     <onunload>control.setfocus(50)</onunload>
     <controls>
-        <!--debugging-->
-        <include>DebugGrid</include>
-        <control type="label">
-            <include>WindowID</include>
-            <label>SlideShow.xml</label>
-        </control>
+        <include content="debug_overlay"><param name="label" value="SlideShow.xml"/></include>
     </controls>
 </window>

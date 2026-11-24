@@ -1,29 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--Now playing strip at the top of every window while music plays. Home, the visualisation and
+    the fullscreen player (1103) show the track themselves.-->
 <window type="dialog" id="1102">
     <visible>player.hasaudio + !Window.IsActive(visualisation) + !window.isactive(home) + !window.isactive(1103)</visible>
     <controls>
         <control type="group">
-            <posx>col-12-begin</posx>
-            <posy>0</posy>
+            <posx>col_12_begin</posx>
             <animation type="windowopen">
                 <effect type="slide" start="0,-50" end="0,0" tween="cubic" easing="out" delay="500" time="300"/>
                 <effect type="fade" start="0" end="100" time="500" delay="500"/>
             </animation>
             <control type="image">
-				<animation type="conditional" condition="true">
-					<effect type="fade" start="100" end="33" time="0"/>
-				</animation>
-                <posx>0</posx>
-                <posy>0</posy>
-                <width>1-col-textbox</width>
+                <animation type="conditional" condition="true">
+                    <effect type="fade" start="100" end="33" time="0"/>
+                </animation>
+                <width>1_col_textbox</width>
                 <height>54</height>
                 <texture>colors/white.png</texture>
                 <colordiffuse>highlight</colordiffuse>
             </control>
-			<control type="image">
-                <posx>1-col</posx>
-                <posy>0</posy>
-                <width>7-col</width>
+            <control type="image">
+                <posx>1_col</posx>
+                <width>7_col</width>
                 <height>54</height>
                 <texture>colors/white.png</texture>
                 <colordiffuse>highlight</colordiffuse>
@@ -32,34 +30,28 @@
                 <visible>!player.paused + !Skin.HasSetting(lowPowerMode)</visible>
                 <posx>12</posx>
                 <posy>-10</posy>
-                <width>1-col-gutter</width>
-                <height>1-col-gutter</height>
+                <width>1_col_gutter</width>
+                <height>1_col_gutter</height>
                 <texture>equaliser.gif</texture>
             </control>
             <control type="label">
                 <visible>!player.paused + Skin.HasSetting(lowPowerMode)</visible>
                 <posx>3</posx>
                 <posy>-9</posy>
-                <width>1-col-textbox</width>
-                <height>2-row</height>
+                <width>1_col_textbox</width>
+                <height>2_row</height>
                 <align>center</align>
-                <aligny>center</aligny>
                 <font>symbol</font>
-                <textcolor>textActive</textcolor>
-                <shadowcolor></shadowcolor>
                 <label></label>
             </control>
             <control type="label">
                 <visible>player.paused</visible>
                 <posx>3</posx>
                 <posy>-9</posy>
-                <width>1-col-textbox</width>
-                <height>2-row</height>
+                <width>1_col_textbox</width>
+                <height>2_row</height>
                 <align>center</align>
-                <aligny>center</aligny>
                 <font>symbol</font>
-                <textcolor>textActive</textcolor>
-                <shadowcolor></shadowcolor>
                 <label></label>
                 <animation type="conditional" condition="true" loop="true">
                     <effect type="fade" start="0" end="100" time="1000"/>
@@ -68,25 +60,13 @@
             </control>
             <control type="label">
                 <description>Artist</description>
-                <posx>1-col-indent</posx>
-                <posy>0</posy>
-                <font>itemSubTitle</font>
-                <width>7-col-gutter</width>
+                <posx>1_col_indent</posx>
+                <font>item_subtitle</font>
+                <width>7_col_gutter</width>
                 <height>54</height>
-                <align>left</align>
-                <aligny>center</aligny>
-                <height>1-row</height>
                 <label>$INFO[MusicPlayer.TimeRemaining]  [B]$INFO[musicplayer.Artist,, ][/B]$INFO[MusicPlayer.Title]</label>
-                <scroll>false</scroll>
-                <textcolor>textActive</textcolor>
             </control>
         </control>
-        <!--debugging-->
-        <include>DebugGrid</include>
-        <control type="label">
-            <visible>false</visible>
-            <include>DialogID</include>
-            <label>custom_musicOverlay.xml</label>
-        </control>
+        <include content="debug_overlay"><param name="label" value="custom_musicOverlay.xml"/></include>
     </controls>
 </window>

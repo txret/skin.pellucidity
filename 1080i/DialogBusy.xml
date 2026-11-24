@@ -1,13 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <window>
-    <defaultcontrol always="true"></defaultcontrol>
     <controls>
-        <control type="label">
-            <posy>0</posy>
-            <include>DialogID</include>
-            <label>DialogBusy.xml</label>
-        </control>
-        <include>loadingIndicator</include>
-        <include>DebugGrid</include>
+        <include>loading_indicator</include>
+        <include content="debug_overlay"><param name="label" value="DialogBusy.xml"/></include>
     </controls>
 </window>

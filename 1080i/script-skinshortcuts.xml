@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<window>
+    <defaultcontrol always="false">211</defaultcontrol>
+    <include>fade_in_out</include>
+    <onunload>control.setfocus(9000)</onunload>
+    <controls>
+        <!--background-->
+        <control type="group">
+            <include content="page_background"><param name="image" value="settings.jpg"/></include>
+            <posx>col_4_begin</posx>
+            <posy>row_5_begin</posy>
+            <include>modal_dialog_in_out_vertical</include>
+            <control type="image">
+                <posx>-12</posx>
+                <posy>-12</posy>
+                <width>1320</width>
+                <height>708</height>
+                <texture>colors/black.png</texture>
+                <colordiffuse>overlay</colordiffuse>
+            </control>
+            <include content="dialog_title_bar"><param name="width" value="18_col"/><param name="label" value="$LOCALIZE[31228]"/></include>
+            <control type="image">
+                <posy>71</posy>
+                <width>18_col</width>
+                <height>1</height>
+                <texture>colors/black.png</texture>
+            </control>
+            <!--options-->
+            <control type="grouplist" id="300">
+                <posy>84</posy>
+                <width>276</width>
+                <height>17_row</height>
+                <itemgap>0</itemgap>
+                <control type="button" id="301">
+                    <description>Add a new shortcut</description>
+                    <onright>211</onright>
+                    <width>5_col_gutter</width>
+                    <label>$ADDON[script.skinshortcuts 32000]</label>
+                </control>
+                <control type="button" id="302">
+                    <description>Delete shortcut</description>
+                    <onright>211</onright>
+                    <width>5_col_gutter</width>
+                    <label>$ADDON[script.skinshortcuts 32001]</label>
+                </control>
+                <control type="button" id="303">
+                    <description>Move shortcut up</description>
+                    <onright>211</onright>
+                    <width>5_col_gutter</width>
+                    <label>$ADDON[script.skinshortcuts 32002]</label>
+                </control>
+                <control type="button" id="304">
+                    <description>Move shortcut down</description>
+                    <onright>211</onright>
+                    <width>5_col_gutter</width>
+                    <label>$ADDON[script.skinshortcuts 32003]</label>
+                </control>
+                <control type="button" id="305">
+                    <description>Change shortcut label</description>
+                    <onright>211</onright>
+                    <width>5_col_gutter</width>
+                    <label>$ADDON[script.skinshortcuts 32025]</label>
+                </control>
+                <control type="button" id="401">
+                    <description>Choose shortcut (apps, library, add-ons, favourites...)</description>
+                    <onright>211</onright>
+                    <width>5_col_gutter</width>
+                    <label>Choose shortcut</label>
+                </control>
+                <control type="button" id="307">
+                    <description>Change shortcut action</description>
+                    <onright>211</onright>
+                    <width>5_col_gutter</width>
+                    <label>$ADDON[script.skinshortcuts 32027]</label>
+                </control>
+                <control type="button" id="311">
+                    <description>Restore a deleted item</description>
+                    <visible>!String.IsEmpty(Window.Property(skinshortcuts-hasdeleted))</visible>
+                    <onright>211</onright>
+                    <width>5_col_gutter</width>
+                    <label>$ADDON[script.skinshortcuts 32137]</label>
+                </control>
+                <control type="button" id="312">
+                    <description>Reset the selected item to the skin default</description>
+                    <visible>!String.IsEmpty(Container(211).ListItem.Property(isResettable))</visible>
+                    <onright>211</onright>
+                    <width>5_col_gutter</width>
+                    <label>$ADDON[script.skinshortcuts 32138]</label>
+                </control>
+            </control>
+            <!-- id 211 - Current shortcuts -->
+            <!--options-->
+            <control type="list" id="211">
+                <posx>4_col</posx>
+                <posy>84</posy>
+                <width>14_col</width>
+                <height>17_row</height>
+                <onleft>300</onleft>
+                <itemlayout width="14_col" height="2_row">
+                    <control type="label">
+                        <posx>24</posx>
+                        <width>13_col</width>
+                        <height>2_row</height>
+                        <font>button_title</font>
+                        <label>$INFO[ListItem.label]</label>
+                    </control>
+                </itemlayout>
+                <focusedlayout width="14_col" height="2_row">
+                    <control type="image">
+                        <width>14_col</width>
+                        <height>2_row</height>
+                        <texture>colors/white.png</texture>
+                        <colordiffuse>text_active</colordiffuse>
+                        <animation effect="fade" start="100" end="50" condition="!Control.HasFocus(211)">Conditional</animation>
+                    </control>
+                    <control type="label">
+                        <posx>24</posx>
+                        <width>13_col</width>
+                        <height>2_row</height>
+                        <font>button_title</font>
+                        <textcolor>black</textcolor>
+                        <label>$INFO[ListItem.label]</label>
+                    </control>
+                </focusedlayout>
+            </control>
+        </control>
+        <include content="debug_overlay"><param name="label" value="script-skinshortcuts.xml"/></include>
+    </controls>
+</window>

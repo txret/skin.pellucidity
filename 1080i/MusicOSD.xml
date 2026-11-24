@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--Kodi's music OSD is not shown; the fullscreen music player (1103) takes its place. The player's
+    "visualisation" button opens this window only to press the OSD's own "select visualisation"
+    button (500), which must exist here for that; then the window closes again.-->
 <window>
-    <!--content moved to custom_musicPlayerFullscreen.xml-->
     <onload condition="!window.isactive(1103)">back</onload>
     <onload>sendclick(10120,500)</onload>
     <onload>back</onload>

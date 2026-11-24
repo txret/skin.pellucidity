@@ -1,7 +1,7 @@
 # Kodi Media Center language file
-# Addon Name: Pellucid
-# Addon id: skin.pellucid
-# Addon Provider: chrisbevan
+# Addon Name: Pellucidity
+# Addon id: skin.pellucidity
+# Addon Provider: txret
 msgid ""
 msgstr ""
 "Project-Id-Version: Kodi Skins\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
 msgctxt "Addon Summary"
-msgid "A skin for Kodi from theDeadmanInYossariansTent"
+msgid "A modified version of the Pellucid skin by theDeadmanInYossariansTent"
 msgstr ""
 
 msgctxt "Addon Description"
@@ -34,10 +34,6 @@ msgstr ""
 
 msgctxt "#31014"
 msgid "title(s)"
-msgstr ""
-
-msgctxt "#31015"
-msgid "On"
 msgstr ""
 
 msgctxt "#31019"
@@ -244,10 +240,6 @@ msgctxt "#31114"
 msgid "Pixel format"
 msgstr ""
 
-msgctxt "#31116"
-msgid "Set home background directory"
-msgstr ""
-
 msgctxt "#31117"
 msgid "Launch addon"
 msgstr ""
@@ -258,10 +250,6 @@ msgstr ""
 
 msgctxt "#31121"
 msgid "My Kodi"
-msgstr ""
-
-msgctxt "#31122"
-msgid "Reset home backgrounds to default"
 msgstr ""
 
 msgctxt "#31123"
@@ -284,10 +272,6 @@ msgctxt "#31138"
 msgid "Stop video playing on return to menu"
 msgstr ""
 
-msgctxt "#31142"
-msgid "Prioritise exit over shutdown in power menu"
-msgstr ""
-
 msgctxt "#31143"
 msgid "Remaining"
 msgstr ""
@@ -302,10 +286,6 @@ msgstr ""
 
 msgctxt "#31149"
 msgid "Released"
-msgstr ""
-
-msgctxt "#31152"
-msgid "Press OK to cancel"
 msgstr ""
 
 msgctxt "#31153"

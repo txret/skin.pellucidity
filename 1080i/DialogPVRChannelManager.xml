@@ -1,16 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <window>
     <defaultcontrol always="true">20</defaultcontrol>
-
+    <include>fade_in_out</include>
     <controls>
-        <!--background-->
-        <include>globalBackground</include>
+        <include content="page_background"><param name="image" value="tv.jpg"/></include>
         <control type="group">
-            <!--animations-->
-            <include>modalDialogInOutVertical</include>
+            <include>modal_dialog_in_out_vertical</include>
             <control type="group">
-                <posx>col-2-begin</posx>
-                <posy>row-3-begin</posy>
+                <posx>col_2_begin</posx>
+                <posy>row_3_begin</posy>
                 <control type="image">
                     <posx>-12</posx>
                     <posy>-12</posy>
@@ -18,121 +16,84 @@
                     <height>864</height>
                     <texture>colors/black.png</texture>
                     <colordiffuse>overlay</colordiffuse>
-                    <aspectratio>stretch</aspectratio>
                 </control>
                 <control type="image">
-                    <posx>0</posx>
-                    <posy>0</posy>
-                    <width>22-col</width>
-                    <height>2-row</height>
+                    <width>22_col</width>
+                    <height>2_row</height>
                     <texture>colors/white.png</texture>
                     <colordiffuse>highlight</colordiffuse>
-                    <aspectratio>stretch</aspectratio>
                 </control>
-				<control type="image">
-                    <posx>0</posx>
+                <control type="image">
                     <posy>84</posy>
-                    <width>16-col</width>
+                    <width>16_col</width>
                     <height>71</height>
                     <texture>colors/offblack.png</texture>
-                    <aspectratio>stretch</aspectratio>
                 </control>
                 <control type="label">
                     <visible>String.IsEmpty(Window.Property(IsRadio))</visible>
                     <posx>24</posx>
-                    <posy>0</posy>
-                    <width>16-col</width>
-                    <height>2-row</height>
-                    <aligny>center</aligny>
-                    <font>dialogTitle</font>
+                    <width>16_col</width>
+                    <height>2_row</height>
+                    <font>dialog_title</font>
                     <label>$LOCALIZE[19199] - $LOCALIZE[19023]</label>
-                    <textcolor>textActive</textcolor>
-                    <shadowcolor></shadowcolor>
                 </control>
                 <control type="label">
                     <visible>!String.IsEmpty(Window.Property(IsRadio))</visible>
                     <posx>24</posx>
-                    <posy>0</posy>
-                    <width>16-col</width>
-                    <height>2-row</height>
-                    <aligny>center</aligny>
-                    <font>dialogTitle</font>
+                    <width>16_col</width>
+                    <height>2_row</height>
+                    <font>dialog_title</font>
                     <label>$LOCALIZE[19199] - $LOCALIZE[19024]</label>
-                    <textcolor>textActive</textcolor>
-                    <shadowcolor></shadowcolor>
                 </control>
                 <!--channel list-->
                 <control type="label">
                     <description>name label</description>
                     <posx>24</posx>
                     <posy>84</posy>
-                    <width>8-col</width>
-                    <height>2-row</height>
-                    <aligny>center</aligny>
-                    <font>itemSubTitle</font>
-                    <textcolor>textActive</textcolor>
+                    <width>8_col</width>
+                    <height>2_row</height>
+                    <font>item_subtitle</font>
                     <label>$LOCALIZE[19029]</label>
                 </control>
                 <control type="list" id="20">
-                    <posx>0</posx>
                     <posy>168</posy>
                     <width>564</width>
                     <height>672</height>
                     <onright>7</onright>
-                    <itemlayout height="72" width="8-col">
+                    <itemlayout height="72" width="8_col">
                         <control type="image">
-                            <posx>0</posx>
-                            <posy>0</posy>
                             <width>69</width>
-                            <height>2-row</height>
-                            <aspectratio>stretch</aspectratio>
-                            <texture fallback="colors/offblack.png" border="0">$INFO[ListItem.Property(Icon)]</texture>
+                            <height>2_row</height>
+                            <texture fallback="colors/offblack.png">$INFO[ListItem.Property(Icon)]</texture>
                         </control>
                         <control type="label">
-                            <posx>1-col-indent</posx>
-                            <posy>0</posy>
-                            <width>6-col</width>
-                            <height>2-row</height>
-                            <aligny>center</aligny>
-                            <font>buttonTitle</font>
-                            <textcolor>textActive</textcolor>
-                            <shadowcolor></shadowcolor>
+                            <posx>1_col_indent</posx>
+                            <width>6_col</width>
+                            <height>2_row</height>
+                            <font>button_title</font>
                             <label>$INFO[ListItem.Property(Number),(,) - ]$INFO[ListItem.Property(Name)]</label>
                         </control>
                     </itemlayout>
-                    <focusedlayout height="72" width="8-col">
+                    <focusedlayout height="72" width="8_col">
                         <control type="image">
-                            <posx>0</posx>
-                            <posy>0</posy>
                             <width>69</width>
-                            <height>2-row</height>
-                            <aspectratio>stretch</aspectratio>
-                            <texture fallback="colors/white.png" border="0">$INFO[ListItem.Property(Icon)]</texture>
-                            <animation type="focus" loop="false" reversible="false">
-                                <effect type="fade" time="500"/>
-                                <effect type="rotatey" end="360" center="33" tween="back" easing="out" time="1000"/>
-                            </animation>
+                            <height>2_row</height>
+                            <texture fallback="colors/white.png">$INFO[ListItem.Property(Icon)]</texture>
+                            <include>spin_focus_thumb</include>
                         </control>
                         <control type="image">
                             <posx>72</posx>
-                            <posy>0</posy>
-                            <width>9-col</width>
-                            <height>2-row</height>
-                            <aspectratio>stretch</aspectratio>
+                            <width>9_col</width>
+                            <height>2_row</height>
                             <texture>colors/white.png</texture>
-                            <bordersize>0</bordersize>
-                            <colordiffuse>ffffffff</colordiffuse>
                         </control>
                         <control type="label">
-                            <posx>1-col-indent</posx>
-                            <posy>0</posy>
-                            <width>6-col</width>
-                            <height>2-row</height>
-                            <aligny>center</aligny>
-                            <font>buttonTitle</font>
+                            <posx>1_col_indent</posx>
+                            <width>6_col</width>
+                            <height>2_row</height>
+                            <font>button_title</font>
                             <textcolor>black</textcolor>
                             <selectedcolor>black</selectedcolor>
-                            <shadowcolor></shadowcolor>
                             <label>$INFO[ListItem.Property(Number),(,) - ]$INFO[ListItem.Property(Name)]</label>
                         </control>
                     </focusedlayout>
@@ -142,17 +103,15 @@
                     <description>name label</description>
                     <posx>600</posx>
                     <posy>84</posy>
-                    <width>8-col</width>
-                    <height>2-row</height>
-                    <aligny>center</aligny>
-                    <font>itemSubTitle</font>
-                    <textcolor>textActive</textcolor>
+                    <width>8_col</width>
+                    <height>2_row</height>
+                    <font>item_subtitle</font>
                     <label>$LOCALIZE[31179]</label>
                 </control>
                 <control type="grouplist">
-                    <posx>8-col</posx>
+                    <posx>8_col</posx>
                     <posy>168</posy>
-					<itemgap>0</itemgap>
+                    <itemgap>0</itemgap>
                     <control type="radiobutton" id="7">
                         <description>Channel activated</description>
                         <width>564</width>
@@ -164,7 +123,7 @@
                     <control type="edit" id="8">
                         <description>Channel name</description>
                         <width>564</width>
-                        <font>buttonTitle</font>
+                        <font>button_title</font>
                         <align>left</align>
                         <texturefocus>colors/white.png</texturefocus>
                         <texturenofocus></texturenofocus>
@@ -231,108 +190,37 @@
                         <ondown>32</ondown>
                     </control>
                 </control>
-                <!--OK / Cancel / apply-->                 
+                <!--OK / Cancel / apply-->
                 <control type="panel" id="9000">
-                    <posx>17-col</posx>
+                    <posx>17_col</posx>
                     <posy>84</posy>
-                    <width>5-col</width>
-                    <height>10-row</height>
-                    <itemgap>0</itemgap>
-                    <orientation>vertical</orientation>
+                    <width>5_col</width>
+                    <height>10_row</height>
                     <onleft>7</onleft>
-                    <itemlayout width="6-col" height="72">
-                        <control type="label">
-                            <posx>0</posx>
-                            <posy>0</posy>
-                            <width>1-col</width>
-                            <height>2-row</height>
-                            <align>center</align>
-                            <aligny>center</aligny>
-                            <font>symbolLarge</font>
-                            <textcolor>textActive</textcolor>
-                            <label>$INFO[ListItem.label2]</label>
-                        </control>
-                        <control type="label">
-                            <posx>1-col-indent</posx>
-                            <posy>-1</posy>
-                            <width>4-col-gutter</width>
-                            <height>2-row</height>
-                            <aligny>center</aligny>
-                            <font>buttonTitle</font>
-                            <textcolor>textActive</textcolor>
-                            <label>$INFO[ListItem.label]</label>
-                        </control>
-                    </itemlayout>
-                    <focusedlayout width="6-col" height="72">
-                        <control type="image">
-                            <posx>0</posx>
-                            <posy>0</posy>
-                            <width>1-col-textbox</width>
-                            <height>2-row</height>
-                            <aspectratio>stretch</aspectratio>
-                            <texture>colors/white.png</texture>
-                            <colordiffuse>highlight</colordiffuse>
-                            <include>spinFocusIcon</include>
-                        </control>
-                        <control type="image">
-                            <posx>1-col</posx>
-                            <posy>0</posy>
-                            <width>5-col</width>
-                            <height>2-row</height>
-                            <aspectratio>stretch</aspectratio>
-                            <texture>colors/white.png</texture>
-                        </control>
-                        <control type="label">
-                            <posx>0</posx>
-                            <posy>0</posy>
-                            <width>1-col</width>
-                            <height>2-row</height>
-                            <align>center</align>
-                            <aligny>center</aligny>
-                            <font>symbolLarge</font>
-                            <textcolor>textActive</textcolor>
-                            <label>$INFO[ListItem.label2]</label>
-                            <shadowcolor></shadowcolor>
-                        </control>
-                        <control type="label">
-                            <posx>1-col-indent</posx>
-                            <posy>-1</posy>
-                            <width>5-col-gutter</width>
-                            <height>2-row</height>
-                            <aligny>center</aligny>
-                            <font>buttonTitle</font>
-                            <textcolor>black</textcolor>
-                            <label>$INFO[ListItem.label]</label>
-                            <shadowcolor></shadowcolor>
-                        </control>
-                    </focusedlayout>
+                    <include content="layout_icon_button_sized"><param name="height" value="72"/><param name="width" value="6_col"/><param name="label_width" value="4_col_gutter"/><param name="focus_width" value="5_col"/></include>
                     <content>
-						<item id="5">
-	                        <description>Switch TV / Radio</description>
-	                        <label>31236</label>
-	                        <label2></label2>
-	                        <thumb></thumb>
-	                        <onclick>SendClick(34)</onclick>
-	                    </item>
-						<item id="2">
+                        <item id="5">
+                            <description>Switch TV / Radio</description>
+                            <label>31236</label>
+                            <label2></label2>
+                            <onclick>SendClick(34)</onclick>
+                        </item>
+                        <item id="2">
                             <description>Apply Button</description>
                             <label>14070</label>
                             <label2></label2>
-                            <thumb></thumb>
                             <onclick>SendClick(5)</onclick>
                         </item>
                         <item id="3">
                             <description>Ok Button</description>
                             <label>186</label>
                             <label2></label2>
-                            <thumb></thumb>
                             <onclick>SendClick(4)</onclick>
                         </item>
                         <item id="4">
                             <description>Cancel Button</description>
                             <label>222</label>
                             <label2></label2>
-                            <thumb></thumb>
                             <onclick>SendClick(6)</onclick>
                         </item>
                     </content>
@@ -343,7 +231,7 @@
         <!--dialog control buttons-->
         <control type="group">
             <visible>false</visible>
-			<control type="togglebutton" id="34">
+            <control type="togglebutton" id="34">
                 <description>Switch TV / Radio</description>
             </control>
             <control type="button" id="4">
@@ -358,11 +246,6 @@
             </control>
         </control>
 
-        <!--debugging-->
-        <include>DebugGrid</include>
-        <control type="label">
-            <include>WindowID</include>
-            <label>DialogPVRChannelManager.xml</label>
-        </control>
+        <include content="debug_overlay"><param name="label" value="DialogPVRChannelManager.xml"/></include>
     </controls>
 </window>

@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--Invisible helper. A video / music window opened without a path has nothing to list, so this
+    dialog shows itself in that situation, closes all dialogs (itself included) and hands focus
+    to the hub menu (9000) for the user to pick a section.-->
 <window type="dialog" id="1107">
     <onload>Dialog.Close(all,true)</onload>
     <onload>control.setfocus(9000)</onload>

@@ -1,135 +1,95 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <window>
     <defaultcontrol always="true">9000</defaultcontrol>
+    <include>fade_in_out</include>
     <controls>
-        <!--background-->
-        <include>globalBackground</include>
-		<!--mini window-->
-		<include>miniVideoPlayer</include>
+        <include content="page_background"><param name="image" value="settings.jpg"/></include>
+        <include>mini_video_player</include>
         <!--main menu-->
         <control type="group">
-            <posx>col-4-begin</posx>
-            <posy>row-7-begin</posy>
-            <!--animations-->
-            <include>modalDialogInOutVertical</include>
+            <posx>col_4_begin</posx>
+            <posy>row_7_begin</posy>
+            <include>modal_dialog_in_out_vertical</include>
             <control type="image">
                 <posx>-12</posx>
                 <posy>-12</posy>
                 <width>1324</width>
-                <height>504</height>
+                <height>522</height>
                 <texture>colors/black.png</texture>
                 <colordiffuse>overlay</colordiffuse>
-                <aspectratio>stretch</aspectratio>
             </control>
-            <control type="image">
-                <posx>0</posx>
-                <posy>0</posy>
-                <width>18-col</width>
-                <height>2-row</height>
-                <texture>colors/white.png</texture>
-                <colordiffuse>highlight</colordiffuse>
-                <aspectratio>stretch</aspectratio>
-            </control>
-            <control type="label">
-                <posx>24</posx>
-                <posy>0</posy>
-                <width>8-col</width>
-                <height>2-row</height>
-                <aligny>center</aligny>
-                <font>dialogTitle</font>
-                <label>$LOCALIZE[5]</label>
-                <textcolor>textActive</textcolor>
-                <shadowcolor></shadowcolor>
-            </control>
+            <include content="dialog_title_bar"><param name="width" value="18_col"/><param name="label" value="$LOCALIZE[5]"/></include>
             <!--menu-->
             <control type="Panel" id="9000">
-                <posx>0</posx>
                 <posy>66</posy>
-                <width>18-col</width>
-                <height>12-col</height>
+                <width>18_col</width>
+                <height>12_col</height>
                 <ondown>9001</ondown>
-                <itemlayout width="6-col" height="3-row">
+                <itemlayout width="6_col" height="3_row">
                     <control type="image">
-                        <posx>0</posx>
                         <posy>18</posy>
-                        <width>1-col</width>
-                        <height>1-col</height>
+                        <width>1_col</width>
+                        <height>1_col</height>
                         <aspectratio scalediffuse="false">scale</aspectratio>
-                        <texture border="0">colors/black.png</texture>
+                        <texture>colors/black.png</texture>
                         <colordiffuse>overlay</colordiffuse>
                     </control>
                     <control type="label">
-                        <posx>0</posx>
-                        <posy>0</posy>
-                        <width>1-col</width>
-                        <height>3-row</height>
+                        <width>1_col</width>
+                        <height>3_row</height>
                         <align>center</align>
-                        <aligny>center</aligny>
-                        <font>symbolLarge</font>
-                        <textcolor>menuUnselected</textcolor>
+                        <font>symbol_large</font>
+                        <textcolor>menu_unselected</textcolor>
                         <label>$INFO[ListItem.label2]</label>
                     </control>
                     <control type="label">
                         <posx>84</posx>
-                        <posy>0</posy>
-                        <width>5-col-gutter</width>
-                        <height>2-row</height>
-                        <aligny>center</aligny>
-                        <font>settingsCategory</font>
-                        <textcolor>textActive</textcolor>
+                        <width>5_col_gutter</width>
+                        <height>2_row</height>
+                        <font>settings_category</font>
                         <label>$INFO[ListItem.label]</label>
                     </control>
                     <control type="label">
                         <posx>84</posx>
-                        <posy>1-row</posy>
-                        <width>5-col-gutter</width>
-                        <height>2-row</height>
-                        <aligny>center</aligny>
-                        <font>settingsCategoryTitle</font>
-                        <textcolor>menuUnselected</textcolor>
+                        <posy>1_row</posy>
+                        <width>5_col_gutter</width>
+                        <height>2_row</height>
+                        <font>settings_category_title</font>
+                        <textcolor>menu_unselected</textcolor>
                         <label>$INFO[listitem.property(label3)]</label>
                     </control>
                 </itemlayout>
-                <focusedlayout width="6-col" height="3-row">
+                <focusedlayout width="6_col" height="3_row">
                     <control type="image">
-                        <posx>0</posx>
                         <posy>18</posy>
-                        <width>1-col</width>
-                        <height>1-col</height>
+                        <width>1_col</width>
+                        <height>1_col</height>
                         <aspectratio scalediffuse="false">scale</aspectratio>
-                        <texture border="0">colors/white.png</texture>
-                        <colordiffuse>textActive</colordiffuse>
-                        <include>spinFocusIcon</include>
+                        <texture>colors/white.png</texture>
+                        <colordiffuse>text_active</colordiffuse>
+                        <include>spin_focus_icon</include>
                     </control>
                     <control type="label">
-                        <posx>0</posx>
-                        <posy>0</posy>
-                        <width>1-col</width>
-                        <height>3-row</height>
+                        <width>1_col</width>
+                        <height>3_row</height>
                         <align>center</align>
-                        <aligny>center</aligny>
-                        <font>symbolLarge</font>
+                        <font>symbol_large</font>
                         <textcolor>ff222222</textcolor>
                         <label>$INFO[ListItem.label2]</label>
                     </control>
                     <control type="label">
                         <posx>84</posx>
-                        <posy>0</posy>
-                        <width>5-col-gutter</width>
-                        <height>2-row</height>
-                        <aligny>center</aligny>
-                        <font>settingsCategory</font>
-                        <textcolor>textActive</textcolor>
+                        <width>5_col_gutter</width>
+                        <height>2_row</height>
+                        <font>settings_category</font>
                         <label>$INFO[ListItem.label]</label>
                     </control>
                     <control type="label">
                         <posx>84</posx>
-                        <posy>1-row</posy>
-                        <width>5-col-gutter</width>
-                        <height>2-row</height>
-                        <aligny>center</aligny>
-                        <font>settingsCategoryTitle</font>
-                        <textcolor>textActive</textcolor>
+                        <posy>1_row</posy>
+                        <width>5_col_gutter</width>
+                        <height>2_row</height>
+                        <font>settings_category_title</font>
                         <label>$INFO[listitem.property(label3)]</label>
                     </control>
                 </focusedlayout>
@@ -220,24 +180,19 @@
                     </item>
                 </content>
             </control>
-			<!--libreelec builds only-->
-			<control type="button" id="9001">
-				<visible>System.HasAddon(service.libreelec.settings)</visible>
-				<label>$LOCALIZE[31226]</label>
-				<posx>6-col</posx>
-                <posy>15-row</posy>
-                <width>6-col</width>
-				<align>center</align>
-				<texturenofocus>colors/offblack.png</texturenofocus>
-				<onclick>RunAddon(service.libreelec.settings)</onclick>
-				<onup>9000</onup>
-			</control>
+            <!--libreelec builds only-->
+            <control type="button" id="9001">
+                <visible>System.HasAddon(service.libreelec.settings)</visible>
+                <label>$LOCALIZE[31226]</label>
+                <posx>6_col</posx>
+                <posy>15_row</posy>
+                <width>6_col</width>
+                <align>center</align>
+                <texturenofocus>colors/offblack.png</texturenofocus>
+                <onclick>RunAddon(service.libreelec.settings)</onclick>
+                <onup>9000</onup>
+            </control>
         </control>
-        <!--debugging-->
-        <include>DebugGrid</include>
-        <control type="label">
-            <include>WindowID</include>
-            <label>Settings.xml</label>
-        </control>
+        <include content="debug_overlay"><param name="label" value="Settings.xml"/></include>
     </controls>
 </window>

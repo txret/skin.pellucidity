@@ -1,0 +1,704 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Item/focused layout pairs shared by several containers.
+    Each include supplies both <itemlayout> and <focusedlayout>; params cover the values that differ.-->
+<includes>
+    <!--side button rows: symbol icon + label (OK / Cancel panels)-->
+    <include name="layout_icon_button">
+        <itemlayout width="4_col" height="2_row">
+            <control type="label">
+                <width>1_col</width>
+                <height>2_row</height>
+                <align>center</align>
+                <font>symbol_large</font>
+                <label>$INFO[ListItem.label2]</label>
+            </control>
+            <control type="label">
+                <posx>1_col_indent</posx>
+                <width>5_col_gutter</width>
+                <height>2_row</height>
+                <font>button_title</font>
+                <label>$INFO[ListItem.label]</label>
+            </control>
+        </itemlayout>
+        <focusedlayout width="4_col" height="2_row">
+            <control type="image">
+                <width>1_col</width>
+                <height>2_row</height>
+                <texture>colors/white.png</texture>
+                <colordiffuse>highlight</colordiffuse>
+                <include>spin_focus_icon</include>
+            </control>
+            <control type="image">
+                <posx>1_col</posx>
+                <width>5_col</width>
+                <height>2_row</height>
+                <texture>colors/white.png</texture>
+            </control>
+            <control type="label">
+                <width>1_col</width>
+                <height>2_row</height>
+                <align>center</align>
+                <font>symbol_large</font>
+                <label>$INFO[ListItem.label2]</label>
+            </control>
+            <control type="label">
+                <posx>1_col_indent</posx>
+                <width>5_col_gutter</width>
+                <height>2_row</height>
+                <font>button_title</font>
+                <textcolor>black</textcolor>
+                <label>$INFO[ListItem.label]</label>
+            </control>
+        </focusedlayout>
+    </include>
+
+    <!--side button rows: symbol icon + label, sized per dialog-->
+    <include name="layout_icon_button_sized">
+        <param name="height"/>
+        <param name="width"/>
+        <param name="label_width"/>
+        <param name="focus_width"/>
+        <definition>
+            <itemlayout width="$PARAM[width]" height="$PARAM[height]">
+                <control type="label">
+                    <width>1_col</width>
+                    <height>2_row</height>
+                    <align>center</align>
+                    <font>symbol_large</font>
+                    <label>$INFO[ListItem.label2]</label>
+                </control>
+                <control type="label">
+                    <posx>1_col_indent</posx>
+                    <posy>-1</posy>
+                    <width>$PARAM[label_width]</width>
+                    <height>2_row</height>
+                    <font>button_title</font>
+                    <label>$INFO[ListItem.label]</label>
+                </control>
+            </itemlayout>
+            <focusedlayout width="$PARAM[width]" height="$PARAM[height]">
+                <control type="image">
+                    <width>1_col_textbox</width>
+                    <height>2_row</height>
+                    <texture>colors/white.png</texture>
+                    <colordiffuse>highlight</colordiffuse>
+                    <include>spin_focus_icon</include>
+                </control>
+                <control type="image">
+                    <posx>1_col</posx>
+                    <width>$PARAM[focus_width]</width>
+                    <height>2_row</height>
+                    <texture>colors/white.png</texture>
+                </control>
+                <control type="label">
+                    <width>1_col</width>
+                    <height>2_row</height>
+                    <align>center</align>
+                    <font>symbol_large</font>
+                    <label>$INFO[ListItem.label2]</label>
+                </control>
+                <control type="label">
+                    <posx>1_col_indent</posx>
+                    <posy>-1</posy>
+                    <width>5_col_gutter</width>
+                    <height>2_row</height>
+                    <font>button_title</font>
+                    <textcolor>black</textcolor>
+                    <label>$INFO[ListItem.label]</label>
+                </control>
+            </focusedlayout>
+        </definition>
+    </include>
+
+    <!--player control symbols (previous / play / next ...)-->
+    <include name="layout_player_symbol">
+        <itemlayout width="1_col" height="2_row">
+            <control type="label">
+                <width>1_col</width>
+                <height>2_row</height>
+                <align>center</align>
+                <font>symbol</font>
+                <label>$INFO[ListItem.label2]</label>
+            </control>
+        </itemlayout>
+        <focusedlayout width="1_col" height="2_row">
+            <control type="image">
+                <width>1_col</width>
+                <height>69</height>
+                <texture>colors/white.png</texture>
+                <colordiffuse>highlight</colordiffuse>
+            </control>
+            <control type="label">
+                <width>1_col</width>
+                <height>2_row</height>
+                <align>center</align>
+                <font>symbol</font>
+                <label>$INFO[ListItem.label2]</label>
+            </control>
+        </focusedlayout>
+    </include>
+
+    <!--info dialog detail rows (bold label + subtitle)-->
+    <include name="layout_info_text_row">
+        <param name="height"/>
+        <definition>
+            <itemlayout width="5_col" height="$PARAM[height]">
+                <control type="label">
+                    <posx>12</posx>
+                    <width>4_col_gutter</width>
+                    <font>item_subtitle</font>
+                    <textcolor>highlight</textcolor>
+                    <label>[B]$INFO[ListItem.label][/B]</label>
+                </control>
+                <control type="label">
+                    <posx>12</posx>
+                    <posy>30</posy>
+                    <width>4_col_gutter</width>
+                    <font>item_subtitle</font>
+                    <label fallback="13205">[B]$INFO[ListItem.label2][/B]</label>
+                </control>
+            </itemlayout>
+            <focusedlayout width="5_col" height="$PARAM[height]">
+            </focusedlayout>
+        </definition>
+    </include>
+
+    <!--info dialog buttons (panel): symbol icon + label on a dark tile-->
+    <include name="layout_info_button">
+        <param name="bg_color"/>
+        <param name="label_width"/>
+        <param name="focus_label_width"/>
+        <definition>
+            <itemlayout width="5_col" height="2_row">
+                <control type="image">
+                    <width>1_col_textbox</width>
+                    <height>2_row</height>
+                    <texture>colors/black.png</texture>
+                    <colordiffuse>$PARAM[bg_color]</colordiffuse>
+                </control>
+                <control type="label">
+                    <width>1_col</width>
+                    <height>2_row</height>
+                    <align>center</align>
+                    <font>symbol_large</font>
+                    <label>$INFO[ListItem.label2]</label>
+                </control>
+                <control type="label">
+                    <posx>1_col_indent</posx>
+                    <width>$PARAM[label_width]</width>
+                    <height>2_row</height>
+                    <font>button_title</font>
+                    <label>$INFO[ListItem.label]</label>
+                </control>
+            </itemlayout>
+            <focusedlayout width="5_col" height="2_row">
+                <control type="image">
+                    <width>1_col</width>
+                    <height>2_row</height>
+                    <texture>colors/white.png</texture>
+                    <colordiffuse>highlight</colordiffuse>
+                    <include>spin_focus_icon</include>
+                </control>
+                <control type="image">
+                    <posx>1_col</posx>
+                    <width>3_col</width>
+                    <height>2_row</height>
+                    <texture>colors/white.png</texture>
+                </control>
+                <control type="label">
+                    <width>1_col</width>
+                    <height>2_row</height>
+                    <align>center</align>
+                    <font>symbol_large</font>
+                    <label>$INFO[ListItem.label2]</label>
+                </control>
+                <control type="label">
+                    <posx>1_col_indent</posx>
+                    <width>$PARAM[focus_label_width]</width>
+                    <height>2_row</height>
+                    <font>button_title</font>
+                    <textcolor>black</textcolor>
+                    <label>$INFO[ListItem.label]</label>
+                </control>
+            </focusedlayout>
+        </definition>
+    </include>
+
+    <!--info dialog buttons (list): symbol icon + label on a dark tile-->
+    <include name="layout_info_button_list">
+        <param name="width"/>
+        <param name="label_width"/>
+        <param name="focus_width"/>
+        <definition>
+            <itemlayout width="$PARAM[width]" height="2_row">
+                <control type="image">
+                    <width>$PARAM[width]</width>
+                    <height>2_row</height>
+                    <texture>colors/black.png</texture>
+                </control>
+                <control type="label">
+                    <width>1_col</width>
+                    <height>2_row</height>
+                    <align>center</align>
+                    <font>symbol_large</font>
+                    <label>$INFO[ListItem.label2]</label>
+                </control>
+                <control type="label">
+                    <posx>1_col_indent</posx>
+                    <width>$PARAM[label_width]</width>
+                    <height>2_row</height>
+                    <font>button_title</font>
+                    <label>$INFO[ListItem.label]</label>
+                </control>
+            </itemlayout>
+            <focusedlayout width="$PARAM[width]" height="2_row">
+                <control type="image">
+                    <width>1_col_textbox</width>
+                    <height>2_row</height>
+                    <texture>colors/white.png</texture>
+                    <colordiffuse>highlight</colordiffuse>
+                    <include>spin_focus_icon</include>
+                </control>
+                <control type="image">
+                    <posx>1_col</posx>
+                    <width>$PARAM[focus_width]</width>
+                    <height>2_row</height>
+                    <texture>colors/white.png</texture>
+                </control>
+                <control type="label">
+                    <width>1_col</width>
+                    <height>2_row</height>
+                    <align>center</align>
+                    <font>symbol_large</font>
+                    <label>$INFO[ListItem.label2]</label>
+                </control>
+                <control type="label">
+                    <posx>1_col_indent</posx>
+                    <width>$PARAM[label_width]</width>
+                    <height>2_row</height>
+                    <font>button_title</font>
+                    <textcolor>black</textcolor>
+                    <label>$INFO[ListItem.label]</label>
+                </control>
+            </focusedlayout>
+        </definition>
+    </include>
+
+    <!--library view category switcher (recent / in progress / ...)-->
+    <include name="layout_view_category">
+        <param name="width"/>
+        <param name="focus_condition"/>
+        <definition>
+            <itemlayout width="$PARAM[width]" height="2_row">
+                <control type="label">
+                    <width>$PARAM[width]</width>
+                    <height>2_row</height>
+                    <font>menu_title</font>
+                    <textcolor>text_disabled</textcolor>
+                    <label>$INFO[ListItem.property(text_title)]</label>
+                </control>
+            </itemlayout>
+            <focusedlayout width="$PARAM[width]" height="2_row">
+                <control type="label">
+                    <width>$PARAM[width]</width>
+                    <height>2_row</height>
+                    <font>menu_title</font>
+                    <label>$INFO[ListItem.property(text_title)]</label>
+                    <animation type="conditional" condition="$PARAM[focus_condition]" loop="true">
+                        <effect type="fade" start="100" end="50" time="1000"/>
+                    </animation>
+                </control>
+            </focusedlayout>
+        </definition>
+    </include>
+
+    <!--symbol-only buttons on a tile-->
+    <include name="layout_symbol_button">
+        <param name="width"/>
+        <param name="bg_color"/>
+        <param name="focus_width"/>
+        <definition>
+            <itemlayout width="$PARAM[width]" height="2_row">
+                <control type="image">
+                    <width>1_col_textbox</width>
+                    <height>2_row</height>
+                    <texture>colors/black.png</texture>
+                    <colordiffuse>$PARAM[bg_color]</colordiffuse>
+                </control>
+                <control type="label">
+                    <width>1_col</width>
+                    <height>2_row</height>
+                    <align>center</align>
+                    <font>symbol_large</font>
+                    <label>$INFO[ListItem.label2]</label>
+                </control>
+            </itemlayout>
+            <focusedlayout width="$PARAM[width]" height="2_row">
+                <control type="image">
+                    <width>$PARAM[focus_width]</width>
+                    <height>2_row</height>
+                    <texture>colors/white.png</texture>
+                    <colordiffuse>highlight</colordiffuse>
+                    <include>spin_focus_icon</include>
+                </control>
+                <control type="label">
+                    <width>1_col</width>
+                    <height>2_row</height>
+                    <align>center</align>
+                    <font>symbol_large</font>
+                    <label>$INFO[ListItem.label2]</label>
+                </control>
+            </focusedlayout>
+        </definition>
+    </include>
+
+    <!--text button rows-->
+    <include name="layout_text_button_row">
+        <param name="focus_width"/>
+        <definition>
+            <itemlayout height="2_row" width="4_col">
+                <control type="label">
+                    <posx>24</posx>
+                    <posy>2</posy>
+                    <width>4_col_gutter</width>
+                    <height>2_row</height>
+                    <font>button_title</font>
+                    <label>$INFO[ListItem.label]</label>
+                </control>
+            </itemlayout>
+            <focusedlayout height="2_row" width="4_col">
+                <control type="image">
+                    <width>$PARAM[focus_width]</width>
+                    <height>2_row</height>
+                    <texture>colors/white.png</texture>
+                </control>
+                <control type="label">
+                    <posx>24</posx>
+                    <width>4_col_gutter</width>
+                    <height>2_row</height>
+                    <font>button_title</font>
+                    <textcolor>black</textcolor>
+                    <label>$INFO[ListItem.label]</label>
+                </control>
+            </focusedlayout>
+        </definition>
+    </include>
+
+    <!--file manager pane rows-->
+    <include name="layout_file_manager_row">
+        <param name="label_width"/>
+        <param name="focus_width"/>
+        <param name="focus_condition"/>
+        <definition>
+            <itemlayout height="2_row" width="9_col">
+                <control type="label">
+                    <posx>24</posx>
+                    <width>$PARAM[label_width]</width>
+                    <height>2_row</height>
+                    <info>ListItem.Label</info>
+                    <font>item_title</font>
+                </control>
+                <control type="label">
+                    <posx>12r</posx>
+                    <width>3_col</width>
+                    <height>2_row</height>
+                    <align>right</align>
+                    <info>ListItem.Label2</info>
+                    <font>item_title</font>
+                    <textcolor>highlight</textcolor>
+                </control>
+            </itemlayout>
+            <focusedlayout height="2_row" width="9_col">
+                <control type="image">
+                    <width>$PARAM[focus_width]</width>
+                    <height>2_row</height>
+                    <texture>colors/white.png</texture>
+                    <animation effect="fade" start="100" end="20" condition="$PARAM[focus_condition]">Conditional</animation>
+                </control>
+                <control type="label">
+                    <posx>24</posx>
+                    <width>$PARAM[label_width]</width>
+                    <height>2_row</height>
+                    <info>ListItem.Label</info>
+                    <font>item_title</font>
+                    <textcolor>black</textcolor>
+                </control>
+                <control type="label">
+                    <posx>12r</posx>
+                    <width>3_col</width>
+                    <height>2_row</height>
+                    <align>right</align>
+                    <info>ListItem.Label2</info>
+                    <font>item_title</font>
+                    <textcolor>black</textcolor>
+                </control>
+            </focusedlayout>
+        </definition>
+    </include>
+
+    <!--OSD buttons: symbol icon + label-->
+    <include name="layout_osd_button">
+        <param name="width"/>
+        <param name="label_width"/>
+        <param name="font"/>
+        <param name="focus_width"/>
+        <definition>
+            <itemlayout width="$PARAM[width]" height="2_row">
+                <control type="label">
+                    <width>1_col</width>
+                    <height>2_row</height>
+                    <align>center</align>
+                    <font>symbol_large</font>
+                    <label>$INFO[ListItem.label2]</label>
+                </control>
+                <control type="label">
+                    <posx>1_col_indent</posx>
+                    <width>$PARAM[label_width]</width>
+                    <height>2_row</height>
+                    <font>$PARAM[font]</font>
+                    <label>$INFO[ListItem.label]</label>
+                </control>
+            </itemlayout>
+            <focusedlayout width="$PARAM[width]" height="2_row">
+                <control type="image">
+                    <width>1_col</width>
+                    <height>2_row</height>
+                    <texture>colors/white.png</texture>
+                    <colordiffuse>highlight</colordiffuse>
+                </control>
+                <control type="image">
+                    <posx>1_col</posx>
+                    <width>$PARAM[focus_width]</width>
+                    <height>2_row</height>
+                    <texture>colors/white.png</texture>
+                    <colordiffuse>eeffffff</colordiffuse>
+                </control>
+                <control type="label">
+                    <width>1_col</width>
+                    <height>2_row</height>
+                    <align>center</align>
+                    <font>symbol_large</font>
+                    <label>$INFO[ListItem.label2]</label>
+                </control>
+                <control type="label">
+                    <posx>1_col_indent</posx>
+                    <width>$PARAM[label_width]</width>
+                    <height>2_row</height>
+                    <font>$PARAM[font]</font>
+                    <textcolor>black</textcolor>
+                    <label>$INFO[ListItem.label]</label>
+                </control>
+            </focusedlayout>
+        </definition>
+    </include>
+
+    <!--playlist editor rows-->
+    <include name="layout_playlist_editor_row">
+        <param name="width"/>
+        <param name="focus_condition"/>
+        <definition>
+            <itemlayout height="2_row" width="$PARAM[width]">
+                <control type="label">
+                    <posx>24</posx>
+                    <width>8_col</width>
+                    <height>2_row</height>
+                    <info>ListItem.Label</info>
+                    <font>item_title</font>
+                </control>
+            </itemlayout>
+            <focusedlayout height="2_row" width="$PARAM[width]">
+                <control type="image">
+                    <width>9_col</width>
+                    <height>2_row</height>
+                    <texture>colors/white.png</texture>
+                    <animation effect="fade" start="100" end="50" condition="$PARAM[focus_condition]">Conditional</animation>
+                </control>
+                <control type="label">
+                    <posx>24</posx>
+                    <width>8_col</width>
+                    <height>2_row</height>
+                    <info>ListItem.Label</info>
+                    <font>item_title</font>
+                    <textcolor>black</textcolor>
+                </control>
+            </focusedlayout>
+        </definition>
+    </include>
+
+    <!--artist thumbnails with name-->
+    <include name="layout_artist_thumb">
+        <param name="shadow"/>
+        <definition>
+            <itemlayout width="444" height="288">
+                <control type="image">
+                    <width>6_col_gutter</width>
+                    <height>4_col_gutter</height>
+                    <aspectratio>scale</aspectratio>
+                    <texture>colors/black.png</texture>
+                    <bordersize>12</bordersize>
+                    <colordiffuse>overlay</colordiffuse>
+                </control>
+                <control type="image">
+                    <width>6_col_gutter</width>
+                    <height>4_col_gutter</height>
+                    <aspectratio align="center" aligny="top">scale</aspectratio>
+                    <texture>$INFO[Listitem.art(thumb)]</texture>
+                    <bordersize>12</bordersize>
+                </control>
+                <control type="textbox">
+                    <posx>24</posx>
+                    <posy>80</posy>
+                    <width>372</width>
+                    <height>3_row</height>
+                    <align>center</align>
+                    <aligny>center</aligny>
+                    <font>menu_title</font>
+                    <label>$INFO[ListItem.label]</label>
+                    <shadowcolor>$PARAM[shadow]</shadowcolor>
+                </control>
+            </itemlayout>
+            <focusedlayout width="444" height="264">
+                <control type="group">
+                    <include>focus_thumb</include>
+                    <control type="image">
+                        <width>6_col_gutter</width>
+                        <height>4_col_gutter</height>
+                        <aspectratio>scale</aspectratio>
+                        <texture border="6">colors/black.png</texture>
+                        <bordertexture border="6" colordiffuse="ffFFFFFF">colors/white.png</bordertexture>
+                        <bordersize>6</bordersize>
+                        <colordiffuse>FF000000</colordiffuse>
+                    </control>
+                    <control type="image">
+                        <width>6_col_gutter</width>
+                        <height>4_col_gutter</height>
+                        <aspectratio align="center" aligny="top">scale</aspectratio>
+                        <texture>$INFO[Listitem.art(thumb)]</texture>
+                        <bordersize>6</bordersize>
+                    </control>
+                    <control type="textbox">
+                        <posx>24</posx>
+                        <posy>80</posy>
+                        <width>372</width>
+                        <height>3_row</height>
+                        <align>center</align>
+                        <aligny>center</aligny>
+                        <font>menu_title</font>
+                        <label>$INFO[ListItem.label]</label>
+                        <shadowcolor>$PARAM[shadow]</shadowcolor>
+                    </control>
+                </control>
+            </focusedlayout>
+        </definition>
+    </include>
+
+    <!--plain file rows: circular thumb, tinted bar and label.
+        Shared by the file/list views of several windows; the defaults match the media views.
+        tint / thumb_tint: unfocused bar and thumb diffuse (dialogs use textbox_inactive, untinted thumbs pass FFFFFFFF).
+        width / bar_width: row and bar width for containers narrower than 24 columns.
+        Extra per-row controls (summary, watched mark) are given as children of the include call;
+        <nested/> places them after the label in both layouts.-->
+    <include name="layout_file_row">
+        <param name="label_width"/>
+        <param name="label" default="$INFO[ListItem.Label]"/>
+        <param name="thumb" default="$INFO[ListItem.Thumb]"/>
+        <param name="thumb_aspect" default="stretch"/>
+        <param name="thumb_tint" default="overlay"/>
+        <param name="tint" default="overlay"/>
+        <param name="width" default="24_col"/>
+        <param name="bar_width" default="23_col"/>
+        <definition>
+            <itemlayout width="$PARAM[width]" height="2_row">
+                <control type="image">
+                    <posy>3</posy>
+                    <width>66</width>
+                    <height>66</height>
+                    <aspectratio scalediffuse="false">$PARAM[thumb_aspect]</aspectratio>
+                    <texture fallback="colors/black.png" diffuse="masks/circle.png">$PARAM[thumb]</texture>
+                    <colordiffuse>$PARAM[thumb_tint]</colordiffuse>
+                </control>
+                <control type="image">
+                    <posx>1_col</posx>
+                    <width>$PARAM[bar_width]</width>
+                    <height>69</height>
+                    <texture>colors/black.png</texture>
+                    <colordiffuse>$PARAM[tint]</colordiffuse>
+                </control>
+                <control type="label">
+                    <posx>1_col_indent</posx>
+                    <width>$PARAM[label_width]</width>
+                    <height>2_row</height>
+                    <font>item_title</font>
+                    <label>$PARAM[label]</label>
+                </control>
+                <nested/>
+            </itemlayout>
+            <focusedlayout width="$PARAM[width]" height="2_row">
+                <control type="image">
+                    <posy>3</posy>
+                    <width>66</width>
+                    <height>66</height>
+                    <aspectratio scalediffuse="false">$PARAM[thumb_aspect]</aspectratio>
+                    <texture fallback="colors/white.png" diffuse="masks/circle.png">$PARAM[thumb]</texture>
+                    <include>spin_focus_thumb</include>
+                </control>
+                <control type="image">
+                    <posx>1_col</posx>
+                    <width>$PARAM[bar_width]</width>
+                    <height>2_row</height>
+                    <texture>colors/white.png</texture>
+                    <colordiffuse>highlight</colordiffuse>
+                </control>
+                <control type="label">
+                    <posx>1_col_indent</posx>
+                    <width>$PARAM[label_width]</width>
+                    <height>2_row</height>
+                    <font>item_title</font>
+                    <label>$PARAM[label]</label>
+                </control>
+                <nested/>
+            </focusedlayout>
+        </definition>
+    </include>
+
+    <!--channel rows of the PVR group manager: channel icon, number and name-->
+    <include name="layout_channel_row">
+        <itemlayout height="2_row" width="8_col">
+            <control type="image">
+                <width>69</width>
+                <height>2_row</height>
+                <texture fallback="colors/offblack.png">$INFO[ListItem.Icon]</texture>
+            </control>
+            <control type="label">
+                <posx>1_col_indent</posx>
+                <width>5_col_gutter</width>
+                <height>2_row</height>
+                <font>button_title</font>
+                <label>$INFO[ListItem.ChannelNumberLabel,(,) - ]$INFO[ListItem.ChannelName]</label>
+            </control>
+        </itemlayout>
+        <focusedlayout height="2_row" width="8_col">
+            <control type="image">
+                <width>69</width>
+                <height>2_row</height>
+                <texture fallback="colors/white.png">$INFO[ListItem.Icon]</texture>
+                <include>spin_focus_thumb</include>
+            </control>
+            <control type="image">
+                <posx>72</posx>
+                <width>502</width>
+                <height>2_row</height>
+                <texture>colors/white.png</texture>
+            </control>
+            <control type="label">
+                <posx>1_col_indent</posx>
+                <width>5_col_gutter</width>
+                <height>2_row</height>
+                <font>button_title</font>
+                <textcolor>black</textcolor>
+                <selectedcolor>black</selectedcolor>
+                <label>$INFO[ListItem.ChannelNumberLabel,(,) - ]$INFO[ListItem.ChannelName]</label>
+            </control>
+        </focusedlayout>
+    </include>
+</includes>

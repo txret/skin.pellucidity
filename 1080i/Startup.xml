@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--First window after the skin loads: resets the developer overlays, lets Skin Shortcuts build
+    the menu includes, then jumps to the start window chosen in Kodi's settings.-->
 <window>
     <defaultcontrol always="true">10</defaultcontrol>
     <onload>Skin.Reset(DebugInfo)</onload>
     <onload>Skin.Reset(DebugGrid)</onload>
+    <!--build skin shortcuts includes (no-op when unchanged)-->
+    <onload>RunScript(script.skinshortcuts,type=buildxml)</onload>
     <coordinates>
         <posx>15</posx>
         <posy>15</posy>
@@ -11,14 +15,8 @@
         <control type="button" id="10">
             <description>Startup Trigger</description>
             <onfocus>ReplaceWindow($INFO[System.StartupWindow])</onfocus>
-            <texturenofocus></texturenofocus>
             <texturefocus></texturefocus>
         </control>
-        <!--debugging-->
-        <include>DebugGrid</include>
-        <control type="label">
-            <include>WindowID</include>
-            <label>StartUp.xml</label>
-        </control>
+        <include content="debug_overlay"><param name="label" value="Startup.xml"/></include>
     </controls>
 </window>

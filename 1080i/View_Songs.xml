@@ -1,328 +1,242 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <includes>
-	<!--Song browser-->
-	<include name="musicsongs">
-		<control type="group">
-			<visible>$EXP[isMusicSong]</visible>
-			<posx>col-1-begin</posx>
-			<posy>row-5-begin</posy>
-			<animation type="visible">
-				<include>listSlideIn</include>
-			</animation>
-			<animation type="hidden">
-				<effect type="fade" start="100" end="0" time="0"/>
-			</animation>
-			<!--album thumb and info-->
-			<control type="image">
-				<posx>0</posx>
-				<posy>8</posy>
-				<width>8-col</width>
-				<height>8-col</height>
-				<aspectratio>stretch</aspectratio>
-				<texture fallback="DefaultAlbumCover.png" diffuse="masks/discSurface.png">$VAR[songViewThumb]</texture>
-				<bordertexture colordiffuse="overlay">colors/black.png</bordertexture>
-				<bordersize>6</bordersize>
-			</control>
-		</control>
-		<control type="group">
-			<visible>$EXP[isMusicSong]</visible>
-			<control type="label">
-				<posx>col-10-begin</posx>
-				<posy>row-5-begin</posy>
-				<width>15-col</width>
-				<height>2-row</height>
-				<font>largeTitle2</font>
-				<aligny>center</aligny>
-				<textcolor>textActive</textcolor>
-				<shadowcolor/>
-				<label>$VAR[songViewAlbum]</label>
-			</control>
-			<control type="label">
-				<posx>col-10-begin</posx>
-				<posy>208</posy>
-				<width>15-col</width>
-				<height>5-row</height>
-				<font>menuTitle</font>
-				<aligny>center</aligny>
-				<textcolor>textActive</textcolor>
-				<shadowcolor/>
-				<label>$VAR[songViewArtist]</label>
-			</control>
-		</control>
-		<control type="panel" id="53">
-			<animation type="conditional" condition="!control.isvisible(53)">
-				<effect type="fade" start="100" end="0" time="0"/>
-			</animation>
-			<animation type="conditional" condition="control.isvisible(53)">
-				<effect type="fade" start="0" end="100" time="500" delay="250"/>
-			</animation>
-			<visible>$EXP[isMusicSong]</visible>
-			<posx>col-10-begin</posx>
-			<posy>row-9-begin</posy>
-			<width>15-col</width>
-			<height>19-row</height>
-			<onleft>9000</onleft>
-			<onright>60</onright>
-			<ondown>53</ondown>
-			<onup>53</onup>
-			<pagecontrol>60</pagecontrol>
-			<itemlayout width="15-col" height="2-row">
-				<control type="image">
-					<posx>0</posx>
-					<posy>0</posy>
-					<width>1-col-textbox</width>
-					<height>69</height>
-					<aspectratio>stretch</aspectratio>
-					<texture>colors/black.png</texture>
-					<bordersize>0</bordersize>
-					<colordiffuse>textboxInactive</colordiffuse>
-				</control>
-				<control type="image">
-					<animation type="focus">
-						<effect type="fade" start="100" end="50" time="0"/>
-					</animation>
-					<animation type="conditional" condition="player.paused">
-						<effect type="fade" start="100" end="50" time="0"/>
-					</animation>
-					<visible>ListItem.IsPlaying</visible>
-					<posx>0</posx>
-					<posy>0</posy>
-					<width>1-col-textbox</width>
-					<height>2-row</height>
-					<aspectratio>stretch</aspectratio>
-					<texture>colors/white.png</texture>
-					<bordersize>0</bordersize>
-					<colordiffuse>highlight</colordiffuse>
-				</control>
-				<control type="image">
-					<visible>ListItem.IsPlaying + !player.paused</visible>
-					<posx>12</posx>
-					<posy>0</posy>
-					<width>1-col-gutter</width>
-					<height>1-col-gutter</height>
-					<texture>equaliser.gif</texture>
-				</control>
-				<control type="label">
-					<visible>ListItem.IsPlaying + player.paused</visible>
-					<posx>0</posx>
-					<posy>0</posy>
-					<width>1-col-textbox</width>
-					<height>2-row</height>
-					<align>center</align>
-					<aligny>center</aligny>
-					<font>symbolLarge</font>
-					<textcolor>textActive</textcolor>
-					<shadowcolor/>
-					<label></label>
-				</control>
-				<control type="label">
-					<visible>!ListItem.IsPlaying</visible>
-					<posx>0</posx>
-					<posy>0</posy>
-					<width>1-col-textbox</width>
-					<height>2-row</height>
-					<align>center</align>
-					<aligny>center</aligny>
-					<font>itemTitle</font>
-					<textcolor>textActive</textcolor>
-					<shadowcolor/>
-					<label>$INFO[ListItem.TrackNumber]</label>
-				</control>
-				<control type="image">
-					<posx>1-col</posx>
-					<posy>0</posy>
-					<width>12-col-textbox</width>
-					<height>69</height>
-					<aspectratio>stretch</aspectratio>
-					<texture>colors/black.png</texture>
-					<bordersize>0</bordersize>
-					<colordiffuse>textboxInactive</colordiffuse>
-				</control>
-				<control type="image">
-					<animation type="conditional" condition="player.paused">
-						<effect type="fade" start="100" end="50" time="0"/>
-					</animation>
-					<visible>ListItem.IsPlaying</visible>
-					<posx>1-col</posx>
-					<posy>0</posy>
-					<width>15-col</width>
-					<height>2-row</height>
-					<aspectratio>stretch</aspectratio>
-					<texture>colors/white.png</texture>
-					<bordersize>0</bordersize>
-					<colordiffuse>highlight</colordiffuse>
-				</control>
-				<control type="image">
-					<visible>!ListItem.IsPlaying</visible>
-					<posx>13-col</posx>
-					<posy>0</posy>
-					<width>2-col-textbox</width>
-					<height>69</height>
-					<aspectratio>stretch</aspectratio>
-					<texture>colors/black.png</texture>
-					<bordersize>0</bordersize>
-					<colordiffuse>textboxInactive</colordiffuse>
-				</control>
-				<control type="label">
-					<visible>ListItem.IsParentFolder</visible>
-					<posx>1-col-indent</posx>
-					<posy>0</posy>
-					<width>11-col-gutter</width>
-					<height>2-row</height>
-					<aligny>center</aligny>
-					<font>itemTitle</font>
-					<textcolor>textActive</textcolor>
-					<shadowcolor/>
-					<label>..</label>
-				</control>
-				<control type="label">
-					<posx>1-col-indent</posx>
-					<posy>0</posy>
-					<width>11-col-gutter</width>
-					<height>2-row</height>
-					<aligny>center</aligny>
-					<font>itemTitle</font>
-					<textcolor>textActive</textcolor>
-					<shadowcolor/>
-					<label>$INFO[ListItem.Title]</label>
-				</control>
-				<control type="label">
-					<visible>!ListItem.IsParentFolder</visible>
-					<posx>12-col-gutter</posx>
-					<posy>0</posy>
-					<width>1-col</width>
-					<height>2-row</height>
-					<aligny>center</aligny>
-					<align>right</align>
-					<font>itemTitle</font>
-					<textcolor>textActive</textcolor>
-					<shadowcolor/>
-					<label fallback="•••">$INFO[ListItem.UserRating,,*]</label>
-				</control>
-				<control type="label">
-					<posx>13-col-indent</posx>
-					<posy>0</posy>
-					<width>2-col-gutter</width>
-					<height>2-row</height>
-					<aligny>center</aligny>
-					<align>center</align>
-					<font>itemTitle</font>
-					<textcolor>textActive</textcolor>
-					<shadowcolor/>
-					<label>$INFO[ListItem.duration]</label>
-				</control>
-			</itemlayout>
-			<focusedlayout width="15-col" height="2-row">
-				<control type="image">
-					<animation type="focus">
-						<effect type="fade" start="100" end="50" time="0"/>
-					</animation>
-					<posx>0</posx>
-					<posy>0</posy>
-					<width>1-col-textbox</width>
-					<height>2-row</height>
-					<aspectratio>stretch</aspectratio>
-					<texture>colors/white.png</texture>
-					<bordersize>0</bordersize>
-					<colordiffuse>highlight</colordiffuse>
-					<include>spinFocusIcon</include>
-				</control>
-				<control type="image">
-					<visible>ListItem.IsPlaying + !player.paused</visible>
-					<posx>12</posx>
-					<posy>0</posy>
-					<width>1-col-gutter</width>
-					<height>1-col-gutter</height>
-					<texture>equaliser.gif</texture>
-				</control>
-				<control type="label">
-					<visible>ListItem.IsPlaying + player.paused</visible>
-					<posx>0</posx>
-					<posy>0</posy>
-					<width>1-col-textbox</width>
-					<height>2-row</height>
-					<align>center</align>
-					<aligny>center</aligny>
-					<font>symbolLarge</font>
-					<textcolor>textActive</textcolor>
-					<shadowcolor/>
-					<label></label>
-				</control>
-				<control type="label">
-					<visible>!ListItem.IsPlaying</visible>
-					<posx>0</posx>
-					<posy>0</posy>
-					<width>1-col-textbox</width>
-					<height>2-row</height>
-					<align>center</align>
-					<aligny>center</aligny>
-					<font>itemTitle</font>
-					<textcolor>textActive</textcolor>
-					<shadowcolor/>
-					<label>$INFO[ListItem.TrackNumber]</label>
-				</control>
-				<control type="image">
-					<animation type="condition" condition="player.playing">
-						<effect type="fade" start="100" end="33" time="0"/>
-					</animation>
-					<posx>1-col</posx>
-					<posy>0</posy>
-					<width>15-col</width>
-					<height>2-row</height>
-					<aspectratio>stretch</aspectratio>
-					<texture>colors/white.png</texture>
-					<bordersize>0</bordersize>
-					<colordiffuse>highlight</colordiffuse>
-				</control>
-				<control type="label">
-					<visible>ListItem.IsParentFolder</visible>
-					<posx>1-col-indent</posx>
-					<posy>0</posy>
-					<width>11-col-gutter</width>
-					<height>2-row</height>
-					<aligny>center</aligny>
-					<font>itemTitle</font>
-					<textcolor>textActive</textcolor>
-					<shadowcolor/>
-					<label>..</label>
-				</control>
-				<control type="label">
-					<posx>1-col-indent</posx>
-					<posy>0</posy>
-					<width>11-col-gutter</width>
-					<height>2-row</height>
-					<aligny>center</aligny>
-					<font>itemTitle</font>
-					<textcolor>textActive</textcolor>
-					<shadowcolor/>
-					<label>$INFO[ListItem.Title]</label>
-				</control>
-				<control type="label">
-					<visible>!ListItem.IsParentFolder</visible>
-					<posx>12-col-gutter</posx>
-					<posy>0</posy>
-					<width>1-col</width>
-					<height>2-row</height>
-					<aligny>center</aligny>
-					<align>right</align>
-					<font>itemTitle</font>
-					<textcolor>textActive</textcolor>
-					<shadowcolor/>
-					<label fallback="•••">$INFO[ListItem.UserRating,,*]</label>
-				</control>
-				<control type="label">
-					<posx>13-col-indent</posx>
-					<posy>0</posy>
-					<width>2-col-gutter</width>
-					<height>2-row</height>
-					<aligny>center</aligny>
-					<align>center</align>
-					<font>itemTitle</font>
-					<textcolor>textActive</textcolor>
-					<shadowcolor/>
-					<label>$INFO[ListItem.duration]</label>
-				</control>
-			</focusedlayout>
-		</control>
-	</include>
+    <!--Song browser-->
+    <include name="view_songs">
+        <control type="group">
+            <visible>$EXP[is_music_song]</visible>
+            <posx>col_1_begin</posx>
+            <posy>row_5_begin</posy>
+            <animation type="visible">
+                <include>list_slide_in</include>
+            </animation>
+            <animation type="hidden">
+                <effect type="fade" start="100" end="0" time="0"/>
+            </animation>
+            <!--album thumb and info-->
+            <control type="image">
+                <posy>8</posy>
+                <width>8_col</width>
+                <height>8_col</height>
+                <texture fallback="noAlbumCover.jpg" diffuse="masks/discSurface.png">$VAR[song_view_thumb]</texture>
+                <bordertexture colordiffuse="overlay">colors/black.png</bordertexture>
+                <bordersize>6</bordersize>
+            </control>
+        </control>
+        <control type="group">
+            <visible>$EXP[is_music_song]</visible>
+            <control type="label">
+                <posx>col_10_begin</posx>
+                <posy>row_5_begin</posy>
+                <width>15_col</width>
+                <height>2_row</height>
+                <font>large_title_2</font>
+                <label>$VAR[song_view_album]</label>
+            </control>
+            <control type="label">
+                <posx>col_10_begin</posx>
+                <posy>208</posy>
+                <width>15_col</width>
+                <height>5_row</height>
+                <font>menu_title</font>
+                <label>$VAR[song_view_artist]</label>
+            </control>
+        </control>
+        <control type="panel" id="53">
+            <animation type="conditional" condition="!control.isvisible(53)">
+                <effect type="fade" start="100" end="0" time="0"/>
+            </animation>
+            <animation type="conditional" condition="control.isvisible(53)">
+                <effect type="fade" start="0" end="100" time="500" delay="250"/>
+            </animation>
+            <visible>$EXP[is_music_song]</visible>
+            <posx>col_10_begin</posx>
+            <posy>row_9_begin</posy>
+            <width>15_col</width>
+            <height>19_row</height>
+            <onleft>9000</onleft>
+            <onright>SetFocus(60,$VAR[jump_index],absolute)</onright>
+            <ondown>53</ondown>
+            <onup>53</onup>
+            <pagecontrol>60</pagecontrol>
+            <itemlayout width="15_col" height="2_row">
+                <control type="image">
+                    <width>1_col_textbox</width>
+                    <height>69</height>
+                    <texture>colors/black.png</texture>
+                    <colordiffuse>textbox_inactive</colordiffuse>
+                </control>
+                <control type="image">
+                    <animation type="focus">
+                        <effect type="fade" start="100" end="50" time="0"/>
+                    </animation>
+                    <animation type="conditional" condition="player.paused">
+                        <effect type="fade" start="100" end="50" time="0"/>
+                    </animation>
+                    <visible>ListItem.IsPlaying</visible>
+                    <width>1_col_textbox</width>
+                    <height>2_row</height>
+                    <texture>colors/white.png</texture>
+                    <colordiffuse>highlight</colordiffuse>
+                </control>
+                <control type="image">
+                    <visible>ListItem.IsPlaying + !player.paused</visible>
+                    <posx>12</posx>
+                    <width>1_col_gutter</width>
+                    <height>1_col_gutter</height>
+                    <texture>equaliser.gif</texture>
+                </control>
+                <control type="label">
+                    <visible>ListItem.IsPlaying + player.paused</visible>
+                    <width>1_col_textbox</width>
+                    <height>2_row</height>
+                    <align>center</align>
+                    <font>symbol_large</font>
+                    <label></label>
+                </control>
+                <control type="label">
+                    <visible>!ListItem.IsPlaying</visible>
+                    <width>1_col_textbox</width>
+                    <height>2_row</height>
+                    <align>center</align>
+                    <font>item_title</font>
+                    <label>$INFO[ListItem.TrackNumber]</label>
+                </control>
+                <control type="image">
+                    <posx>1_col</posx>
+                    <width>12_col_textbox</width>
+                    <height>69</height>
+                    <texture>colors/black.png</texture>
+                    <colordiffuse>textbox_inactive</colordiffuse>
+                </control>
+                <control type="image">
+                    <animation type="conditional" condition="player.paused">
+                        <effect type="fade" start="100" end="50" time="0"/>
+                    </animation>
+                    <visible>ListItem.IsPlaying</visible>
+                    <posx>1_col</posx>
+                    <width>15_col</width>
+                    <height>2_row</height>
+                    <texture>colors/white.png</texture>
+                    <colordiffuse>highlight</colordiffuse>
+                </control>
+                <control type="image">
+                    <visible>!ListItem.IsPlaying</visible>
+                    <posx>13_col</posx>
+                    <width>2_col_textbox</width>
+                    <height>69</height>
+                    <texture>colors/black.png</texture>
+                    <colordiffuse>textbox_inactive</colordiffuse>
+                </control>
+                <control type="label">
+                    <visible>ListItem.IsParentFolder</visible>
+                    <posx>1_col_indent</posx>
+                    <width>11_col_gutter</width>
+                    <height>2_row</height>
+                    <font>item_title</font>
+                    <label>..</label>
+                </control>
+                <control type="label">
+                    <posx>1_col_indent</posx>
+                    <width>11_col_gutter</width>
+                    <height>2_row</height>
+                    <font>item_title</font>
+                    <label>$INFO[ListItem.Title]</label>
+                </control>
+                <control type="label">
+                    <visible>!ListItem.IsParentFolder</visible>
+                    <posx>12_col_gutter</posx>
+                    <width>1_col</width>
+                    <height>2_row</height>
+                    <align>right</align>
+                    <font>item_title</font>
+                    <label fallback="•••">$INFO[ListItem.UserRating,,*]</label>
+                </control>
+                <control type="label">
+                    <posx>13_col_indent</posx>
+                    <width>2_col_gutter</width>
+                    <height>2_row</height>
+                    <align>center</align>
+                    <font>item_title</font>
+                    <label>$INFO[ListItem.duration]</label>
+                </control>
+            </itemlayout>
+            <focusedlayout width="15_col" height="2_row">
+                <control type="image">
+                    <animation type="focus">
+                        <effect type="fade" start="100" end="50" time="0"/>
+                    </animation>
+                    <width>1_col_textbox</width>
+                    <height>2_row</height>
+                    <texture>colors/white.png</texture>
+                    <colordiffuse>highlight</colordiffuse>
+                    <include>spin_focus_icon</include>
+                </control>
+                <control type="image">
+                    <visible>ListItem.IsPlaying + !player.paused</visible>
+                    <posx>12</posx>
+                    <width>1_col_gutter</width>
+                    <height>1_col_gutter</height>
+                    <texture>equaliser.gif</texture>
+                </control>
+                <control type="label">
+                    <visible>ListItem.IsPlaying + player.paused</visible>
+                    <width>1_col_textbox</width>
+                    <height>2_row</height>
+                    <align>center</align>
+                    <font>symbol_large</font>
+                    <label></label>
+                </control>
+                <control type="label">
+                    <visible>!ListItem.IsPlaying</visible>
+                    <width>1_col_textbox</width>
+                    <height>2_row</height>
+                    <align>center</align>
+                    <font>item_title</font>
+                    <label>$INFO[ListItem.TrackNumber]</label>
+                </control>
+                <control type="image">
+                    <animation type="condition" condition="player.playing">
+                        <effect type="fade" start="100" end="33" time="0"/>
+                    </animation>
+                    <posx>1_col</posx>
+                    <width>15_col</width>
+                    <height>2_row</height>
+                    <texture>colors/white.png</texture>
+                    <colordiffuse>highlight</colordiffuse>
+                </control>
+                <control type="label">
+                    <visible>ListItem.IsParentFolder</visible>
+                    <posx>1_col_indent</posx>
+                    <width>11_col_gutter</width>
+                    <height>2_row</height>
+                    <font>item_title</font>
+                    <label>..</label>
+                </control>
+                <control type="label">
+                    <posx>1_col_indent</posx>
+                    <width>11_col_gutter</width>
+                    <height>2_row</height>
+                    <font>item_title</font>
+                    <label>$INFO[ListItem.Title]</label>
+                </control>
+                <control type="label">
+                    <visible>!ListItem.IsParentFolder</visible>
+                    <posx>12_col_gutter</posx>
+                    <width>1_col</width>
+                    <height>2_row</height>
+                    <align>right</align>
+                    <font>item_title</font>
+                    <label fallback="•••">$INFO[ListItem.UserRating,,*]</label>
+                </control>
+                <control type="label">
+                    <posx>13_col_indent</posx>
+                    <width>2_col_gutter</width>
+                    <height>2_row</height>
+                    <align>center</align>
+                    <font>item_title</font>
+                    <label>$INFO[ListItem.duration]</label>
+                </control>
+            </focusedlayout>
+        </control>
+    </include>
 </includes>

@@ -1,64 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <window>
-	<onload condition="!integer.IsGreater(Container(996).NumItems,0)">control.setfocus(9004)</onload>
-    <include>fadeInOut</include>
+    <onload condition="!integer.IsGreater(Container(996).NumItems,0)">control.setfocus(9004)</onload>
+    <include>fade_in_out</include>
     <controls>
-        <include>modalDialog</include>
-		<control type="label">
-			<visible>integer.IsGreater(Container(996).NumItems,0)</visible>
-			<posx>552</posx>
-			<posy>5-row</posy>
-			<width>12-col</width>
-			<height>2-row</height>
-			<font>pageTitle</font>
-			<textcolor>textActive</textcolor>
-			<label>[COLOR highlight]$LOCALIZE[31179][/COLOR] $INFO[listitem.title]</label>
-		</control>
-		<control type="label">
-			<visible>!integer.IsGreater(Container(996).NumItems,0)</visible>
-			<posx>552</posx>
-			<posy>5-row</posy>
-			<width>12-col</width>
-			<height>2-row</height>
-			<font>pageTitle</font>
-			<textcolor>textActive</textcolor>
-			<label>[COLOR highlight]$LOCALIZE[31179][/COLOR] $INFO[container(996).content]</label>
-		</control>
-		<control type="grouplist" id="996">
-            <posx>col-7-begin</posx>
-            <posy>8-row</posy>
-            <itemgap>0</itemgap>
-			<onright>9004</onright>
-			<height>16-row</height>
-        </control>
-		<control type="group">
-			<control type="grouplist" id="9004">
-				<visible>!integer.IsGreater(Container(996).NumItems,0)</visible>
-				<posx>col-7-begin</posx>
-	            <posy>8-row</posy>
-	            <itemgap>0</itemgap>
-	            <width>12-col</width>
-	            <height>16-row</height>
-	            <itemgap>0</itemgap>
-				<onleft>996</onleft>
-	            <include condition="Window.isactive(Videos) | window.isactive(videoplaylist) | window.isactive(tvchannels) | window.isactive(tvguide) | window.isactive(TVRecordings) | window.isactive(tvtimers)">videoSideMenu</include>
-	            <include condition="Window.isactive(Music) | window.isactive(musicplaylist) | window.isactive(radiochannels)">musicSideMenu</include>
-	            <include condition="window.isactive(pictures)">picturesSideMenu</include>
-	            <include condition="window.isactive(addonbrowser)">addonsSideMenu</include>
-				<include condition="window.isactive(games)">gameSideMenu</include>
-	        </control>
-	        <control type="button" id="1000">
-	            <description>Buttons</description>
-	            <texturefocus colordiffuse="highlight">colors/white.png</texturefocus>
-	            <focusedcolor>textActive</focusedcolor>
-	            <width>12-col</width>
-	        </control>
-		</control>
-        <!--debugging-->
-        <include>DebugGrid</include>
+        <include>modal_dialog_dim</include>
         <control type="label">
-            <include>DialogID</include>
-            <label>DialogContextMenu.xml</label>
+            <visible>integer.IsGreater(Container(996).NumItems,0)</visible>
+            <posx>552</posx>
+            <posy>5_row</posy>
+            <width>12_col</width>
+            <height>2_row</height>
+            <font>page_title</font>
+            <label>[COLOR highlight]$LOCALIZE[31179][/COLOR] $INFO[listitem.title]</label>
         </control>
+        <control type="label">
+            <visible>!integer.IsGreater(Container(996).NumItems,0)</visible>
+            <posx>552</posx>
+            <posy>5_row</posy>
+            <width>12_col</width>
+            <height>2_row</height>
+            <font>page_title</font>
+            <label>[COLOR highlight]$LOCALIZE[31179][/COLOR] $INFO[container(996).content]</label>
+        </control>
+        <control type="grouplist" id="996">
+            <posx>col_7_begin</posx>
+            <posy>8_row</posy>
+            <itemgap>0</itemgap>
+            <onright>9004</onright>
+            <height>16_row</height>
+        </control>
+        <control type="grouplist" id="9004">
+            <visible>!integer.IsGreater(Container(996).NumItems,0)</visible>
+            <posx>col_7_begin</posx>
+            <posy>8_row</posy>
+            <itemgap>0</itemgap>
+            <width>12_col</width>
+            <height>16_row</height>
+            <onleft>996</onleft>
+            <include condition="Window.isactive(Videos) | window.isactive(videoplaylist) | window.isactive(tvchannels) | window.isactive(tvguide) | window.isactive(TVRecordings) | window.isactive(tvtimers)">side_menu_video</include>
+            <include condition="Window.isactive(Music) | window.isactive(musicplaylist) | window.isactive(radiochannels)">side_menu_music</include>
+            <include condition="window.isactive(pictures)">side_menu_pictures</include>
+            <include condition="window.isactive(addonbrowser)">side_menu_addons</include>
+            <include condition="window.isactive(games)">side_menu_games</include>
+        </control>
+        <control type="button" id="1000">
+            <include>side_menu_button</include>
+            <description>Buttons</description>
+        </control>
+        <include content="debug_overlay"><param name="label" value="DialogContextMenu.xml"/></include>
     </controls>
 </window>

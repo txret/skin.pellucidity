@@ -1,14 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--Kodi opens this window for fullscreen music; it hands over to the skin's own player (1103).-->
 <window>
-    <!--content moved to custom_musicPlayerFullscreen.xml-->
     <onload>action(back)</onload>
     <onload>activateWindow(1103)</onload>
     <controls>
-        <!--debugging-->
-        <include>DebugGrid</include>
-        <control type="label">
-            <include>DialogID</include>
-            <label>MusicVisualisation.xml</label>
-        </control>
+        <include content="debug_overlay"><param name="label" value="MusicVisualisation.xml"/></include>
     </controls>
 </window>
